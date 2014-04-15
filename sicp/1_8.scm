@@ -23,4 +23,6 @@
 (define (cube-root x)
   (cube-iter 1.0 x x))
 
+; tests
+(cube-root 10)
 (cube (cube-root 10))
