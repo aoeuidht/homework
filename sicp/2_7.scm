@@ -6,7 +6,7 @@
 
 ; Answer
 (define (upper-bound r)
-  (+ 1 (cdr r)))
+  (cdr r))
 (define (lower-bound r)
   (car r))
   
