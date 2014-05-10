@@ -28,12 +28,10 @@
                       (= c1 (cdr r))
                       (= (* c1 2) (+ (car r) (cdr r))))
                   '()
-                  (cons (+ 1 (car r))
-                        (- 1 (cdr r))))))))
-  (let ((r0 (pair? (safe-wrapper 1 positions))))
-    (dispaly k positions r0)
-    r0)
-  )
+                  (cons (+ (car r) 1)
+                        (- (cdr r) 1)))))))
+  
+  (pair? (safe-wrapper 1 positions)))
 
 (define empty-board '())
 (define (adjoin-position new-row k rest-of-queens)
@@ -55,4 +53,4 @@
           (queen-cols (- k 1))))))
   (queen-cols board-size))
 
-(queens 5)
+(queens 8)
