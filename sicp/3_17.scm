@@ -25,7 +25,7 @@
   ; 3
   (set-cdr! p1 p2)
   (set-cdr! p2 p3)
-  (display (count-pairs p1))
+  ;(display (count-pairs p1))
   (set-cdr! p1 p3)
   (set-car! p1 p2)
   (display (count-pairs p1))
