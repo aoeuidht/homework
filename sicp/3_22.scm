@@ -1,0 +1,61 @@
+; Exercise 3.22. Instead of representing a queue as a pair of pointers, we can build a queue as a procedure
+; with local state. The local state will consist of pointers to the beginning and the end of an ordinary list.
+; Thus, the make-queue procedure will have the form
+;(define (make-queue)
+;  (let ((front-ptr ...)
+;        (rear-ptr ...))
+;    <definitions of internal procedures>
+;    (define (dispatch m) ...)
+;    dispatch))
+; Complete the definition of make-queue and provide implementations of the queue operations using this
+; representation.
+
+(define (make-queue)
+  (let ((front-ptr '())
+        (rear-ptr '()))
+    (define (make-queue) '())
+    (define (empty-queue?) (null? front-ptr))
+    (define (front-queue)
+      (if (empty-queue?)
+          (error "FRONT called with an empty queue")
+          (car front-ptr)))
+    (define (insert-queue! item)
+      (let ((new-ptr (cons item '())))
+        (if (empty-queue?)
+            (begin 
+              (set! front-ptr new-ptr)
+              (set! rear-ptr new-ptr))
+            (begin 
+              (set-cdr! rear-ptr new-ptr)
+              (set! rear-ptr new-ptr))
+            )))
+      
+    (define (delete-queue!)
+       (if (empty-queue?)
+          (error "delete called with an empty queue")
+          (set! front-ptr (cdr front-ptr))
+          )
+      )
+    (define (print-queue)
+      (display front-ptr))
+    (define (dispatch m)
+      (cond ((eq? m 'insert-queue!) insert-queue!)
+            ((eq? m 'front-queue) front-queue)
+            ((eq? m 'print-queue) print-queue)
+            ((eq? m 'empty-queue?) empty-queue?)
+            ((eq? m 'delete-queue!) delete-queue!)
+            ))
+    dispatch))
+
+(define q1 (make-queue))
+((q1 'empty-queue?))
+((q1 'insert-queue!) 1)
+((q1 'empty-queue?))
+((q1 'print-queue))
+((q1 'insert-queue!) 2)
+((q1 'print-queue))
+((q1 'delete-queue!))
+((q1 'print-queue))
+((q1 'delete-queue!))
+((q1 'print-queue))
+((q1 'empty-queue?))
