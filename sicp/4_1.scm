@@ -14,8 +14,9 @@
 (define (list-of-values exps env)
   (if (no-operands? exp)
       '()
-      (cons (eval (first-operand exps) env)
-            (list-of-values (rest-operands exps) env))))
+      (let (fst-value (eval (first-operand exps) env))
+        (cons fst-value
+              (list-of-values (rest-operands exps) env))))
 
 ; the right-to-left way
 (define (list-of-values exps env)
