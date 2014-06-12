@@ -13,9 +13,9 @@ and add the appropriate clause to eval to handle let expressions.
 (define (let-body exp) (cddr exp))
 
 (define (let-combination exp)
-  (list (make-lambda (map car (let-params exp))
-                     (let-body exp))
-        (map cdr (let-params exp))))
+  (cons (make-lambda (map car (let-params exp))
+                             (let-body exp))
+        (map cadr (let-params exp))))
 
 (define (make-lambda parameters body)
   (cons 'lambda (cons parameters body)))

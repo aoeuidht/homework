@@ -33,12 +33,12 @@ or must we explicitly expand let* in terms of non-derived expressions?
                            (z (+ x y 5)))
                       (* x z)))
 
-; then we got ((lambda (x y z) (* x z)) (3) ((+ x 2)) ((+ x y 5)))
+; then we got 
 ((lambda (x y z)
    (* x z))
- (3)
- (+ x 2))
- (+ x y 5)))
+ 3
+ (+ x 2)
+ (+ x y 5))
 
 ; while eval calculating the parameters, it can't find the defination of x and y,
 ; then there will be panic.
