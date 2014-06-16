@@ -1,3 +1,4 @@
+#lang racket
 #| Exercise 4.6. Let expressions are derived expressions, because
 (let ((<var1> <exp1>) ... (<varn> <expn>)) <body>)
 is equivalent to
@@ -7,7 +8,10 @@ Implement a syntactic transformation let->combination that reduces evaluating
 let expressions to evaluating combinations of the type shown above, 
 and add the appropriate clause to eval to handle let expressions.
 |#
-
+(define (tagged-list? exp tag)
+  (if (pair? exp)
+      (eq? (car exp) tag)
+      #false))
 (define (let? exp) (tagged-list? exp 'let))
 (define (let-params exp) (cadr exp))
 (define (let-body exp) (cddr exp))
