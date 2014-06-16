@@ -3,6 +3,8 @@
 (define (eval exp env)
   ((analyze exp) env))
 
+(define error display)
+
 (define (analyze exp)
   (cond ((self-evaluating? exp)
          (analyze-self-evaluating exp))
@@ -16,7 +18,7 @@
         ((cond? exp) (analyze (cond->if exp)))
         ((application? exp) (analyze-application exp))
         (else
-         (error "Unknown expression type -- ANALYZE" exp))))
+         (display "Unknown expression type -- ANALYZE" exp))))
 
 (define (analyze-self-evaluating exp)
   (lambda (env) exp))
@@ -64,7 +66,7 @@
               (cdr rest-procs))))
   (let ((procs (map analyze exps)))
     (if (null? procs)
-        (error "Empty sequence -- ANALYZE"))
+        (display "Empty sequence -- ANALYZE"))
     (loop (car procs) (cdr procs))))
 (define (analyze-application exp)
   (let ((fproc (analyze (operator exp)))
@@ -82,7 +84,7 @@
                               args
                               (procedure-environment proc))))
         (else
-         (error
+         (display
           "Unknown procedure type -- EXECUTE-APPLICATION"
           proc))))
 
@@ -103,8 +105,8 @@
   (if (= (length vars) (length vals))
       (cons (make-frame vars vals) base-env)
       (if (< (length vars) (length vals))
-          (error "Too many arguments supplied" vars vals)
-          (error "Too few arguments supplied" vars vals))))
+          (display "Too many arguments supplied" vars vals)
+          (display "Too few arguments supplied" vars vals))))
 
 (define (lookup-variable-value var env)
   (define (env-loop env)
@@ -115,7 +117,7 @@
              (car vals))
             (else (scan (cdr vars) (cdr vals)))))
     (if (eq? env the-empty-environment)
-        (error "Unbound variable" var)
+        (display "Unbound variable" var)
         (let ((frame (first-frame env)))
           (scan (frame-variables frame)
                 (frame-values frame)))))
@@ -130,7 +132,7 @@
              (set-car! vals val))
             (else (scan (cdr vars) (cdr vals)))))
     (if (eq? env the-empty-environment)
-        (error "Unbound variable -- SET!" var)
+        (display "Unbound variable -- SET!" var)
         (let ((frame (first-frame env)))
           (scan (frame-variables frame)
                 (frame-values frame)))))
@@ -356,12 +358,12 @@
       (announce-output output-prompt)
       (user-print output)))
 
-(test-eval '(define (append x y)
+(test-eval '(begin (define (append x y)
   (if (null? x)
       y
       (cons (car x)
             (append (cdr x) y))))
-           (append '(a b c) '(d e f)))
+           (append '(a b c) '(d e f))))
 
 #|
 (define (append x y)
