@@ -223,7 +223,6 @@
 (define (lambda-body exp) (cddr exp))
 
 (define (make-lambda parameters body)
-  (display 'make-lambda-called)(newline)
   (cons 'lambda (cons parameters body)))
 
 (define (if? exp) (tagged-list? exp 'if))
@@ -280,7 +279,6 @@
                      (expand-clauses rest))))))
 
 (define (make-procedure parameters body env)
-  (display 'make-procedure-called)(newline)
   (list 'procedure parameters body env))
 (define (compound-procedure? p)
   (tagged-list? p 'procedure))
@@ -339,7 +337,6 @@
 (define apply-in-underlying-scheme apply)
 
 (define (apply-primitive-procedure proc args)
-  (display args)
   (apply-in-underlying-scheme
    (primitive-implementation proc) args))
 (define input-prompt ";;; M-Eval input:")
