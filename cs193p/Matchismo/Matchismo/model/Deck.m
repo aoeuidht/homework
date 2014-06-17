@@ -16,7 +16,7 @@
 @implementation Deck
 - (NSMutableArray *) cards
 {
-    if (_cards)
+    if (! _cards)
     {
         _cards = [[NSMutableArray alloc] init];
     }
@@ -44,10 +44,12 @@
 {
     Card *rand_card = nil;
     
-    unsigned index = arc4random() % [self.cards count];
-    rand_card = self.cards[index];
-    [self.cards removeObjectAtIndex:index];
-    
+    if ([self.cards count])
+    {
+        unsigned index = arc4random() % [self.cards count];
+        rand_card = self.cards[index];
+        [self.cards removeObjectAtIndex:index];
+    }
     return rand_card;
 }
 @end
