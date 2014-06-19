@@ -13,7 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *flipsLabel;
 @property (nonatomic) int flipCount;
 
-@property (strong, nonatomic) PlayingCardDeck *deck;
+@property (strong, nonatomic) Deck *deck;
 @end
 
 @implementation CardGameViewController
@@ -41,22 +41,19 @@
         [sender setBackgroundImage:[UIImage imageNamed:@"cardback"]
                           forState:UIControlStateNormal];
         [sender setTitle:@"" forState:UIControlStateNormal];
+        self.flipCount++;
     }
     else
     {
-        [sender setBackgroundImage:[UIImage imageNamed:@"cardfront"] forState:UIControlStateNormal];
-        // we should drow a random card from the deck
-        // instead of the fixed string, for exercise 6
-        // [sender setTitle:@"A♣︎" forState:UIControlStateNormal];
-        NSString *btn_str  = @"?";
         Card *rand_card = [self.deck drawRandomCard];
         if (rand_card) {
-            btn_str = [rand_card contents];
+            [sender setBackgroundImage:[UIImage imageNamed:@"cardfront"] forState:UIControlStateNormal];
+            [sender setTitle:[rand_card contents] forState:UIControlStateNormal];
+            self.flipCount++;
         }
-        [sender setTitle:btn_str forState:UIControlStateNormal];
     }
     
-    self.flipCount++;
+
 }
 
 @end
