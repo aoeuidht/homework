@@ -16,6 +16,8 @@ he realizes that the ``lists'' obtained by reading in quoted expressions
     (if (null? (cdr exp))
         (car exp)
         (list 'cons (car exp) (quota-wrapper (cdr exp)))))
-  (quota-wrapper (cdr exp)))
+  (if (pair? (cadr exp))
+      (eval (quota-wrapper (cadr exp)))
+      (cadr exp)))
 
-(display (text-of-quotation '(quote a b c)))
+(display (text-of-quotation (list 'quote '(a b c))))
