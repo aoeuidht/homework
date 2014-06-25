@@ -14,14 +14,25 @@
 @interface CardGameViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *flipsLabel;
 @property (nonatomic) int flipCount;
+@property (nonatomic) int play_mode;
 
 @property (strong, nonatomic) Deck *deck;
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+
 @end
 
 @implementation CardGameViewController
+
+- (int) play_mode
+{
+    if (_play_mode == 0)
+    {
+        _play_mode = 2;
+    }
+    return _play_mode;
+}
 
 - (CardMatchingGame *) game
 {
@@ -29,7 +40,8 @@
     {
         _game = [[CardMatchingGame alloc]
                  initWithCardCount:[self.cardButtons count]
-                 usingDeck:[self createDeck]];
+                 usingDeck:[self createDeck]
+                 atMode: self.play_mode];
     }
     return _game;
 }
@@ -52,7 +64,6 @@
 {
     _flipCount = flipCount;
     self.flipsLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCount];
-    NSLog(@"flipCount changed to %d", self.flipCount);
 }
 
 - (IBAction)touchCardButton:(UIButton *)sender
@@ -64,13 +75,18 @@
     self.flipCount = self.flipCount + 1;
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d",
                             self.game.score];
-    
 }
 - (IBAction)touchRstBtn:(UIButton *)sender {
     self.deck = Nil;
     self.game = Nil;
     self.scoreLabel.text = @"Score: 0";
     [self updateUI];
+}
+
+- (IBAction)cardModeChange:(UISwitch *)sender {
+    int game_mode = sender.isOn ? 3 : 2;
+    self.play_mode = game_mode;
+    [self touchRstBtn:Nil];
 }
 
 - (void) updateUI
