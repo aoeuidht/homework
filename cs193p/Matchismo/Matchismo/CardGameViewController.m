@@ -66,6 +66,12 @@
                             self.game.score];
     
 }
+- (IBAction)touchRstBtn:(UIButton *)sender {
+    self.deck = Nil;
+    self.game = Nil;
+    self.scoreLabel.text = @"Score: 0";
+    [self updateUI];
+}
 
 - (void) updateUI
 {

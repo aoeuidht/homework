@@ -31,7 +31,11 @@
         {
             score = 1;
         }
+        NSLog(@"%@ vs %@",
+              self.contents,
+              otherCard.contents);
     }
+    
     return score;
 }
 
