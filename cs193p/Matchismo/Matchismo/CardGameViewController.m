@@ -72,13 +72,13 @@
 {
     int choosenButtonIndex = [self.cardButtons
                               indexOfObject:sender];
-    NSString * info = [self.game chooseCardAtIndex:choosenButtonIndex];
+    [self.game chooseCardAtIndex:choosenButtonIndex];
     [self updateUI];
     self.flipCount = self.flipCount + 1;
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d",
                             self.game.score];
     // task 5
-    self.matchInfo.text = info;
+    self.matchInfo.text = self.game.match_info ? self.game.match_info : @"";
     // task 4
     self.modSwitchBtn.enabled = NO;
 }

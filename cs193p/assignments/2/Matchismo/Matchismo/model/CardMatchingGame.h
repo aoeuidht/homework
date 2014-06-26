@@ -16,9 +16,10 @@
                         usingDeck:(Deck *)deck
                            atMode: (int) play_mode;
 
-- (NSString *) chooseCardAtIndex:(NSUInteger)index;
+- (void) chooseCardAtIndex:(NSUInteger)index;
 - (Card *)cardAtIndex:(NSUInteger)index;
 
 @property (nonatomic, readonly) NSInteger score;
 @property (nonatomic, readonly) NSInteger play_mode;
+@property (nonatomic, readonly) NSString *match_info;
 @end
