@@ -59,8 +59,9 @@ static const int MISMATCH_PENALTY = 2;
 static const int MATCH_BOUNS = 4;
 static const int COST_TO_CHOOSE = 1;
 
-- (void) chooseCardAtIndex:(NSUInteger)index
+- (NSString *) chooseCardAtIndex:(NSUInteger)index
 {
+    NSString *info = @"";
     Card *card = [self cardAtIndex:index];
     if (! card.isMatched)
     {
@@ -76,7 +77,14 @@ static const int COST_TO_CHOOSE = 1;
                 if (otherCard.isChosen &&
                     (! otherCard.isMatched))
                 {
+                    if (info.length < 1)
+                    {
+                        info = card.contents;
+                    }
                     [selectCards addObject:otherCard];
+                    info = [NSString stringWithFormat:@"%@ %@",
+                            info,
+                            otherCard.contents];
                 }
             }
             if ([selectCards count] == (self.play_mode - 1))
@@ -90,6 +98,10 @@ static const int COST_TO_CHOOSE = 1;
                         otherCard.matched = YES;
                     }
                     card.matched = YES;
+                    info = [NSString
+                            stringWithFormat:@"Matched %@ for %d points",
+                            info,
+                            matchScore * MATCH_BOUNS];
                 }
                 else
                 {
@@ -98,12 +110,18 @@ static const int COST_TO_CHOOSE = 1;
                     {
                         otherCard.chosen = NO;
                     }
+                    info = [NSString
+                            stringWithFormat:@"%@ don't match! %d point penalty!",
+                            info,
+                            MISMATCH_PENALTY];
                 }
             }
             card.chosen = YES;
             self.score = self.score - COST_TO_CHOOSE;
         }
     }
+    
+    return info;
 }
 
 @end

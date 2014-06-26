@@ -245,10 +245,19 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No Matching Yet" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5XU-1M-phJ">
+                                <rect key="frame" x="20" y="466" width="280" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.50196081399917603" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <connections>
+                        <outlet property="matchInfo" destination="5XU-1M-phJ" id="oUG-GP-par"/>
+                        <outlet property="modSwitchBtn" destination="oLY-HI-lNs" id="ILH-6r-jjw"/>
                         <outlet property="scoreLabel" destination="j2M-AY-vgO" id="3hn-lz-VTh"/>
                         <outletCollection property="cardButtons" destination="031-ON-znC" id="EX3-Cq-pBq"/>
                         <outletCollection property="cardButtons" destination="VjI-19-UxY" id="DeP-9a-yA2"/>

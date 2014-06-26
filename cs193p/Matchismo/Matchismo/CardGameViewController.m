@@ -20,6 +20,8 @@
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *modSwitchBtn;
+@property (weak, nonatomic) IBOutlet UILabel *matchInfo;
 
 @end
 
@@ -70,17 +72,24 @@
 {
     int choosenButtonIndex = [self.cardButtons
                               indexOfObject:sender];
-    [self.game chooseCardAtIndex:choosenButtonIndex];
+    NSString * info = [self.game chooseCardAtIndex:choosenButtonIndex];
     [self updateUI];
     self.flipCount = self.flipCount + 1;
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d",
                             self.game.score];
+    // task 5
+    self.matchInfo.text = info;
+    // task 4
+    self.modSwitchBtn.enabled = NO;
 }
 - (IBAction)touchRstBtn:(UIButton *)sender {
     self.deck = Nil;
     self.game = Nil;
     self.scoreLabel.text = @"Score: 0";
     [self updateUI];
+    
+    // task 4
+    self.modSwitchBtn.enabled = YES;
 }
 
 - (IBAction)cardModeChange:(UISwitch *)sender {
