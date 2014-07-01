@@ -8,5 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+#import "Deck.h"
+
 @interface CardGameViewController : UIViewController
+
+- (Deck *)createDeck;
+- (IBAction)touchCardButton:(UIButton *)sender;
+- (void) updateUI;
+- (NSString *) titleForCard:(Card *)card;
+- (UIImage *) backgroundImageForCard:(Card *) card;
 @end

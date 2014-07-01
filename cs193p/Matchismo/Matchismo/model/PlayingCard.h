@@ -15,5 +15,6 @@
 
 + (NSArray *) validSuits;
 + (NSUInteger) maxRank;
+- (int) match:(NSArray *)otherCards;
 
 @end
