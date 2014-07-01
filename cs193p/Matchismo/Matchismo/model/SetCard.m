@@ -10,8 +10,31 @@
 
 @implementation SetCard
 
+- (NSAttributedString *) attr_cont
+{
+    UIColor *sy_col = [UIColor redColor];
+    if ([self.color isEqualToString:@"g"]) {
+        sy_col = [UIColor greenColor];
+    }
+    else if ([self.color isEqualToString:@"p"])
+    {
+        sy_col = [UIColor purpleColor];
+    }
+    
+    NSMutableAttributedString *content = [[NSMutableAttributedString alloc]
+                                          initWithString: [NSString stringWithFormat:@"%@%@%@",
+                                                           self.symbol,
+                                                           self.number,
+                                                           self.shading]];
+    
+    [content setAttributes: @{ NSForegroundColorAttributeName: sy_col}
+                     range: NSMakeRange(0, 1)];
+    return content;
+}
+
 - (NSString *) contents
 {
+    
     return [NSString stringWithFormat:@"%@%@%@%@",
             self.symbol,
             self.number,
@@ -75,19 +98,16 @@ static const int MATCH_BOUNS = 4;
 
 + (NSArray *) validSymbols
 {
-    return @[@"1", @"2", @"3"];
     return @[@"♦︎", @"⚑", @"◼︎"];
 }
 
 + (NSArray *) validColors
 {
-    return @[@"1", @"2", @"3"];
     return @[@"r", @"g", @"p"];
 }
 
 + (NSArray *) validShadings
 {
-    return @[@"1", @"2", @"3"];
     return @[@"☐", @"☑︎", @"◼︎"];
 }
 

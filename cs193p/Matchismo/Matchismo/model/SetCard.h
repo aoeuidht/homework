@@ -15,6 +15,8 @@
 @property (strong, nonatomic) NSString *shading;
 @property (strong, nonatomic) NSString *color;
 
+@property (strong, nonatomic) NSAttributedString *attr_cont;
+
 + (NSArray *) validNumbers;
 + (NSArray *) validSymbols;
 + (NSArray *) validColors;

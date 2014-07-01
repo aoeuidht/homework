@@ -8,6 +8,7 @@
 
 #import "SetCardGameViewController.h"
 
+#import "model/SetCard.h"
 #import "model/SetCardDeck.h"
 #import "model/CardMatchingGame.h"
 
@@ -46,7 +47,19 @@
         int cardButtonInedx = [self.setBtns
                                indexOfObject:cardButton];
         Card *card = [self.game cardAtIndex:cardButtonInedx];
-        [cardButton setTitle:[self titleForCard:card] forState:UIControlStateNormal];
+        SetCard *sc = (SetCard *)card;
+        if (card.isChosen)
+        {
+        [cardButton setAttributedTitle:sc.attr_cont
+                              forState:UIControlStateNormal];
+        }
+        else
+        {
+            [cardButton setAttributedTitle:nil forState:UIControlStateNormal];
+            [cardButton setTitle:@""
+                        forState:UIControlStateNormal];
+            
+        }
         [cardButton
          setBackgroundImage:[self backgroundImageForCard:card]
          forState:UIControlStateNormal];
