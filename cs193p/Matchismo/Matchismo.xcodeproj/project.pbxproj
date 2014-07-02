@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FF1C744019631A9C00BB380B /* GameScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1C743F19631A9C00BB380B /* GameScoreViewController.m */; };
 		FF5428F8195068990092465C /* PlayingCard.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5428F7195068990092465C /* PlayingCard.m */; };
 		FF5428FB19506D940092465C /* Deck.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5428FA19506D940092465C /* Deck.m */; };
 		FF5496511959349C00563A74 /* CardMatchingGame.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5496501959349C00563A74 /* CardMatchingGame.m */; };
@@ -42,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FF1C743E19631A9C00BB380B /* GameScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScoreViewController.h; sourceTree = "<group>"; };
+		FF1C743F19631A9C00BB380B /* GameScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameScoreViewController.m; sourceTree = "<group>"; };
 		FF5428F6195068990092465C /* PlayingCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayingCard.h; path = model/PlayingCard.h; sourceTree = "<group>"; };
 		FF5428F7195068990092465C /* PlayingCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayingCard.m; path = model/PlayingCard.m; sourceTree = "<group>"; };
 		FF5428F919506D940092465C /* Deck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Deck.h; path = model/Deck.h; sourceTree = "<group>"; };
@@ -140,6 +143,8 @@
 				FF7FBD2019505A6600B98CDE /* CardGameAppDelegate.m */,
 				FF7FBD2219505A6600B98CDE /* Main.storyboard */,
 				FF7FBD2519505A6600B98CDE /* CardGameViewController.h */,
+				FF1C743E19631A9C00BB380B /* GameScoreViewController.h */,
+				FF1C743F19631A9C00BB380B /* GameScoreViewController.m */,
 				FF7FBD2619505A6600B98CDE /* CardGameViewController.m */,
 				FFC5C5AC1961C5800012E432 /* SetCardGameViewController.h */,
 				FFC5C5AD1961C5800012E432 /* SetCardGameViewController.m */,
@@ -307,6 +312,7 @@
 				FF5496511959349C00563A74 /* CardMatchingGame.m in Sources */,
 				FFEA2386195071A6005F35E5 /* PlayingCardDeck.m in Sources */,
 				FF5428FB19506D940092465C /* Deck.m in Sources */,
+				FF1C744019631A9C00BB380B /* GameScoreViewController.m in Sources */,
 				FFC5C5AE1961C5800012E432 /* SetCardGameViewController.m in Sources */,
 				FF7FBD4A1950652600B98CDE /* Card.m in Sources */,
 			);

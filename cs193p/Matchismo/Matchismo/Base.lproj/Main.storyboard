@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Set Card Game View Controller - Item 1-->
+        <!--Set Card Game View Controller-->
         <scene sceneID="3OT-jl-zQ8">
             <objects>
                 <viewController id="iOb-1A-Bcw" customClass="SetCardGameViewController" sceneMemberID="viewController">
@@ -217,13 +217,33 @@
                                 </state>
                                 <connections>
                                     <action selector="touchRstBtn:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="a65-BL-Kdu"/>
+                                    <action selector="touchRstBtn:" destination="iOb-1A-Bcw" eventType="touchUpInside" id="pYi-tX-yzA"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Score: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KLX-b4-VO4">
+                                <rect key="frame" x="122" y="432" width="76" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CEw-r3-cfg">
+                                <rect key="frame" x="254" y="428" width="49" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="History">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="w5U-fx-AYN" kind="push" identifier="showHisScore" id="9bu-v8-tsA"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="OrE-gk-lap"/>
+                    <navigationItem key="navigationItem" id="qAX-qo-qbE"/>
                     <connections>
+                        <outlet property="scoreLabel" destination="KLX-b4-VO4" id="5m3-nh-5cx"/>
                         <outletCollection property="setBtns" destination="oeq-fh-v8j" id="iOl-YV-JPG"/>
                         <outletCollection property="setBtns" destination="g1T-XQ-xYc" id="xxA-fl-ot9"/>
                         <outletCollection property="setBtns" destination="7jy-Ep-lXy" id="GUt-fp-Tut"/>
@@ -244,7 +264,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mib-xL-dP1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-64" y="-20"/>
+            <point key="canvasLocation" x="462" y="-20"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="rqm-gd-Wud">
@@ -257,15 +277,15 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="iOb-1A-Bcw" kind="relationship" relationship="viewControllers" id="haA-h6-L1o"/>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="viewControllers" id="nXU-Bt-Bhg"/>
+                        <segue destination="4Vp-iI-Jgu" kind="relationship" relationship="viewControllers" id="haA-h6-L1o"/>
+                        <segue destination="ghP-He-TSJ" kind="relationship" relationship="viewControllers" id="nXU-Bt-Bhg"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C8X-xm-TVY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-598" y="306"/>
+            <point key="canvasLocation" x="-604" y="284"/>
         </scene>
-        <!--Card Game View Controller - Item-->
+        <!--Card Game View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="CardGameViewController" sceneMemberID="viewController">
@@ -470,7 +490,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Score: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j2M-AY-vgO">
-                                <rect key="frame" x="20" y="527" width="280" height="21"/>
+                                <rect key="frame" x="133" y="432" width="70" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -487,10 +507,20 @@
                                     <action selector="touchRstBtn:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="cCq-zJ-a0b"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZDS-uD-yfe">
+                                <rect key="frame" x="254" y="428" width="49" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="History">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="w5U-fx-AYN" kind="push" identifier="showHisScore" id="jlz-gb-Z43"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.50196081399917603" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="RaP-uT-xMx"/>
                     <navigationItem key="navigationItem" id="fO2-ij-2ol"/>
                     <connections>
                         <outlet property="scoreLabel" destination="j2M-AY-vgO" id="3hn-lz-VTh"/>
@@ -514,7 +544,76 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="462" y="653"/>
+        </scene>
+        <!--Game Score View Controller-->
+        <scene sceneID="AoI-3g-1qy">
+            <objects>
+                <viewController id="w5U-fx-AYN" customClass="GameScoreViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lDp-6I-yAi"/>
+                        <viewControllerLayoutGuide type="bottom" id="k2M-ZK-KJs"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="C2W-uU-pk7">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="32a-GT-N7A">
+                                <rect key="frame" x="0.0" y="64" width="320" height="453"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="hW4-8p-4uN"/>
+                    <connections>
+                        <outlet property="gameScoreText" destination="32a-GT-N7A" id="s0V-ce-vcM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="50a-oi-zA8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1002" y="284"/>
+        </scene>
+        <!--Navigation Controller - Item-->
+        <scene sceneID="4V3-XA-2nI">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ghP-He-TSJ" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="RaP-uT-xMx"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="aws-Ea-MmJ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="0ru-VX-Hbu"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bz2-G2-JtP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
             <point key="canvasLocation" x="-64" y="653"/>
+        </scene>
+        <!--Navigation Controller - Item 1-->
+        <scene sceneID="ERv-nX-7dv">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4Vp-iI-Jgu" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item 1" id="OrE-gk-lap"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZJs-az-ONM">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="iOb-1A-Bcw" kind="relationship" relationship="rootViewController" id="lSn-V5-Ifs"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sdD-CD-q8q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-64" y="-20"/>
         </scene>
     </scenes>
     <resources>
@@ -526,4 +625,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="9bu-v8-tsA"/>
+    </inferredMetricsTieBreakers>
 </document>

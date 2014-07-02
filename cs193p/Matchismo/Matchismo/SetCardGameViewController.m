@@ -7,6 +7,7 @@
 //
 
 #import "SetCardGameViewController.h"
+#import "GameScoreViewController.h"
 
 #import "model/SetCard.h"
 #import "model/SetCardDeck.h"
@@ -17,10 +18,43 @@
 
 @property (strong, nonatomic) Deck *deck;
 @property (strong, nonatomic) CardMatchingGame *game;
-
+@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (strong, nonatomic) NSMutableArray *score_his;
 @end
 
 @implementation SetCardGameViewController
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"showHisScore"])
+    {
+        if ([segue.destinationViewController isKindOfClass:[GameScoreViewController class]])
+        {
+            GameScoreViewController *gsvc = (GameScoreViewController *)segue.destinationViewController;
+            gsvc.score_his = self.score_his;
+        }
+    }
+}
+
+- (IBAction)touchRstBtn:(UIButton *)sender {
+    // append his score to the list
+    [self.score_his addObject:[NSString stringWithFormat:@"score: %ld",
+                               self.game.score]];
+    self.deck = Nil;
+    self.game = Nil;
+    self.scoreLabel.text = @"Score: 0";
+    [self updateUI];
+}
+
+- (NSMutableArray *) score_his
+{
+    if (! _score_his)
+    {
+        _score_his = [[NSMutableArray alloc] init];
+    }
+    
+    return _score_his;
+}
 
 
 - (CardMatchingGame *) game
@@ -44,8 +78,8 @@
 {
     for (UIButton *cardButton in self.setBtns)
     {
-        int cardButtonInedx = [self.setBtns
-                               indexOfObject:cardButton];
+        NSUInteger cardButtonInedx = [self.setBtns
+                                      indexOfObject:cardButton];
         Card *card = [self.game cardAtIndex:cardButtonInedx];
         SetCard *sc = (SetCard *)card;
         if (card.isChosen)
@@ -71,9 +105,12 @@
     
 
     NSLog(@"btn clicked");
-    int choosenButtonIndex = [self.setBtns
-                              indexOfObject:sender];
+    NSUInteger choosenButtonIndex = [self.setBtns
+                                      indexOfObject:sender];
     [self.game chooseCardAtIndex:choosenButtonIndex];
+    
+    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %ld",
+                            (long)self.game.score];
     [self updateUI];
 
 }

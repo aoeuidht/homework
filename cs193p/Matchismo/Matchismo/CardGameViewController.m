@@ -7,6 +7,8 @@
 //
 
 #import "CardGameViewController.h"
+#import "GameScoreViewController.h"
+
 #import "model/PlayingCardDeck.h"
 
 #import "model/CardMatchingGame.h"
@@ -22,10 +24,23 @@
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *modSwitchBtn;
 @property (weak, nonatomic) IBOutlet UILabel *matchInfo;
+@property (strong, nonatomic) NSMutableArray *score_his;
 
 @end
 
 @implementation CardGameViewController
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"showHisScore"])
+    {
+        if ([segue.destinationViewController isKindOfClass:[GameScoreViewController class]])
+        {
+            GameScoreViewController *gsvc = (GameScoreViewController *)segue.destinationViewController;
+            gsvc.score_his = self.score_his;
+        }
+    }
+}
 
 - (int) play_mode
 {
@@ -46,6 +61,16 @@
                  atMode: self.play_mode];
     }
     return _game;
+}
+
+- (NSMutableArray *) score_his
+{
+    if (! _score_his)
+    {
+        _score_his = [[NSMutableArray alloc] init];
+    }
+    
+    return _score_his;
 }
 
 - (Deck *)deck
@@ -70,12 +95,12 @@
 
 - (IBAction)touchCardButton:(UIButton *)sender
 {
-    int choosenButtonIndex = [self.cardButtons
-                              indexOfObject:sender];
+    NSUInteger choosenButtonIndex = [self.cardButtons
+                                     indexOfObject:sender];
     [self.game chooseCardAtIndex:choosenButtonIndex];
     [self updateUI];
     self.flipCount = self.flipCount + 1;
-    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d",
+    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %ld",
                             self.game.score];
     // task 5
     self.matchInfo.text = self.game.match_info ? self.game.match_info : @"";
@@ -83,6 +108,9 @@
     self.modSwitchBtn.enabled = NO;
 }
 - (IBAction)touchRstBtn:(UIButton *)sender {
+    [self.score_his addObject:[NSString stringWithFormat:@"score: %ld",
+                               self.game.score]];
+    
     self.deck = Nil;
     self.game = Nil;
     self.scoreLabel.text = @"Score: 0";
@@ -102,8 +130,8 @@
 {
     for (UIButton *cardButton in self.cardButtons)
     {
-        int cardButtonInedx = [self.cardButtons
-                               indexOfObject:cardButton];
+        NSUInteger cardButtonInedx = [self.cardButtons
+                                      indexOfObject:cardButton];
         Card *card = [self.game cardAtIndex:cardButtonInedx];
         [cardButton setTitle:[self titleForCard:card] forState:UIControlStateNormal];
         [cardButton
