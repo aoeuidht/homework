@@ -72,7 +72,6 @@ if exp equals zero, it will jump to the target label
          (make-perform inst machine labels ops pc))
         ((eq? (car inst) 'je)
          (make-je inst machine labels ops pc))
-
         (else (error "Unknown instruction type -- ASSEMBLE"
                      inst))))
 
