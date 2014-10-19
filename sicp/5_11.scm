@@ -91,4 +91,30 @@ You should make the initialize-stack operation initialize all the register stack
               (set-contents! reg (pop stack))    
               (advance-pc pc)))))))
 ;c
-; save the reg name, and just find the proper value to restore
+; set a standlone stack for every register when make-machine is invoked
+(define (make-register name)
+  (let ((contents '*unassigned*)
+        ; add a stack for each register
+        (reg-stack (make-stack)))
+    (define (dispatch message)
+      (cond ((eq? message 'get) contents)
+            ((eq? message 'get-stack) reg-stack)
+            ((eq? message 'set)
+             (lambda (value) (set! contents value)))
+            (else
+             (error "Unknown request -- REGISTER" message))))
+    dispatch))
+
+(define (make-save inst machine stack pc)
+  (let ((reg (get-register machine
+                           (stack-inst-reg-name inst))))
+    (lambda ()
+      (push (reg 'get-stack) (get-contents reg))
+      (advance-pc pc))))
+
+(define (make-restore inst machine stack pc)
+  (let ((reg (get-register machine
+                           (stack-inst-reg-name inst))))
+    (lambda ()
+      (set-contents! reg (pop (reg 'get-stack)))
+      (advance-pc pc))))
