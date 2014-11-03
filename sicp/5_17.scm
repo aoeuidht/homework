@@ -1,10 +1,10 @@
 #lang r5rs
-#|
-Exercise 5.16.  Augment the simulator to provide for instruction tracing.
- That is, before each instruction is executed, the simulator should print
- the text of the instruction. Make the machine model accept trace-on
- and trace-off messages to turn tracing on and off. 
-|#
+
+#|Exercise 5.17.  Extend the instruction tracing of exercise 5.16 so that before printing an instruction,
+ the simulator prints any labels that immediately precede that instruction in the controller sequence.
+ Be careful to do this in a way that does not interfere with instruction counting (exercise 5.15).
+ You will have to make the simulator retain the necessary label information. |#
+
 (define (error reason . args)
       (display "Error: ")
       (display reason)
@@ -47,24 +47,40 @@ Exercise 5.16.  Augment the simulator to provide for instruction tracing.
 
 ; -----------
 (define (make-stack)
-  (let ((s '()))
+  (let ((s '())
+        (number-pushes 0)
+        (max-depth 0)
+        (current-depth 0))
     (define (push x)
-      (set! s (cons x s)))
+      (set! s (cons x s))
+      (set! number-pushes (+ 1 number-pushes))
+      (set! current-depth (+ 1 current-depth))
+      (set! max-depth (max current-depth max-depth)))
     (define (pop)
       (if (null? s)
           (error "Empty stack -- POP")
           (let ((top (car s)))
             (set! s (cdr s))
-            top)))
+            (set! current-depth (- current-depth 1))
+            top)))    
     (define (initialize)
       (set! s '())
-      'done)
+      (set! number-pushes 0)
+      (set! max-depth 0)
+      (set! current-depth 0)
+      'done-reg-initialize)
+    (define (print-statistics)
+      (newline)
+      (display (list 'total-pushes  '= number-pushes
+                     'maximum-depth '= max-depth)))
     (define (dispatch message)
       (cond ((eq? message 'push) push)
             ((eq? message 'pop) (pop))
             ((eq? message 'initialize) (initialize))
-            (else (error "Unknown request -- STACK"
-                         message))))
+            ((eq? message 'print-statistics)
+             (print-statistics))
+            (else
+             (error "Unknown request -- STACK" message))))
     dispatch))
 (define (pop stack)
   (stack 'pop))
@@ -77,12 +93,23 @@ Exercise 5.16.  Augment the simulator to provide for instruction tracing.
         (flag (make-register 'flag))
         (stack (make-stack))
         (the-instruction-sequence '())
+        (inst-counting 0)
         (inst-trace #f))
+    (define (print-inst-counting)
+      (display (list 'instruction-counting '= inst-counting)))
     (let ((the-ops
            (list (list 'initialize-stack
-                       (lambda () (stack 'initialize)))))
+                       (lambda () (stack 'initialize)))
+                 (list 'print-stack-statistics
+                       (lambda () (stack 'print-statistics)))
+                 (list 'initialize-inst-counting
+                       (lambda () (set! inst-counting 0)))
+                 (list 'print-inst-counting
+                       (lambda () (print-inst-counting)))
+                 ))
           (register-table
            (list (list 'pc pc) (list 'flag flag))))
+
       (define (trace-on)
         (set! inst-trace #t))
       (define (trace-off)
@@ -107,8 +134,10 @@ Exercise 5.16.  Augment the simulator to provide for instruction tracing.
                 (if inst-trace
                     (begin
                       (display (caar insts))
-                      (newline))
-                    'done)
+                      (newline)
+                      'pass)
+                    'pass)
+                (set! inst-counting (+ inst-counting 1))
                 ((instruction-execution-proc (car insts)))
                 (execute)))))
       (define (dispatch message)
@@ -125,6 +154,7 @@ Exercise 5.16.  Augment the simulator to provide for instruction tracing.
               ((eq? message 'trace-on) (trace-on))
               ((eq? message 'trace-off) (trace-off))
               ((eq? message 'operations) the-ops)
+              ((eq? message 'print-inst-counting) (print-inst-counting))
               (else (error "Unknown request -- MACHINE" message))))
       dispatch)))
 
@@ -150,12 +180,23 @@ Exercise 5.16.  Augment the simulator to provide for instruction tracing.
       (receive '() '())
       (extract-labels (cdr text)
        (lambda (insts labels)
+         ;(display (cons 'inst insts))(newline)(display labels)(newline)
          (let ((next-inst (car text)))
            (if (symbol? next-inst)
-               (receive insts
-                        (cons (make-label-entry next-inst
-                                                insts)
-                              labels))
+               (begin
+                 (for-each (lambda (inst)
+                             (if (null? (cdar inst)); (symbol? (caar inst))
+                                 ;(set-car! inst (cons (car inst) next-inst))
+                                 (set-cdr! (car inst) next-inst)
+                                 'done)
+                             )
+                           insts)
+                 (display insts)
+                 (newline)
+                 (receive insts
+                          (cons (make-label-entry next-inst
+                                                  insts)
+                                labels)))
                (receive (cons (make-instruction next-inst)
                               insts)
                         labels)))))))
@@ -173,9 +214,9 @@ Exercise 5.16.  Augment the simulator to provide for instruction tracing.
          pc flag stack ops)))
      insts)))
 (define (make-instruction text)
-  (cons text '()))
+  (cons (list text) '()))
 (define (instruction-text inst)
-  (car inst))
+  (caar inst))
 (define (instruction-execution-proc inst)
   (cdr inst))
 (define (set-instruction-execution-proc! inst proc)
@@ -342,70 +383,67 @@ Exercise 5.16.  Augment the simulator to provide for instruction tracing.
     (if val
         (cadr val)
         (error "Unknown operation -- ASSEMBLE" symbol))))
-#|
+
 (define gcd-machine
   (make-machine
-   '(a b t)
-   (list (list 'rem remainder) (list '= =))
-   '(test-b
-       (test (op =) (reg b) (const 0))
-       (branch (label gcd-done))
-       (assign t (op rem) (reg a) (reg b))
-       (assign a (reg b))
-       (assign b (reg t))
-       (goto (label test-b))
-     gcd-done)))
-(set-register-contents! gcd-machine 'a 206)
-done
-(set-register-contents! gcd-machine 'b 40)
-done
-(start gcd-machine)
-done
-(get-register-contents gcd-machine 'a)
-2
-|#
-(define gcd-machine
-  (make-machine
-   '(a b t continue n val)
-   (list (list 'rem remainder) (list '= =) (list '- -) (list '< <) (list '+ +))
+   '(continue n val)
+   (list (list 'rem remainder) (list '= =) (list '- -) (list '< <) (list '+ +) (list '* *))
    '(controller
-   (assign continue (label fib-done))
- fib-loop
-   (test (op <) (reg n) (const 2))
-   (branch (label immediate-answer))
-   ;; set up to compute Fib(n - 1)
+   (assign continue (label fact-done))     ; set up final return address
+ fact-loop
+   (test (op =) (reg n) (const 1))
+   (branch (label base-case))
+   ;; Set up for the recursive call by saving n and continue.
+   ;; Set up continue so that the computation will continue
+   ;; at after-fact when the subroutine returns.
    (save continue)
-   (assign continue (label afterfib-n-1))
-   (save n)                           ; save old value of n
-   (assign n (op -) (reg n) (const 1)); clobber n to n - 1
-   (goto (label fib-loop))            ; perform recursive call
- afterfib-n-1                         ; upon return, val contains Fib(n - 1)
+   (save n)
+   (assign n (op -) (reg n) (const 1))
+   (assign continue (label after-fact))
+   (goto (label fact-loop))
+ after-fact
    (restore n)
    (restore continue)
-   ;; set up to compute Fib(n - 2)
-   (assign n (op -) (reg n) (const 2))
-   (save continue)
-   (assign continue (label afterfib-n-2))
-   (save val)                         ; save Fib(n - 1)
-   (goto (label fib-loop))
- afterfib-n-2                         ; upon return, val contains Fib(n - 2)
-   (assign n (reg val))               ; n now contains Fib(n - 2)
-   (restore val)                      ; val now contains Fib(n - 1)
-   (restore continue)
-   (assign val                        ;  Fib(n - 1) +  Fib(n - 2)
-           (op +) (reg val) (reg n)) 
-   (goto (reg continue))              ; return to caller, answer is in val
- immediate-answer
-   (assign val (reg n))               ; base case:  Fib(n) = n
-   (goto (reg continue))
- fib-done)))
+   (assign val (op *) (reg n) (reg val))   ; val now contains n(n - 1)!
+   (goto (reg continue))                   ; return to caller
+ base-case
+   (assign val (const 1))                  ; base case: 1! = 1
+   (goto (reg continue))                   ; return to caller
+ fact-done)))
 
-(set-register-contents! gcd-machine 'a 206)
-(set-register-contents! gcd-machine 'b 40)
-(set-register-contents! gcd-machine 't 0)
+(set-register-contents! gcd-machine 'continue 0)
+(set-register-contents! gcd-machine 'val 0)
+(set-register-contents! gcd-machine 'n 10)
+(display (start gcd-machine))
+(display (get-register-contents gcd-machine 'val))
+((gcd-machine 'stack) 'print-statistics)
+((gcd-machine 'stack) 'initialize)
 (set-register-contents! gcd-machine 'continue 0)
 (set-register-contents! gcd-machine 'val 0)
 (set-register-contents! gcd-machine 'n 10)
 (gcd-machine 'trace-on)
-(start gcd-machine)
+(display (start gcd-machine))
 (display (get-register-contents gcd-machine 'val))
+((gcd-machine 'stack) 'print-statistics)
+
+(define (run-and-stat n machine)
+  ((machine 'stack) 'initialize)
+  (set-register-contents! machine 'continue 0)
+  (set-register-contents! machine 'val 0)
+  (set-register-contents! machine 'n n)
+  (start machine)
+  (display (get-register-contents machine 'val))
+  ((machine 'stack) 'print-statistics)
+  (machine 'print-inst-counting)
+  (newline))
+
+(define range
+  (lambda (n . m)
+    (let
+      ((n (if (null? m) 0 n)) (m (if (null? m) n (car m))))
+      (cond
+    ((= n m) (list n))
+    (else (cons n (range ((if (< n m) + -) n 1) m)))))))
+
+(map (lambda (n) (run-and-stat n gcd-machine))
+     (range 1 10))
