@@ -52,4 +52,4 @@ ev-let-body-done
 (restore argl)
 (restore unev)
 (restore env)
-(goto (label continue))
+(goto (reg continue))
