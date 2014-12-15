@@ -293,8 +293,6 @@
                (registers-modified seq2))
    (append (statements seq1) (statements seq2))))
 
-(#%provide (all-defined))
-
 (define (compile exp target linkage)
   (cond ((self-evaluating? exp)
          (compile-self-evaluating exp target linkage))
@@ -320,16 +318,29 @@
 (define (pprint c)
   (if (and (pair? c)
            (pair? (car c)))
-      (map (lambda (c1) (begin (display c1) (newline))) c)
+      (begin
+        (display '\( )
+        (newline)
+        (map (lambda (c1) (begin (display c1) (newline))) c)
+        (display '\) )
+        (newline))
       (begin
         (display c)
         (newline))))
 
+#|
 (map pprint 
      (compile
       '(define (factorial n)
          (if (= n 1)
              1
              (* (factorial (- n 1)) n)))
+      'val
+      'next))
+|#
+
+(map pprint
+     (compile
+      '(+ 1 (* b c))
       'val
       'next))
