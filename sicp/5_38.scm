@@ -29,4 +29,40 @@
                                                           (reg arg1)
                                                           (reg arg2)))))))
               after-call))))
-      
+
+
+                                        ; 5.38 d
+(define (expand-big-open-code exp)
+  (let ((operator (car exp))
+        (oper-1st (cadr exp)))
+    (let ((oper-rst (if (> (length exp) 3)
+                        (expand-big-open-code (cons operator (cddr exp)))
+                        (caddr exp))))
+      (list operator oper-1st oper-rst))))
+
+
+
+
+(define (compile-open-code exp target linkage)
+  (if (> (length exp) 3)
+      (compile-open-code (expand-big-open-code exp) target linkage)
+      (let ((after-call (make-label 'after-call))
+            )
+        (let ((compiled-linkage
+               (if (eq? linkage 'next) after-call linkage))
+              (argls (spread-arguments (cadr exp) (caddr exp)))
+              )
+          (append-instruction-sequences
+           (end-with-linkage
+            compiled-linkage
+            (append-instruction-sequences
+             (car argls)
+             (preserving '(arg1)
+                         (cadr argls)
+                         (make-instruction-sequence '(arg1 arg2)
+                                                    (list target)
+                                                    `((assign ,target
+                                                              (op ,(car exp))
+                                                              (reg arg1)
+                                                              (reg arg2)))))))
+           after-call)))))

@@ -302,22 +302,32 @@
             (op2 (compile operand2 'arg2 'next))) 
    (list op1 op2)))
 (define (compile-open-code exp target linkage)
-  (let ((after-call (make-label 'after-call))
-        )
+  (let ((after-call (make-label 'after-call)))
     (let ((compiled-linkage
            (if (eq? linkage 'next) after-call linkage))
-          (argls (spread-arguments (cadr exp) (caddr exp)))
-          )
-      (end-with-linkage
-       compiled-linkage
-       (make-instruction-sequence '(arg1 arg2)
-                                  (list target)
-                                  (list
-                                   (spread-arguments (cadr exp) (caddr exp))
-                                   (assign ,target
-                                           (op (car exp))
-                                           (reg arg1)
-                                           (reg arg2))))))))
+          (arg-1st (compile (cadr exp) 'arg1 'next))
+          (arg-rest (map 
+                     (lambda (operand)
+                       (preserving '(arg1)
+                                   (compile operand 'arg2 'next)
+                                   (make-instruction-sequence '(arg1 arg2)
+                                                              (list 'arg1)
+                                                              `((assign ,target
+                                                                        (op ,(car exp))
+                                                                        (reg arg1)
+                                                                        (reg arg2))))))
+                     (cddr exp))))
+      (display arg-rest)
+      (append-instruction-sequences
+       (end-with-linkage
+        compiled-linkage
+        (cons
+         arg-1st
+         arg-rest))
+       ;(make-instruction-sequence '(,target arg1) (list 'val)
+       ;                           `((assign ,target (reg arg1))))
+       after-call
+      ))))
 ; -----
 
 (define (compile exp target linkage)
@@ -367,9 +377,11 @@
       'next))
 |#
 
+(display (cddr '(+ 1 (+ b c))))
+
 (map pprint
      (compile
-      '(+ 1 (* b c))
-      'val
+      '(+ 1 (+ b c) d)
+      'arg1
       'next))
 
