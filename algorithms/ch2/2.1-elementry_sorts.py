@@ -33,6 +33,22 @@ def insertion_sort(items):
                 items[j], items[j-1] = items[j-1], items[j]
             else:
                 break
+    return items
+
+def shell_sort(items):
+    n = len(items)
+    h = 1
+    while h < (n / 3):
+        h = 3 * h + 1
+    while h >= 1:
+        for i in range(h, n):
+            for j in xrange(i, h-1, -h):
+                if items[j] < items[j-h]:
+                    items[j], items[j-h] = items[j-h], items[j]
+                else:
+                    break
+        h = h/3
+    return items
 
 def compare_sort(m0, m1, arr_len, cnt):
     """
@@ -51,8 +67,9 @@ def compare_sort(m0, m1, arr_len, cnt):
     cm0 = lambda: [_m0(items[:]) for _ in xrange(cnt)]
     cm1 = lambda: [_m1(items[:]) for _ in xrange(cnt)]
 
-    cost_m0, _ = hp.time_calc(cm0)
-    cost_m1, _ = hp.time_calc(cm1)
+    cost_m0, cr0 = hp.time_calc(cm0)
+    cost_m1, cr1 = hp.time_calc(cm1)
+    print cr0[0] == cr1[0]
 
     print 'For %d random doubles %d times' % (arr_len, cnt)
     print '%s: %f vs %s: %f' % (m0, cost_m0, m1, cost_m1)
