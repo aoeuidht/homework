@@ -8,8 +8,6 @@ import helper as hp
 def merge_sort(items):
     aux = items[:]
     def merge(lo, mid, hi):
-        print lo, mid, hi
-        print items[lo:mid], items[mid+1:hi+1]
         i, j = lo, mid+1
         # copy lo ... hi to aux
         aux[lo:hi+1] = items[lo:hi+1]
@@ -35,8 +33,34 @@ def merge_sort(items):
         merge(lo, mid, hi)
     merge_sort_wrapper(0, len(items) - 1)
 
+def mergebu_sort(items):
+    aux = items[:]
+    def merge(lo, mid, hi):
+        i, j = lo, mid+1
+        # copy lo ... hi to aux
+        aux[lo:hi+1] = items[lo:hi+1]
+        for k in range(lo, hi+1):
+            if i > mid:
+                items[k] = aux[j]
+                j += 1
+            elif j > hi:
+                items[k] = aux[i]
+                i += 1
+            elif aux[j] < aux[i]:
+                items[k] = aux[j]
+                j += 1
+            else:
+                items[k] = aux[i]
+                i += 1
+    sz = 1
+    n = len(items)
+    while sz < n:
+        for lo in range(0, n-sz, sz*2):
+            merge(lo, lo+sz-1, (n-1) if (lo+sz+sz > n) else (lo+sz+sz-1))
+        sz *= 2
+
 if __name__ == '__main__':
     items = [random.randint(1, 100) for _ in xrange(10)]
     print items
-    merge_sort(items)
+    mergebu_sort(items)
     print items
