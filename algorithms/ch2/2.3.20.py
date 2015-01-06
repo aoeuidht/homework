@@ -36,37 +36,24 @@ def quick_sort(items, lo, hi):
     quick_sort(items, lo, j-1)
     quick_sort(items, j+1, hi)
 
-def quick3_sort(items, lo, hi):
-    """
-    lo ... lt-1 smaller ones
-    lt ... gt   equal ones
-    gt+1 ... hi bigger ones
+def quick_sort_stack(items, lo, hi):
+    parts = [(lo, hi),]
+    while True:
+        if not parts:
+            return
+        lo, hi = parts.pop()
+        if hi <= lo:
+            continue
+        j = partition(items, lo, hi)
+        parts.append((lo, j-1))
+        parts.append((j+1, hi))
 
-    during sort
-    i ... gt    the unsorted ones
-    """
-    if hi <= lo:
-        return
-    lt = lo
-    i = lo + 1
-    gt = hi
-    piv = items[lo]
-    while i <= gt:
-        item = items[i]
-        if item < piv:
-            items[i], items[lt] = items[lt], items[i]
-            i += 1
-            lt += 1
-        elif item > piv:
-            items[i], items[gt] = items[gt], items[i]
-            gt -= 1
-        else:
-            i += 1
-    quick3_sort(items, lo, lt-1)
-    quick3_sort(items, gt+1, hi)
 
 if __name__ == '__main__':
     items = [random.randint(1, 100) for _ in xrange(10)]
     print items
-    quick3_sort(items, 0, len(items)-1)
+    q_sort = items[:]
+    quick_sort(items, 0, len(items)-1)
     print items
+    quick_sort_stack(q_sort, 0, len(items)-1)
+    print q_sort
