@@ -5,42 +5,66 @@ import random
 
 import helper as hp
 
-def partition(items, lo, hi):
-    i, j = lo, hi+1
+def partition_fast(items, lo, hi):
     piv = items[lo]
+    sp, bp = lo, hi+1
+    sep, bep = lo, hi+1
     while True:
         while True:
-            i += 1
-            if items[i] < piv:
-                if i == hi:
+            sp += 1
+            item = items[sp]
+            if item < piv:
+                if sp == hi:
+                    sp += 1
+                    break
+            elif item == piv:
+                sep += 1
+                items[sep], items[sp] = items[sp], items[sep]
+                if sp == hi:
+                    sp += 1
                     break
             else:
                 break
         while True:
-            j -= 1
-            if piv < items[j]:
-                if j == lo:
+            bp -= 1
+            item = items[bp]
+            if piv < item:
+                if bp == lo:
                     break
+            elif item == piv:
+                if bp == lo:
+                    break
+                bep -= 1
+                items[bep], items[bp] = items[bp], items[bep]
             else:
                 break
-        if i >= j:
+        if sp >= bp:
             break
-        items[i], items[j] = items[j], items[i]
-    items[lo], items[j] = items[j], items[lo]
-    return j
+        items[sp], items[bp] = items[bp], items[sp]
+    #print sp, bp, sep, bep
+    for idx in range(lo, sep+1):
+        near, far = idx, sp-1-(idx-lo)
+        items[near], items[far] = items[far], items[near]
+    for idx in range(bep, hi+1):
+        near = idx-bep+bp+1
+        far = idx
+        items[near], items[far] = items[far], items[near]
+    return sp-1-sep+lo, hi-bep+bp+1
 
 def quick_sort(items, lo, hi):
+    #print lo, hi, items
     if hi <= lo:
         return
-    j = partition(items, lo, hi)
-    quick_sort(items, lo, j-1)
-    quick_sort(items, j+1, hi)
+    i, j = partition_fast(items, lo, hi)
+    if lo < i:
+        quick_sort(items, lo, i-1)
+    if hi > j:
+        quick_sort(items, j+1, hi)
 
-def quick_part(item, lo, hi):
-    pass
 
 if __name__ == '__main__':
-    items = [random.randint(1, 100) for _ in xrange(10)]
-    print items
-    quick3_sort(items, 0, len(items)-1)
-    print items
+    for i in range(1000):
+        items = [random.randint(1, 10) for _ in xrange(100)]
+        s = sorted(items)
+        quick_sort(items, 0, len(items)-1)
+        print s == items
