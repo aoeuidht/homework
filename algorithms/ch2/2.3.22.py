@@ -29,8 +29,7 @@ def partition_fast(items, lo, hi):
             bp -= 1
             item = items[bp]
             if piv < item:
-                if bp == lo:
-                    break
+                continue
             elif item == piv:
                 if bp == lo:
                     break
