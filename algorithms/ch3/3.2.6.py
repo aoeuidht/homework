@@ -1,6 +1,10 @@
 #! /usr/bin/env python
 #! -*- coding: utf-8 -*-
 
+import random
+
+import helper
+
 class node():
     def __init__(self, key, value):
         self.key = key
@@ -24,24 +28,38 @@ class bst():
             return 1
 
     def insert(self, node):
-        pass
+        if self.root_node:
+            bst.insert_wrapper(self.root_node, node)
+        else:
+            self.root_node = node
 
     @staticmethod
     def insert_wrapper(root, node):
         root.count += 1
         if bst.comp(root, node) > 0:
-            if node.left:
-                bst.insert_wrapper(node.left, node)
+            if root.left:
+                bst.insert_wrapper(root.left, node)
             else:
                 root.left = node
             root.height = max(root.height, root.left.height+1)
         else:
-            if node.right:
-                bst.insert_wrapper(node.right, node)
+            if root.right:
+                bst.insert_wrapper(root.right, node)
             else:
                 root.right = node
             root.height = max(root.height, root.right.height+1)
 
+    def print_bst(self, root=None, prefix=' '):
+        root = root if root else self.root_node
+        print helper.print_bst(root, prefix)
 
 if __name__ == '__main__':
-    pass
+    a = range(16)
+    random.shuffle(a)
+    b = bst()
+    print a
+    for v in a:
+        n = node(v, v)
+        b.insert(n)
+    b.print_bst()
+    print b.root_node.height
