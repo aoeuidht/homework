@@ -29,3 +29,18 @@ def print_bst(root, prefix=' '):
         print prefix, '|'
     if root.left:
         print_bst(root.left, prefix=prefix)
+
+def print_br_bst(root, prefix=' '):
+    value = '\033[31m%s\033[0m ' % root.value if root.__class__.is_red(root) else root.value
+    print prefix, value
+    if root.right:
+        if root.left:
+            rprefix = prefix + ' | '
+        else:
+            rprefix = prefix + '   '
+        print rprefix[:-1], '\\'
+        print_br_bst(root.right, rprefix)
+    elif root.left:
+        print prefix, '|'
+    if root.left:
+        print_br_bst(root.left, prefix=prefix)
