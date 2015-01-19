@@ -81,6 +81,7 @@ class rb_bst():
             self.root_node = rb_bst.insert_wrapper(self.root_node, n)
         else:
             self.root_node = n
+        self.root_node.color = node.CLR_BLK
 
     @staticmethod
     def insert_wrapper(r, n):
@@ -95,6 +96,9 @@ class rb_bst():
             r.right = rb_bst.insert_wrapper(r.right, n)
         else:
             r.value = n.value
+
+        if cmp != 0:
+            r.count += 1
 
         # now the colors
         # left black, right red, then rotate left
