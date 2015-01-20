@@ -133,12 +133,18 @@ class rb_bst():
         if node.is_red(r.left) and node.is_red(r.right):
             rb_bst.flip_node(r)
         cmp = node.comp(r, n)
+        inserted = False
         if cmp > 0:
+            inserted = False if r.left else True
             r.left = rb_bst.insert_wrapper(r.left, n)
         elif cmp < 0:
+            inserted = False if r.right else True
             r.right = rb_bst.insert_wrapper(r.right, n)
         else:
             r.value = n.value
+        if inserted and node.is_red(r.left) and node.is_red(r.right):
+            rb_bst.flip_node(r)
+
         if cmp != 0:
             r.count += 1
         # now the colors
@@ -159,7 +165,7 @@ class rb_bst():
         print helper.print_br_bst(root, prefix)
 
 if __name__ == '__main__':
-    a = range(8)
+    a = range(16)
     random.shuffle(a)
     #a = ['s', 'e', 'a', 'r', 'c', 'h', 'x', 'm', 'p', 'l']
     b = rb_bst()
