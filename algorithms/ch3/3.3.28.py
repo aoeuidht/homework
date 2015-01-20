@@ -119,7 +119,7 @@ class rb_bst():
 
     def insert234(self, n):
         if self.root_node:
-            self.root_node = rb_bst.insert_wrapper234(self.root_node, n)
+            self.root_node, _ = rb_bst.insert_wrapper234(self.root_node, n)
         else:
             self.root_node = n
         if self.root_node.is_red(self.root_node.left) and self.root_node.is_red(self.root_node.right):
@@ -129,22 +129,19 @@ class rb_bst():
     @staticmethod
     def insert_wrapper234(r, n):
         if not r:
-            return n
+            return n, False
         if node.is_red(r.left) and node.is_red(r.right):
             rb_bst.flip_node(r)
         cmp = node.comp(r, n)
-        inserted = False
+        inserted, rotated, need_flip = False, False, False
         if cmp > 0:
             inserted = False if r.left else True
-            r.left = rb_bst.insert_wrapper(r.left, n)
+            r.left, need_flip = rb_bst.insert_wrapper234(r.left, n)
         elif cmp < 0:
             inserted = False if r.right else True
-            r.right = rb_bst.insert_wrapper(r.right, n)
+            r.right, need_flip = rb_bst.insert_wrapper234(r.right, n)
         else:
             r.value = n.value
-        if inserted and node.is_red(r.left) and node.is_red(r.right):
-            rb_bst.flip_node(r)
-
         if cmp != 0:
             r.count += 1
         # now the colors
@@ -154,15 +151,21 @@ class rb_bst():
         # self red, left red, then rotate right
         if node.is_red(r.left) and node.is_red(r.left.left):
             r = rb_bst.r_right(r)
-        return r
+        if (inserted and node.is_red(r.left) and node.is_red(r.right)) or need_flip:
+            rb_bst.flip_node(r)
+
+        need_flip = False
+        if (inserted and node.is_red(r)):
+            need_flip = True
+        return r, need_flip
 
     def print_bst(self, root=None, prefix=' '):
         root = root if root else self.root_node
-        print helper.print_bst(root, prefix)
+        helper.print_bst(root, prefix)
 
     def print_br_bst(self, root=None, prefix=' '):
         root = root if root else self.root_node
-        print helper.print_br_bst(root, prefix)
+        helper.print_br_bst(root, prefix)
 
 if __name__ == '__main__':
     a = range(16)
@@ -176,5 +179,5 @@ if __name__ == '__main__':
         b.insert(n)
         nb = node(v, v)
         rb.insert234(nb)
-    b.print_br_bst()
     rb.print_br_bst()
+    b.print_br_bst()

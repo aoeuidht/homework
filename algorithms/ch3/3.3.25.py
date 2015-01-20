@@ -131,12 +131,13 @@ class rb_bst():
         if not r:
             return n
         if node.is_red(r.left) and node.is_red(r.right):
+            print 'heeheh'
             rb_bst.flip_node(r)
         cmp = node.comp(r, n)
         if cmp > 0:
-            r.left = rb_bst.insert_wrapper(r.left, n)
+            r.left = rb_bst.insert_wrapper234(r.left, n)
         elif cmp < 0:
-            r.right = rb_bst.insert_wrapper(r.right, n)
+            r.right = rb_bst.insert_wrapper234(r.right, n)
         else:
             r.value = n.value
         if cmp != 0:
@@ -162,6 +163,7 @@ if __name__ == '__main__':
     a = range(8)
     random.shuffle(a)
     #a = ['s', 'e', 'a', 'r', 'c', 'h', 'x', 'm', 'p', 'l']
+    a = [5, 3, 6, 2, 4]
     b = rb_bst()
     rb = rb_bst()
     print a
@@ -170,5 +172,5 @@ if __name__ == '__main__':
         b.insert(n)
         nb = node(v, v)
         rb.insert234(nb)
-    b.print_br_bst()
     rb.print_br_bst()
+    b.print_br_bst()
