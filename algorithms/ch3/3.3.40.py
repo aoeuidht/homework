@@ -87,7 +87,6 @@ class rb_bst():
     def insert_wrapper(r, n):
         """ insert node n into r"""
         if not r:
-            #n.color = node.CLR_BLK
             return n
         cmp = node.comp(r, n)
         if cmp > 0:
@@ -117,42 +116,54 @@ class rb_bst():
         n.right.color = node.CLR_BLK
         n.color = node.CLR_RED
 
-    def insert234(self, n):
+    @staticmethod
+    def flip_node_for_del(n):
+        if n.left:
+            n.left.color = node.CLR_RED
+        if n.right:
+            n.right.color = node.CLR_RED
+        n.color = node.CLR_BLK
+
+    def del_min(self):
+        if (not node.is_red(self.root_node.left)) and \
+           (not node.is_red(self.root_node.right)):
+            self.root_node.color = node.CLR_RED
+        self.root_node = rb_bst.del_min_wrapper(self.root_node)
         if self.root_node:
-            self.root_node = rb_bst.insert_wrapper234(self.root_node, n)
-        else:
-            self.root_node = n
-        if self.root_node.is_red(self.root_node.left) and self.root_node.is_red(self.root_node.right):
-            rb_bst.flip_node(self.root_node)
-        self.root_node.color = node.CLR_BLK
+            self.root_color = node.CLR_BLK
 
     @staticmethod
-    def insert_wrapper234(r, n):
-        if not r:
-            return n
-        if node.is_red(r.left) and node.is_red(r.right):
-            rb_bst.flip_node(r)
-        cmp = node.comp(r, n)
-        if cmp > 0:
-            r.left = rb_bst.insert_wrapper234(r.left, n)
-        elif cmp < 0:
-            r.right = rb_bst.insert_wrapper234(r.right, n)
-        else:
-            r.value = n.value
-        if cmp != 0:
-            r.count += 1
-        # now the colors
-        # left black, right red, then rotate left
+    def del_min_wrapper(n):
+        if not n.left:
+            return None
+        if ((not node.is_red(n.left)) and
+            (not node.is_red(n.left.left))):
+            n = rb_bst.move_red_left(n)
+        n.left = rb_bst.del_min_wrapper(n.left)
+        return rb_bst.balance(n)
+
+    @staticmethod
+    def move_red_left(n):
+        rb_bst.flip_node_for_del(n)
+        if n.right and node.is_red(n.right.left):
+            n.right = rb_bst.r_right(n.right)
+            n = rb_bst.r_left(n)
+        return n
+
+    @staticmethod
+    def balance(r):
+        if node.is_red(r.right):
+            r = rb_bst.r_left(r)
         if node.is_red(r.right) and (not node.is_red(r.left)):
             r = rb_bst.r_left(r)
         # self red, left red, then rotate right
         if node.is_red(r.left) and node.is_red(r.left.left):
             r = rb_bst.r_right(r)
+        # left red, right red, then filp
+        if node.is_red(r.left) and node.is_red(r.right):
+            rb_bst.flip_node(r)
         return r
 
-    def print_bst(self, root=None, prefix=' '):
-        root = root if root else self.root_node
-        print helper.print_bst(root, prefix)
 
     def print_br_bst(self, root=None, prefix=' '):
         root = root if root else self.root_node
@@ -168,7 +179,8 @@ if __name__ == '__main__':
     for v in a:
         n = node(v, v)
         b.insert(n)
-        nb = node(v, v)
-        rb.insert234(nb)
-    rb.print_br_bst()
     b.print_br_bst()
+
+    for i in a:
+        b.del_min()
+        b.print_br_bst()

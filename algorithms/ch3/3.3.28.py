@@ -122,8 +122,8 @@ class rb_bst():
             self.root_node, _ = rb_bst.insert_wrapper234(self.root_node, n)
         else:
             self.root_node = n
-        if self.root_node.is_red(self.root_node.left) and self.root_node.is_red(self.root_node.right):
-            rb_bst.flip_node(self.root_node)
+        #if self.root_node.is_red(self.root_node.left) and self.root_node.is_red(self.root_node.right):
+        #    rb_bst.flip_node(self.root_node)
         self.root_node.color = node.CLR_BLK
 
     @staticmethod
@@ -152,6 +152,7 @@ class rb_bst():
         if node.is_red(r.left) and node.is_red(r.left.left):
             r = rb_bst.r_right(r)
         if (inserted and node.is_red(r.left) and node.is_red(r.right)) or need_flip:
+            inserted = False
             rb_bst.flip_node(r)
 
         need_flip = False
@@ -171,6 +172,7 @@ if __name__ == '__main__':
     a = range(16)
     random.shuffle(a)
     #a = ['s', 'e', 'a', 'r', 'c', 'h', 'x', 'm', 'p', 'l']
+    a = [5, 9, 2, 1, 7, 14, 8, 6, 0, 3, 12, 15, 11, 10, 4, 13][:8]
     b = rb_bst()
     rb = rb_bst()
     print a
@@ -179,5 +181,6 @@ if __name__ == '__main__':
         b.insert(n)
         nb = node(v, v)
         rb.insert234(nb)
+        #print 'insert ', v
     rb.print_br_bst()
     b.print_br_bst()

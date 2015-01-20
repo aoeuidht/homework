@@ -34,6 +34,8 @@ def get_red_str(tgt):
     return '\033[31m%s\033[0m' % str(tgt)
 
 def print_br_bst(root, prefix=' '):
+    if not root:
+        return
     value = get_red_str(root.value) if root.__class__.is_red(root) else root.value
     print prefix, value
     if root.__class__.is_red(root.left):
