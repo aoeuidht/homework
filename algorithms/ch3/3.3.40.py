@@ -142,12 +142,40 @@ class rb_bst():
         n.left = rb_bst.del_min_wrapper(n.left)
         return rb_bst.balance(n)
 
+    def del_max(self):
+        if ((not node.is_red(self.root_node.left)) and
+            (not node.is_red(self.root_node.right))):
+            self.root_node.color = node.CLR_RED
+        self.root_node = rb_bst.del_max_wrapper(self.root_node)
+        if self.root_node:
+            self.root_node.color = node.CLR_BLK
+
+    @staticmethod
+    def del_max_wrapper(n):
+        if node.is_red(n.left):
+            n = rb_bst.r_right(n)
+        if not n.right:
+            return None
+        if ((not node.is_red(n.right)) and
+            n.right and
+            (not node.is_red(n.right.left))):
+            n = rb_bst.move_red_right(n)
+        n.right = rb_bst.del_max_wrapper(n.right)
+        return rb_bst.balance(n)
+
     @staticmethod
     def move_red_left(n):
         rb_bst.flip_node_for_del(n)
         if n.right and node.is_red(n.right.left):
             n.right = rb_bst.r_right(n.right)
             n = rb_bst.r_left(n)
+        return n
+
+    @staticmethod
+    def move_red_right(n):
+        rb_bst.flip_node_for_del(n)
+        if n.left and (not node.is_red(n.left.left)):
+            n = rb_bst.r_right(n)
         return n
 
     @staticmethod
@@ -164,15 +192,57 @@ class rb_bst():
             rb_bst.flip_node(r)
         return r
 
+    def deln(self, value):
+        if ((not node.is_red(self.root_node.left)) and
+            (not node.is_red(self.root_node.right))):
+            self.root_node.color = node.CLR_RED
+        self.root_node = rb_bst.deln_wrapper(self.root_node, value)
+        if self.root_node:
+            self.root_node.color = node.CLR_BLK
+
+    @staticmethod
+    def deln_wrapper(n, value):
+        if value < n.value:
+            #left
+            if ((not node.is_red(n.left)) and
+                (not node.is_red(n.left))):
+                n = rb_bst.move_red_left(n)
+            n.left = rb_bst.deln_wrapper(n.left, value)
+        else:
+            #right or equal
+            if node.is_red(n.left):
+                n = rb_bst.r_right(n)
+            if ((n.value == value) and
+                (not n.right)):
+                # FIXME if it has left
+                return n.left if n.left else None
+
+            if ((not node.is_red(n.right)) and
+                (not (n.right and node.is_red(n.right.left)))):
+                n = rb_bst.move_red_right(n)
+            if n.value == value:
+                # set current to the minum and del the minum
+                n.value, n.key = rb_bst.get_min(n.right)
+                n.right = rb_bst.del_min_wrapper(n.right)
+            else:
+                n.right = rb_bst.deln_wrapper(n.right, value)
+        return rb_bst.balance(n)
+
+    @staticmethod
+    def get_min(n):
+        if n.left:
+            return rb_bst.get_min(n.left)
+        return n.value, n.key
 
     def print_br_bst(self, root=None, prefix=' '):
         root = root if root else self.root_node
-        print helper.print_br_bst(root, prefix)
+        helper.print_br_bst(root, prefix)
 
 if __name__ == '__main__':
     a = range(14)
     random.shuffle(a)
     #a = ['s', 'e', 'a', 'r', 'c', 'h', 'x', 'm', 'p', 'l']
+    #a = [3, 13, 8, 7, 12, 5, 11, 9, 6, 0, 2, 1, 4, 10]
     b = rb_bst()
     rb = rb_bst()
     print a
@@ -182,5 +252,6 @@ if __name__ == '__main__':
     b.print_br_bst()
 
     for i in a:
-        b.del_min()
+        b.deln(i)
+        print 'after delete ', i
         b.print_br_bst()
