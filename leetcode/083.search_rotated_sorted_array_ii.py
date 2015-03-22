@@ -13,6 +13,7 @@ class Solution:
         return self.s_wrapper(A, 0, len(A)-1, target)
 
     def s_wrapper(self, A, lo, hi, target):
+        print A[lo:hi+1]
         if (hi - lo) < 5:
             for i in range(lo, hi+1):
                 if A[i] == target:
@@ -24,16 +25,11 @@ class Solution:
         if mid_val == target:
             return mid_idx
         if A[lo] == A[hi]:
-            if mid_val == A[lo]:
-                lr = self.s_wrapper(A, lo, mid_idx-1, target)
-                rr = self.s_wrapper(A, mid_idx + 1, hi, target)
-                if (lr == -1) and (rr == -1):
-                    return -1
-                return 1
-            if mid_val > target:
-                #on lift part
-                return self.s_wrapper(A, lo, mid_idx-1, target)
-            return self.s_wrapper(A, mid_idx + 1, hi, target)
+            lr = self.s_wrapper(A, lo, mid_idx-1, target)
+            rr = self.s_wrapper(A, mid_idx + 1, hi, target)
+            if (lr == -1) and (rr == -1):
+                return -1
+            return 1
         elif A[lo] < A[hi]:
             return self.norm_search(A, lo, hi, target)
 
@@ -57,6 +53,7 @@ class Solution:
             return self.s_wrapper(A, lo, mid_idx+1, target)
 
     def norm_search(self, A, lo, hi, target):
+        print A[lo:hi+1], target
         if (hi - lo) < 100:
             for i in range(lo, hi+1):
                 if A[i] == target:
@@ -73,6 +70,7 @@ class Solution:
 if __name__ == '__main__':
     s = Solution()
     v = lambda x, y: (y, s.search(x, y))
+    """
     print v([1, 1, 1, 1, 1, 1], 2)
     print v([1, 1, 1, 1, 1, 1, 2, 2], 2)
     print v([1, 1, 1, 1, 1, 1, 2, 2], 2)
@@ -89,3 +87,5 @@ if __name__ == '__main__':
             50)
     print v([100] * 10 + range(101, 200) + range(1, 80) + [80] * 10,
             199)
+    """
+    print v([1,2,2,2,0,1,1], 0)
