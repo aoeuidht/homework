@@ -1,18 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-import sys
-
 class Solution:
-    def minCut(self, s):
-        if not s:
-            return 0
-        rst = self.partition(s)
-        for r in rst:
-            print r
-        r = min(rst, key=lambda x: len(x))
-        return len(r)
-
     # @param s, a string
     # @return a list of lists of string
     def partition(self, s):
@@ -40,7 +26,7 @@ class Solution:
             if self.p_chk(s, offset, sl-1):
                 rst = [[s[offset:sl]]]
             else:
-                rst = []
+                rst = None
         elif num == (sl - offset):
             rst = [list(s[offset:sl])]
         else:
@@ -53,9 +39,6 @@ class Solution:
                 if rst_r:
                     for _rst_r in rst_r:
                         rst.append(rst_l + _rst_r)
-        if len(rst) > 1:
-            _r = min(rst, key=lambda r: len(r))
-            rst = [_r]
         self.rc[k] = rst
         return rst
 
@@ -67,9 +50,3 @@ class Solution:
             else:
                 return False
         return True
-
-
-if __name__ == '__main__':
-    s = Solution()
-    r = s.minCut(sys.argv[1])
-    print r
