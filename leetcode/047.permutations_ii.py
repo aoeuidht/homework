@@ -24,20 +24,16 @@ class Solution:
         elif lo == hi:
             rst.append(num[:])
         l = num[lo]
+        s = set([l])
+
         for i in range(lo, hi+1):
             if (l == num[i]):
                 if i == lo:
                     self.p_wrapper(num, lo+1, hi, rst)
-                n = num[:]
-                for j in range(i+1, hi+1):
-                    if num[j] == l:
-                        continue
-                    n[:lo] = num[:lo]
-                    n[lo] = num[j]
-                    n[lo+1:j+1] = num[lo:j]
-                    self.p_wrapper(n, lo+1, hi, rst)
-                break
             else:
+                if num[i] in s:
+                    continue
+                s.add(num[i])
                 num[lo], num[i] = num[i], num[lo]
                 self.p_wrapper(num, lo+1, hi, rst)
                 num[lo], num[i] = num[i], num[lo]
@@ -45,4 +41,7 @@ class Solution:
 
 if __name__ == '__main__':
     s = Solution()
-    print s.permuteUnique(map(int, sys.argv[1].split(',')))
+    # -1,2,0,-1,1,0,1
+    r = s.permuteUnique(map(int, sys.argv[1].split(',')))
+    print len(r), len(set(map(lambda x: '_'.join(map(str, x)),
+                              r)))
