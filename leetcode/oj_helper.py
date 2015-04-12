@@ -20,3 +20,15 @@ def print_bst(root, prefix=' '):
         print prefix, '|'
     if root.left:
         print_bst(root.left, prefix=prefix)
+
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+def print_list(root):
+    rst = []
+    while root:
+        rst.append(root.val)
+        root = root.next
+    print ' --> '.join(map(str, rst))
