@@ -1,0 +1,1 @@
+("6.0" ("dd3fd9dd691992d825a3d132b5c822569b2899f8" . "31487f5eb3b6add8a15bc7e6e5b2715936b42091") (collects #"eopl" #"main.rkt") (collects #"eopl" #"tests" #"chapter3" #"proc-lang" #"proc-rep" #"data-structures.rkt") (collects #"eopl" #"lang" #"reader.rkt"))
