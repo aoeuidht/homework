@@ -1,0 +1,1 @@
+("6.0" ("992ec7e2127747dac6c1cc7168860577129d5959" . "11cf04bf70240f9b52a1eda8717ec0465b148af8") #"/Users/liszt/work/liszt/homework/eopl/ch3/3.21/environments.rkt" #"/Users/liszt/work/liszt/homework/eopl/ch3/3.21/lang.rkt" #"/Users/liszt/work/liszt/homework/eopl/ch3/3.21/data-structures.rkt" (collects #"eopl" #"main.rkt") (collects #"eopl" #"lang" #"reader.rkt"))
