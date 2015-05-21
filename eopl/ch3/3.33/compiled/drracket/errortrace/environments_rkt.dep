@@ -1,1 +1,0 @@
-("6.0" ("e1fa2096ddf3414450b1e5e2b604c158e32fd632" . "f639924c4cf5b1e9f4082f35348fd4901dab9d54") #"/Users/liszt/work/liszt/homework/eopl/ch3/3.33/data-structures.rkt" (collects #"errortrace" #"errortrace-key.rkt") (collects #"eopl" #"main.rkt") (collects #"eopl" #"lang" #"reader.rkt"))
