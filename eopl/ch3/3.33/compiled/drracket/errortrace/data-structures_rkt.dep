@@ -1,0 +1,1 @@
+("6.0" ("01e2898d2b27ff49aeb8d22baef348f5273bf6e7" . "c6869f09148997fefe0a3b04b5f9ebfe285498fa") (collects #"errortrace" #"errortrace-key.rkt") #"/Users/liszt/work/liszt/homework/eopl/ch3/3.33/lang.rkt" (collects #"eopl" #"main.rkt") (collects #"eopl" #"lang" #"reader.rkt"))
