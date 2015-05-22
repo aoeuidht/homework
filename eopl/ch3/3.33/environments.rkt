@@ -1,4 +1,5 @@
 #lang eopl
+(require racket/pretty)
 
 ;; builds environment interface, using data structures defined in
 ;; data-structures.scm. 
@@ -38,10 +39,31 @@
                   (if (eqv? search-sym var)
                       val
                       (apply-env saved-env search-sym)))
-      (extend-env-rec (p-name b-vars p-body saved-env)
-                      (if (eqv? search-sym p-name)
-                          (proc-val (procedure b-vars p-body env))          
-                          (apply-env saved-env search-sym))))))
+      (extend-env-rec (proc-list saved-env)
+                      (let ((proc-info (search-proc-list search-sym
+                                                         proc-list
+                                                         env)))
+                        (if proc-info
+                            proc-info
+                            (apply-env saved-env search-sym)
+                            )
+                        ))
+      )))
+
+(define (search-proc-list search-sym proc-list env)
+
+  (if (null? proc-list)
+      #f
+      (cases proc-info (car proc-list)
+             (a-proc (id bvars body)
+                     (if (eq? id search-sym)
+                         (proc-val (procedure bvars body env))
+                         (search-proc-list search-sym (cdr proc-list) env)
+                         )
+                     )
+             (else #f))
+      )
+  )
 
 (define (batch-extend-env syms vals old-env)
   (if (null? syms)
@@ -52,12 +74,7 @@
                    old-env))))
 
 (define (batch-extend-env-rec p-names b-vars-list p-body-list env)
-  (if (null? p-names)
-      env
-      (batch-extend-env-rec (cdr p-names)
-                            (cdr b-vars-list)
-                            (cdr p-body-list)
-                            (extend-env-rec (car p-names)
-                                            (car b-vars-list)
-                                            (car p-body-list)
-                                            env))))
+  (let ((proc-list (map (lambda (id bvars body) (a-proc id bvars body))
+                        p-names b-vars-list p-body-list)))
+    (extend-env-rec proc-list env)
+    ))

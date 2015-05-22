@@ -1,4 +1,5 @@
 #lang eopl
+(require racket/pretty)
 (require eopl/tests/private/utils)
 
 (require "data-structures.rkt")  ; for expval constructors
@@ -33,6 +34,7 @@
     ...))
 
 ;;;;;;;;;;;;;;;; tests ;;;;;;;;;;;;;;;;
+
 (check-run
  ;; simple arithmetic
  (positive-const "11" 11)
@@ -142,6 +144,12 @@ in let times4 = (fix t4m)
   "letrec even(odd)  = proc(x) if zero?(x) then 1 else (odd -(x,1))
           odd(x)  = if zero?(x) then 0 else ((even odd) -(x,1))
    in (odd 13)" 1  
+  )
+ (test-multi-recursion-2
+  "letrec even(y)  = if zero?(y) then 1 else (odd -(y,1))
+          odd(x)  = if zero?(x) then 0 else (even -(x,1))
+   in (odd 13)"
+  1  
   )
  )
 

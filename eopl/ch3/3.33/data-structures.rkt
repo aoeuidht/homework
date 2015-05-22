@@ -65,6 +65,12 @@
    (body expression?)
    (env environment?)))
 
+(define-datatype proc-info proc-info?
+  (a-proc
+   (id symbol?)
+   (bvars (list-of symbol?))
+   (body expression?)
+   ))
 ;; Page: 86
 (define-datatype environment environment?
   (empty-env)
@@ -73,7 +79,5 @@
    (bval expval?)
    (saved-env environment?))
   (extend-env-rec
-   (id symbol?)
-   (bvars (list-of symbol?))
-   (body expression?)
+   (proc-list (list-of proc-info?))
    (saved-env environment?)))

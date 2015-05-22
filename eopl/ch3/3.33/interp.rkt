@@ -71,9 +71,9 @@
                                  rand)))
                   (apply-procedure proc args)))
       
-      (letrec-exp (p-name b-vars p-body letrec-body)
+      (letrec-exp (p-names b-vars p-body-list letrec-body)
                   (value-of letrec-body
-                            (batch-extend-env-rec p-name b-vars p-body env)))
+                            (batch-extend-env-rec p-names b-vars p-body-list env)))
       
       )))
 
