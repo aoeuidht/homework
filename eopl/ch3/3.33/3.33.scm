@@ -33,7 +33,6 @@
     ...))
 
 ;;;;;;;;;;;;;;;; tests ;;;;;;;;;;;;;;;;
-
 (check-run
  ;; simple arithmetic
  (positive-const "11" 11)
@@ -131,4 +130,19 @@ in let times4 = (fix t4m)
  (test-multi-argument-in-let
   "let f = proc (a, b) -(a, b) in (f 3 5)" -2
   )
+
+ (test-multi-letrec-with-multi-arguments
+  "letrec f(x) = if zero?(x)  then 0 else -((f -(x,1)), -2)
+          f1(x) = x
+          in -((f 4), (f1 8))"
+  0
+  )
+
+ (test-multi-recursion-1
+  "letrec even(odd)  = proc(x) if zero?(x) then 1 else (odd -(x,1))
+          odd(x)  = if zero?(x) then 0 else ((even odd) -(x,1))
+   in (odd 13)" 1  
+  )
  )
+
+

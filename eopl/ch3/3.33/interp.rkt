@@ -73,7 +73,7 @@
       
       (letrec-exp (p-name b-vars p-body letrec-body)
                   (value-of letrec-body
-                            (extend-env-rec p-name b-vars p-body env)))
+                            (batch-extend-env-rec p-name b-vars p-body env)))
       
       )))
 

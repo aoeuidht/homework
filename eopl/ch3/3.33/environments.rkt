@@ -5,7 +5,7 @@
 
 (require "data-structures.rkt")
 
-(provide init-env empty-env extend-env apply-env batch-extend-env)
+(provide init-env empty-env extend-env apply-env batch-extend-env batch-extend-env-rec)
 
 ;;;;;;;;;;;;;;;; initial environment ;;;;;;;;;;;;;;;;
 
@@ -50,3 +50,14 @@
        (cdr syms) (cdr vals)
        (extend-env (car syms) (car vals)
                    old-env))))
+
+(define (batch-extend-env-rec p-names b-vars-list p-body-list env)
+  (if (null? p-names)
+      env
+      (batch-extend-env-rec (cdr p-names)
+                            (cdr b-vars-list)
+                            (cdr p-body-list)
+                            (extend-env-rec (car p-names)
+                                            (car b-vars-list)
+                                            (car p-body-list)
+                                            env))))
