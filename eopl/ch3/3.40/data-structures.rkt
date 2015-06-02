@@ -110,7 +110,9 @@
                           (proc-val
                            (procedure (car pbody)
                                       ;; next line rocks
-                                      (cons (recproc-val pbody)
-                                            (cdr pbody)))))
+                                      ;; (cons (recproc-val pbody) (cdr pbody))
+                                      ;; this also works
+                                      (cons r (cdr pbody))
+                                      )))
              (else r )))
     ))
