@@ -36,17 +36,8 @@
                        (let ((n (location search-var p-names)))
                          ;; n : (maybe int)
                          (if n
-                             (newref
-                              (list-ref
-                               (vector-ref vec 0)
-                               n
-                               )
-                              ;; (proc-val
-                              ;;  (procedure
-                              ;;   (list-ref b-vars n)
-                              ;;   (list-ref p-bodies n)
-                              ;;   env))
-                              )
+                             (newref (list-ref
+                                      (vector-ref vec 0) n))
                              (apply-env saved-env search-var)))))))
 
 ;; location : Sym * Listof(Sym) -> Maybe(Int)
