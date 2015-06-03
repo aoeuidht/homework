@@ -8,14 +8,14 @@
 ;;;;;;;;;;;;;;;; expressed values ;;;;;;;;;;;;;;;;
 
 ;;; an expressed value is either a number, a boolean, a procval, or a
-;;; reference. 
+;;; reference.
 
 (define-datatype expval expval?
   (num-val
    (value number?))
   (bool-val
    (boolean boolean?))
-  (proc-val 
+  (proc-val
    (proc proc?))
   (ref-val
    (ref reference?))
@@ -62,9 +62,10 @@
 
 (define-datatype environment environment?
   (empty-env)
-  (extend-env 
+  (extend-env
    (bvar symbol?)
-   (bval reference?)                 ; new for implicit-refs
+   (bval (lambda (b) (or (reference? b)
+                         (expval? b))))          ; new for implicit-refs
    (saved-env environment?))
   (extend-env-rec*
    (proc-names (list-of symbol?))
@@ -81,7 +82,7 @@
       (extend-env (sym val saved-env)
                   (cons
                    (list sym val)              ; val is a denoted value-- a
-                   ; reference. 
+                   ; reference.
                    (env->list saved-env)))
       (extend-env-rec* (p-names b-vars p-bodies saved-env)
                        (cons
@@ -90,7 +91,7 @@
 
 ;; expval->printable : ExpVal -> List
 ;; returns a value like its argument, except procedures get cleaned
-;; up with env->list 
+;; up with env->list
 (define expval->printable
   (lambda (val)
     (cases expval val
@@ -99,4 +100,3 @@
                   (procedure (var body saved-env)
                              (list 'procedure var '... (env->list saved-env)))))
       (else val))))
-
