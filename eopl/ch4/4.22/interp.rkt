@@ -21,7 +21,7 @@
 ;;;;;;;;;;;;;;;; the interpreter ;;;;;;;;;;;;;;;;
 
 ;; value-of-program : Program -> ExpVal
-(define value-of-program 
+(define value-of-program
   (lambda (pgm)
     (initialize-store!)
     (cases program pgm
@@ -33,14 +33,14 @@
 (define value-of
   (lambda (exp env)
     (cases expression exp
-      
+
       ;\commentbox{ (value-of (const-exp \n{}) \r) = \n{}}
       (const-exp (num) (num-val num))
-      
-      ;\commentbox{ (value-of (var-exp \x{}) \r) 
+
+      ;\commentbox{ (value-of (var-exp \x{}) \r)
       ;              = (deref (apply-env \r \x{}))}
       (var-exp (var) (deref (apply-env env var)))
-      
+
       ;\commentbox{\diffspec}
       (diff-exp (exp1 exp2)
                 (let ((val1 (value-of exp1 env))
@@ -49,7 +49,7 @@
                         (num2 (expval->num val2)))
                     (num-val
                      (- num1 num2)))))
-      
+
       ;\commentbox{\zerotestspec}
       (zero?-exp (exp1)
                  (let ((val1 (value-of exp1 env)))
@@ -57,34 +57,34 @@
                      (if (zero? num1)
                          (bool-val #t)
                          (bool-val #f)))))
-      
+
       ;\commentbox{\ma{\theifspec}}
       (if-exp (exp1 exp2 exp3)
               (let ((val1 (value-of exp1 env)))
                 (if (expval->bool val1)
                     (value-of exp2 env)
                     (value-of exp3 env))))
-      
+
       ;\commentbox{\ma{\theletspecsplit}}
-      (let-exp (var exp1 body)       
+      (let-exp (var exp1 body)
                (let ((v1 (value-of exp1 env)))
                  (value-of body
                            (extend-env var (newref v1) env))))
-      
+
       (proc-exp (var body)
                 (proc-val (procedure var body env)))
-      
+
       (call-exp (rator rand)
                 (let ((proc (expval->proc (value-of rator env)))
                       (arg (value-of rand env)))
                   (apply-procedure proc arg)))
-      
+
       (letrec-exp (p-names b-vars p-bodies letrec-body)
                   (value-of letrec-body
                             (extend-env-rec* p-names b-vars p-bodies env)))
-      
+
       (begin-exp (exp1 exps)
-                 (letrec 
+                 (letrec
                      ((value-of-begins
                        (lambda (e1 es)
                          (let ((v1 (value-of e1 env)))
@@ -92,14 +92,31 @@
                                v1
                                (value-of-begins (car es) (cdr es)))))))
                    (value-of-begins exp1 exps)))
-      
+
       (assign-exp (var exp1)
                   (begin
                     (setref!
                      (apply-env env var)
                      (value-of exp1 env))
                     (num-val 27)))
-      
+      (setdynamic-exp
+       (var exp1 body-exp)
+       (let ((var-ref (apply-env env var)))
+         (let ((var-origin (deref var-ref)))
+           ;; set store
+           (setref! var-ref (value-of exp1 env))
+           ;; run body
+           (let ((body-rst (value-of body-exp env)))
+             ;; backup store
+             (setref! var-ref var-origin)
+             ;; return the body value
+             body-rst
+             )
+           )
+         )
+
+                      )
+      ;; (var-exp (var) (deref (apply-env env var)))
       )))
 
 
@@ -125,13 +142,13 @@
                        (eopl:printf
                         "entering body of proc ~s with env =~%"
                         var)
-                       (pretty-print (env->list new-env)) 
+                       (pretty-print (env->list new-env))
                        (eopl:printf "store =~%")
                        (pretty-print (store->readable (get-store-as-list)))
                        (eopl:printf "~%"))
-                     (value-of body new-env)))))))  
+                     (value-of body new-env)))))))
 
-;; store->readable : Listof(List(Ref,Expval)) 
+;; store->readable : Listof(List(Ref,Expval))
 ;;                    -> Listof(List(Ref,Something-Readable))
 (define store->readable
   (lambda (l)
@@ -141,7 +158,3 @@
         (car p)
         (expval->printable (cadr p))))
      l)))
-
-
-
-
