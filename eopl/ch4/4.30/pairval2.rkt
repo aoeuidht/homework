@@ -52,7 +52,7 @@
     (setref! (+ 1 p) val)))
 
 (define (arrval? v)
-  (reference? v))
+  (pair? v))
 
 (define (my-range start end)
   (if (>= start end)
@@ -61,13 +61,28 @@
       )
   )
 
+(define (arraylen arr)
+  (car arr))
+
+(define (arraydata arr)
+  (cdr arr))
+
+(define (array-idx-get arr idx)
+  (if (< idx (car arr))
+      (+ (car arr) idx)
+      (eopl:error 'array-index-out-of-range "max-index is ~s, got ~s"
+                  (car arr) idx)
+      )
+  )
+
 (define (make-array arr-len init-val)
-  (car (map (lambda (idx) (newref init-val))
-            (my-range 0 arr-len))))
+  (cons arr-len
+        (car (map (lambda (idx) (newref init-val))
+                  (my-range 0 arr-len)))))
 
 (define (arrayref arr ref-idx)
-  (deref (+ arr ref-idx))
+  (deref (array-idx-get arr ref-idx))
   )
 
 (define (arrayset arr set-idx val)
-  (setref! (+ arr set-idx) val))
+  (setref! (array-idx-get arr set-idx) val))
