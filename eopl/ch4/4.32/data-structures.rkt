@@ -12,14 +12,14 @@
 ;;;;;;;;;;;;;;;; expressed values ;;;;;;;;;;;;;;;;
 
 ;;; an expressed value is either a number, a boolean, a procval, a
-;;; reference, or a mutable pair. 
+;;; reference, or a mutable pair.
 
 (define-datatype expval expval?
   (num-val
    (value number?))
   (bool-val
    (boolean boolean?))
-  (proc-val 
+  (proc-val
    (proc proc?))
   (ref-val
    (ref reference?))
@@ -68,7 +68,7 @@
 
 (define-datatype proc proc?
   (procedure
-   (bvar symbol?)
+   (vars (list-of symbol?))
    (body expression?)
    (env environment?)))
 
@@ -76,13 +76,13 @@
 
 (define-datatype environment environment?
   (empty-env)
-  (extend-env 
+  (extend-env
    (bvar symbol?)
-   (bval reference?)                 
+   (bval reference?)
    (saved-env environment?))
   (extend-env-rec*
    (proc-names (list-of symbol?))
-   (b-vars (list-of symbol?))
+   (b-vars (list-of (list-of symbol?)))
    (proc-bodies (list-of expression?))
    (saved-env environment?)))
 
@@ -95,7 +95,7 @@
       (extend-env (sym val saved-env)
                   (cons
                    (list sym val)              ; val is a denoted value-- a
-                   ; reference. 
+                   ; reference.
                    (env->list saved-env)))
       (extend-env-rec* (p-names b-vars p-bodies saved-env)
                        (cons
@@ -104,7 +104,7 @@
 
 ;; expval->printable : ExpVal -> List
 ;; returns a value like its argument, except procedures get cleaned
-;; up with env->list 
+;; up with env->list
 (define expval->printable
   (lambda (val)
     (cases expval val
@@ -114,3 +114,12 @@
                              (list 'procedure var '... (env->list saved-env)))))
       (else val))))
 
+;;; the multiple arguments part
+(define (extend-env-list vars vals old-env)
+  (if (null? vars)
+      old-env
+      (extend-env (car vars)
+                  (car vals)
+                  (extend-env-list (cdr vars)
+                                   (cdr vals)
+                                   old-env))))

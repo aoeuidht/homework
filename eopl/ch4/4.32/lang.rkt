@@ -18,68 +18,68 @@
 
 (define the-grammar
   '((program (expression) a-program)
-    
+
     (expression (number) const-exp)
     (expression
      ("-" "(" expression "," expression ")")
      diff-exp)
-    
+
     (expression
      ("zero?" "(" expression ")")
      zero?-exp)
-    
+
     (expression
      ("if" expression "then" expression "else" expression)
      if-exp)
-    
+
     (expression (identifier) var-exp)
-    
+
     (expression
      ("let" identifier "=" expression "in" expression)
-     let-exp)   
-    
+     let-exp)
+
     (expression
-     ("proc" "(" identifier ")" expression)
+     ("proc" "(" (separated-list identifier ",") ")" expression)
      proc-exp)
-    
+
     (expression
-     ("(" expression expression ")")
+     ("(" expression (arbno expression) ")")
      call-exp)
-    
+
     (expression
      ("letrec"
-      (arbno identifier "(" identifier ")" "=" expression)
+      (arbno identifier "(" (separated-list identifier ",") ")" "=" expression)
       "in" expression)
      letrec-exp)
-    
+
     (expression
      ("begin" expression (arbno ";" expression) "end")
      begin-exp)
-    
+
     (expression
      ("set" identifier "=" expression)
      assign-exp)
-    
+
     (expression
      ("newpair" "(" expression "," expression ")")
      newpair-exp)
-    
+
     (expression
      ("left" "(" expression ")")
      left-exp)
-    
+
     (expression
      ("setleft" expression "=" expression)
      setleft-exp)
-    
+
     (expression
      ("right" "(" expression ")")
      right-exp)
-    
+
     (expression
      ("setright" expression "=" expression)
      setright-exp)
-    
+
     ))
 
 ;;;;;;;;;;;;;;;; sllgen boilerplate ;;;;;;;;;;;;;;;;
@@ -94,5 +94,3 @@
 
 (define just-scan
   (sllgen:make-string-scanner the-lexical-spec the-grammar))
-
-
