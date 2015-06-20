@@ -92,6 +92,23 @@
                      )
                    (value-of body new-env))))
 
+      ;; the lazy-let
+      (lazylet-exp (var exp1 body)
+               (when (instrument-let)
+                 (eopl:printf "entering lazy-let ~s~%" var))
+               (let ((val (value-of exp1 env)))
+                 (let ((new-env (extend-env var
+                                            (value-of-operand val env)
+                                            env)))
+                   (when (instrument-let)
+                     (eopl:printf "entering body of lazy-let ~s with env =~%" var)
+                     (pretty-print (env->list new-env))
+                     (eopl:printf "store =~%")
+                     (pretty-print (store->readable (get-store-as-list)))
+                     (eopl:printf "~%")
+                     )
+                   (value-of body new-env))))
+
       (proc-exp (var body)
                 (proc-val
                  (procedure var body env)))

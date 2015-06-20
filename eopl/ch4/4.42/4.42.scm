@@ -229,4 +229,6 @@ in begin
   end"
                        44)
 
+ (lazy-let-check "let x = proc(x) set y = 100 in 3" 3)
+
  )
