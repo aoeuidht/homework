@@ -115,7 +115,8 @@
                                  (rand-cont val cont)))
 
          (rand-cont (rator cont)
-                    (apply-procedure/k (expval->proc rator) val cont))
+                    (lambda ()
+                      (apply-procedure/k (expval->proc rator) val cont)))
 
          (list-cdr-cont
           (exp env cont)
@@ -138,9 +139,9 @@
          ))
 
 (define (apply-procedure/k rator rand cont)
-  (lambda ()
-    (cases proc rator
-           (procedure (var body saved-env)
-                      (value-of/k body
-                                  (extend-env var rand saved-env)
-                                  cont)))))
+  ;(lambda ())
+  (cases proc rator
+         (procedure (var body saved-env)
+                    (value-of/k body
+                                (extend-env var rand saved-env)
+                                cont))))
