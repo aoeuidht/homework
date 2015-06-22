@@ -11,6 +11,11 @@
 (provide value-of-program )
 
 ;;;;;;;;;;;;;;;; the interpreter ;;;;;;;;;;;;;;;;
+;;; the trampoline
+(define (trampoline bounce)
+  (if (expval? bounce)
+      bounce
+      (trampoline (bounce))))
 
 ;; value-of-program : Program -> ExpVal
 (define value-of-program
@@ -19,7 +24,8 @@
      program pgm
      (a-program
       (exp1)
-      (value-of/k exp1 (init-env) (end-cont))))))
+      (trampoline
+       (value-of/k exp1 (init-env) (end-cont)))))))
 
 (define (value-of/k exp env cont)
   (cases
@@ -132,9 +138,9 @@
          ))
 
 (define (apply-procedure/k rator rand cont)
-  (cases proc rator
-         (procedure (var body saved-env)
-                    (value-of/k body
-                                (extend-env var rand saved-env)
-                                cont)))
-  )
+  (lambda ()
+    (cases proc rator
+           (procedure (var body saved-env)
+                      (value-of/k body
+                                  (extend-env var rand saved-env)
+                                  cont)))))

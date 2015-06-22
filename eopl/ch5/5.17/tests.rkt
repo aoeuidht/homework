@@ -29,6 +29,7 @@
     (cond [(eqv? 'res 'error)
            (check-exn always? (lambda () (run str)))]
           [else
+           ;; (eopl:printf "Start-Test-of-~s~%" 'name)
            (check equal-answer? (run str) 'res (symbol->string 'name))])
     ...))
 
@@ -128,4 +129,13 @@ in let times4 = (fix t4m)
  (list-exp-check-2 "let x = 4 in car(list(x, -(x, 1), -(x, 3)))" 4)
  (list-exp-check-3 "let x = 4 in car(cdr(list(x, -(x, 1), -(x, 3))))" 3)
  (begin-check-1 "begin 3; 4; 5 end" 5)
+ (trampoline-check-1 "
+let x = proc(a) 3 in
+-((x 5), 2)" 1)
  )
+
+(newline)
+
+(display  (run "
+let x = proc(a) 3 in
+-((x 5), 2)"))
