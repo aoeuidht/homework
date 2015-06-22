@@ -139,3 +139,7 @@ let x = proc(a) 3 in
 (display  (run "
 let x = proc(a) 3 in
 -((x 5), 2)"))
+
+(display  (run "
+let x = proc(a) 3 in
+-(2, (x 5))"))

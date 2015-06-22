@@ -83,63 +83,62 @@
 ;;; -------- the continution part --------
 ;;; apply
 (define (apply-cont cont val)
-  (cases continution cont
-         (end-cont ()
-                   (begin
-                     (eopl:printf "End-of-computation.~%")
-                     val))
-         (zero1-cont (cont)
-                     (apply-cont
-                      cont
-                      (bool-val
-                       (zero? (expval->num val)))))
-         (let-exp-cont (var body env cont)
-                       (value-of/k body
-                                   (extend-env var val env)
-                                   cont))
-         (if-test-cont (exp2 exp3 env cont)
-                       (if (expval->bool val)
-                           (value-of/k exp2 env cont)
-                           (value-of/k exp3 env cont)))
-         (diff1-cont (exp2 env cont)
-                     (value-of/k exp2 env
-                                 (diff2-cont val cont)))
+  (lambda ()
+    (cases continution cont
+           (end-cont ()
+                     (begin
+                       (eopl:printf "End-of-computation.~%")
+                       val))
+           (zero1-cont (cont)
+                       (apply-cont
+                        cont
+                        (bool-val
+                         (zero? (expval->num val)))))
+           (let-exp-cont (var body env cont)
+                         (value-of/k body
+                                     (extend-env var val env)
+                                     cont))
+           (if-test-cont (exp2 exp3 env cont)
+                         (if (expval->bool val)
+                             (value-of/k exp2 env cont)
+                             (value-of/k exp3 env cont)))
+           (diff1-cont (exp2 env cont)
+                       (value-of/k exp2 env
+                                   (diff2-cont val cont)))
 
-         (diff2-cont (val1 cont)
-                     (let ((num1 (expval->num val1))
-                           (num2 (expval->num val)))
-                       (apply-cont cont (num-val (- num1 num2)))))
+           (diff2-cont (val1 cont)
+                       (let ((num1 (expval->num val1))
+                             (num2 (expval->num val)))
+                         (apply-cont cont (num-val (- num1 num2)))))
 
-         (rator-cont (rand env cont)
-                     (value-of/k rand env
-                                 (rand-cont val cont)))
+           (rator-cont (rand env cont)
+                       (value-of/k rand env
+                                   (rand-cont val cont)))
 
-         (rand-cont (rator cont)
-                    (lambda ()
-                      (apply-procedure/k (expval->proc rator) val cont)))
+           (rand-cont (rator cont)
+                      (apply-procedure/k (expval->proc rator) val cont))
 
-         (list-cdr-cont
-          (exp env cont)
-          (value-of/k exp env
-                      (list-car-cont val cont)))
-         (list-car-cont (cdr-val cont)
-                        (apply-cont cont
-                                    (list-val
-                                     (cons val (expval->list cdr-val)))))
-         (cdr-cont (cont)
-                   (apply-cont cont (list-val (cdr (expval->list val)))))
-         (car-cont (cont)
-                   (apply-cont cont (car (expval->list val))))
+           (list-cdr-cont
+            (exp env cont)
+            (value-of/k exp env
+                        (list-car-cont val cont)))
+           (list-car-cont (cdr-val cont)
+                          (apply-cont cont
+                                      (list-val
+                                       (cons val (expval->list cdr-val)))))
+           (cdr-cont (cont)
+                     (apply-cont cont (list-val (cdr (expval->list val)))))
+           (car-cont (cont)
+                     (apply-cont cont (car (expval->list val))))
 
-         ;; begin-cont
-         (begin-cont (exps env cont)
-                     (if (null? exps)
-                         (apply-cont cont val)
-                         (value-of/k (begin-exp exps) env cont)))
-         ))
+           ;; begin-cont
+           (begin-cont (exps env cont)
+                       (if (null? exps)
+                           (apply-cont cont val)
+                           (value-of/k (begin-exp exps) env cont)))
+           )))
 
 (define (apply-procedure/k rator rand cont)
-  ;(lambda ())
   (cases proc rator
          (procedure (var body saved-env)
                     (value-of/k body
