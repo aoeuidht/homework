@@ -22,6 +22,7 @@
 (define env 'uninitialized)
 (define cont 'uninitialized)
 (define val 'uninitialized)
+(define pc 'uninitialized)
 (define proc1 'uninitialized)         ; we've already used "proc".
 
 ;; value-of-program : Program -> FinalAnswer
@@ -33,7 +34,9 @@
                       (set! cont (end-cont))
                       (set! exp body)
                       (set! env (init-env))
-                      (value-of/k)))))
+                      (trampoline
+                       (value-of/k))
+                      ))))
 
 ;; value-of : Exp * Env * Cont -> FinalAnswer
 ;; value-of/k : () -> FinalAnswer
@@ -110,7 +113,8 @@
            (end-cont ()
                      (when (instrument-end)
                            (eopl:printf "End of computation.~%"))
-                     val)
+                     #f ;val
+                     )
            ;; or (logged-print val)  ; if you use drscheme-init-cps.scm
            (zero1-cont (saved-cont)
                        ;; (apply-cont cont
@@ -157,7 +161,8 @@
                         (set! cont saved-cont)
                         (set! proc1 rator-proc)
                         (set! val val)
-                        (apply-procedure/k)))
+                        (set! pc apply-procedure/k)
+                        pc))
            )))
 
 ;; apply-procedure : Proc * ExpVal -> ExpVal
@@ -169,6 +174,7 @@
 ;; Page 170
 (define apply-procedure/k
   (lambda ()
+    (set! pc #f)
     (cases proc proc1
            (procedure (var body saved-env)
                       (set! exp body)
@@ -188,3 +194,8 @@
 ;;         (set! exp body)
 ;;         (set! env (extend-env var val saved-env))
 ;;         (value-of/k)))))
+
+(define (trampoline pc)
+  (if pc
+      (trampoline (pc))
+      val))
