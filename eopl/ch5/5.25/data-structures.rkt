@@ -13,8 +13,11 @@
    (value number?))
   (bool-val
    (boolean boolean?))
-  (proc-val 
-   (proc proc?)))
+  (proc-val
+   (proc proc?))
+  (list-val
+   (list (list-of expval?)))
+  )
 
 ;;; extractors:
 
@@ -36,6 +39,11 @@
       (proc-val (proc) proc)
       (else (expval-extractor-error 'proc v)))))
 
+(define (expval->list lst)
+  (cases expval lst
+         (list-val (list) list)
+         (else (expval-extractor-error 'list lst))))
+
 (define expval-extractor-error
   (lambda (variant value)
     (eopl:error 'expval-extractors "Looking for a ~s, found ~s"
@@ -47,7 +55,7 @@
 (define identifier? symbol?)
 
 (define-datatype continuation continuation?
-  (end-cont)                 
+  (end-cont)
   (zero1-cont
    (saved-cont continuation?))
   (let-exp-cont
@@ -55,31 +63,39 @@
    (body expression?)
    (saved-env environment?)
    (saved-cont continuation?))
-  (if-test-cont 
+  (if-test-cont
    (exp2 expression?)
    (exp3 expression?)
    (saved-env environment?)
    (saved-cont continuation?))
-  (diff1-cont                
+  (diff1-cont
    (exp2 expression?)
    (saved-env environment?)
    (saved-cont continuation?))
-  (diff2-cont                
+  (diff2-cont
    (val1 expval?)
    (saved-cont continuation?))
-  (rator-cont            
-   (rand expression?)
+  (rator-cont
+   (rands (list-of expression?))
    (saved-env environment?)
    (saved-cont continuation?))
-  (rand-cont             
+  (rand-cont
    (val1 expval?)
-   (saved-cont continuation?)))
+   (saved-cont continuation?))
+  (list-cdr-cont
+   (exp1 expression?)
+   (saved-env environment?)
+   (saved-cont continuation?))
+  (list-car-cont
+   (val1 expval?)
+   (saved-cont continuation?))
+  )
 
 ;;;;;;;;;;;;;;;; procedures ;;;;;;;;;;;;;;;;
 
 (define-datatype proc proc?
   (procedure
-   (bvar symbol?)
+   (bvars (list-of symbol?))
    (body expression?)
    (env environment?)))
 
@@ -87,7 +103,7 @@
 
 (define-datatype environment environment?
   (empty-env)
-  (extend-env 
+  (extend-env
    (bvar symbol?)
    (bval expval?)
    (saved-env environment?))

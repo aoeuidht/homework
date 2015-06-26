@@ -26,7 +26,7 @@
 
 ;; value-of-program : Program -> FinalAnswer
 ;; Page: 167
-(define value-of-program 
+(define value-of-program
   (lambda (pgm)
     (cases program pgm
       (a-program (body)
@@ -37,7 +37,7 @@
 
 ;; value-of : Exp * Env * Cont -> FinalAnswer
 ;; value-of/k : () -> FinalAnswer
-;; usage : relies on registers 
+;; usage : relies on registers
 ;;      exp  : Exp
 ;;      env  : Env
 ;;      cont : Cont
@@ -46,21 +46,21 @@
 ;; The code from the corresponding portions of interp.scm is shown
 ;; as comments.
 (define value-of/k
-  (lambda ()                         
+  (lambda ()
     (cases expression exp
       (const-exp (num)
-                 ;; (apply-cont cont (num-val num)))                   
+                 ;; (apply-cont cont (num-val num)))
                  (set! val (num-val num))
-                 ;; cont is unchanged          
+                 ;; cont is unchanged
                  (apply-cont))
       (var-exp (var)
-               ;; (apply-cont cont (apply-env env id)))                 
+               ;; (apply-cont cont (apply-env env id)))
                (set! val (apply-env env var))
-               ;; cont is unchanged          
+               ;; cont is unchanged
                (apply-cont))
-      (proc-exp (var body)
+      (proc-exp (vars body)
                 ;; (apply-cont cont (proc-val (procedure bvar body env))
-                (set! val (proc-val (procedure var body env)))
+                (set! val (proc-val (procedure vars body env)))
                 (apply-cont))
       (letrec-exp (p-name b-var p-body letrec-body)
                   ;; (value-of/k letrec-body
@@ -75,8 +75,8 @@
                  (set! cont (zero1-cont cont))
                  (set! exp exp1)
                  (value-of/k))
-      (let-exp (var exp1 body) 
-               ;; (value-of/k rhs env (let-exp-cont id body env cont)) 
+      (let-exp (var exp1 body)
+               ;; (value-of/k rhs env (let-exp-cont id body env cont))
                (set! cont (let-exp-cont var body env cont))
                (set! exp exp1)
                (value-of/k))
@@ -86,16 +86,26 @@
               (set! exp exp1)
               (value-of/k))
       (diff-exp (exp1 exp2)
-                ;; (value-of/k exp1 env (diff1-cont exp2 env cont))              
+                ;; (value-of/k exp1 env (diff1-cont exp2 env cont))
                 (set! cont (diff1-cont exp2 env cont))
                 (set! exp exp1)
-                ;; env is unchanged          
+                ;; env is unchanged
                 (value-of/k))
-      (call-exp (rator rand)
+      (call-exp (rator rands)
                 ;; (value-of/k rator env (rator-cont rand env cont))
-                (set! cont (rator-cont rand env cont))
+                (set! cont (rator-cont rands env cont))
                 (set! exp rator)
                 (value-of/k))
+      (list-exp (exp1)
+                (if (null? exp1)
+                    (begin
+                      (set! val (list-val '()))
+                      (apply-cont))
+                    (begin
+                      (set! exp (list-exp (cdr exp1)))
+                      (set! cont (list-cdr-cont (car exp1) env cont))
+                      (value-of/k)
+                      )))
       )))
 
 ;; apply-cont : Cont * ExpVal -> FinalAnswer
@@ -104,9 +114,9 @@
 ;;     val  : ExpVal
 ;; Page 169 and 170
 (define apply-cont
-  (lambda ()                          
+  (lambda ()
     (cases continuation cont
-      
+
       (end-cont ()
                 (when (instrument-end)
                   (eopl:printf "End of computation.~%"))
@@ -120,7 +130,7 @@
                   (set! val (bool-val (zero? (expval->num val))))
                   (apply-cont))
       (let-exp-cont (var body saved-env saved-cont)
-                    ;; (value-of/k body (extend-env id val env) cont)                     
+                    ;; (value-of/k body (extend-env id val env) cont)
                     (set! cont saved-cont)
                     (set! exp body)
                     (set! env (extend-env var val saved-env))
@@ -145,10 +155,10 @@
                     (set! cont saved-cont)
                     (set! val (num-val (- num1 num2)))
                     (apply-cont)))
-      (rator-cont (rand saved-env saved-cont)
+      (rator-cont (rands saved-env saved-cont)
                   ;; (value-of/k rand env (rand-cont val cont))
                   (set! cont (rand-cont val saved-cont))
-                  (set! exp rand)
+                  (set! exp (list-exp rands))
                   (set! env saved-env)
                   (value-of/k))
       (rand-cont (rator-val saved-cont)
@@ -156,8 +166,16 @@
                    ;; (apply-procedure rator-proc rator-val cont)
                    (set! cont saved-cont)
                    (set! proc1 rator-proc)
-                   (set! val val)
+                   (set! val (expval->list val))
                    (apply-procedure/k)))
+      (list-cdr-cont (exp1 saved-env saved-cont)
+                     (set! exp exp1)
+                     (set! cont (list-car-cont val saved-cont))
+                     (value-of/k))
+      (list-car-cont (val1 saved-cont)
+                     (set! val (list-val (cons val (expval->list val1))))
+                     (set! cont saved-cont)
+                     (apply-cont))
       )))
 
 ;; apply-procedure : Proc * ExpVal -> ExpVal
@@ -168,11 +186,11 @@
 ;;      cont : Cont
 ;; Page 170
 (define apply-procedure/k
-  (lambda ()                          
+  (lambda ()
     (cases proc proc1
-      (procedure (var body saved-env)
+      (procedure (vars body saved-env)
                  (set! exp body)
-                 (set! env (extend-env var val saved-env))
+                 (set! env (batch-extend-env vars val saved-env))
                  (value-of/k)))))
 
 ;; instrumented version
@@ -181,12 +199,10 @@
 ;;     (if (trace-apply-procedure)
 ;;       (begin
 ;;         (eopl:printf
-;;           "~%entering apply-procedure:~%proc1=~s~%val=~s~%cont=~s~%" 
+;;           "~%entering apply-procedure:~%proc1=~s~%val=~s~%cont=~s~%"
 ;;           proc1 val cont)))
 ;;     (cases proc proc1
 ;;       (procedure (var body saved-env)
 ;;         (set! exp body)
 ;;         (set! env (extend-env var val saved-env))
 ;;         (value-of/k)))))
-
-
