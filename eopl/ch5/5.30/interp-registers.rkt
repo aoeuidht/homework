@@ -6,7 +6,7 @@
 (require "lang.rkt")
 (require "data-structures.rkt")
 (require "environments.rkt")
-
+(require (only-in racket pretty-print))
 (provide value-of-program value-of/k)
 
 (provide trace-apply-procedure instrument-end)
@@ -60,7 +60,7 @@
                     (apply-cont))
            (proc-exp (var body)
                      ;; (apply-cont cont (proc-val (procedure bvar body env))
-                     (set! val (proc-val (procedure var body env)))
+                     (set! val (proc-val (procedure var body)))
                      (apply-cont))
            (letrec-exp (p-name b-var p-body letrec-body)
                        ;; (value-of/k letrec-body
@@ -68,7 +68,7 @@
                        ;;   cont)
                        (set! exp letrec-body)
                        (set! env
-                             (extend-env-rec p-name b-var p-body env))
+                             (extend-env-rec p-name b-var p-body))
                        (value-of/k))
            (zero?-exp (exp1)
                       ;; (value-of/k exp1 env (zero1-cont cont))
@@ -147,16 +147,17 @@
                          (apply-cont)))
            (rator-cont (rand saved-env saved-cont)
                        ;; (value-of/k rand env (rand-cont val cont))
-                       (set! cont (rand-cont val saved-cont))
+                       (set! cont (rand-cont val saved-env saved-cont))
                        (set! exp rand)
                        (set! env saved-env)
                        (value-of/k))
-           (rand-cont (rator-val saved-cont)
+           (rand-cont (rator-val saved-env saved-cont)
                       (let ((rator-proc (expval->proc rator-val)))
                         ;; (apply-procedure rator-proc rator-val cont)
                         (set! cont saved-cont)
                         (set! proc1 rator-proc)
                         (set! val val)
+                        (set! env saved-env)
                         (apply-procedure/k)))
            )))
 
@@ -167,24 +168,11 @@
 ;;       val : ExpVal
 ;;      cont : Cont
 ;; Page 170
-(define apply-procedure/k
-  (lambda ()
-    (cases proc proc1
-           (procedure (var body saved-env)
-                      (set! exp body)
-                      (set! env (extend-env var val saved-env))
-                      (value-of/k)))))
+(define (apply-procedure/k)
+  (cases proc proc1
+         (procedure (var body)
+                    (set! exp body)
+                    (set! env (extend-env var val env))
+                    (value-of/k))))
 
-;; instrumented version
-;; (define apply-procedure/k
-;;   (lambda ()                       ; (proc1 val cont)
-;;     (if (trace-apply-procedure)
-;;       (begin
-;;         (eopl:printf
-;;           "~%entering apply-procedure:~%proc1=~s~%val=~s~%cont=~s~%"
-;;           proc1 val cont)))
-;;     (cases proc proc1
-;;       (procedure (var body saved-env)
-;;         (set! exp body)
-;;         (set! env (extend-env var val saved-env))
-;;         (value-of/k)))))
+;;;

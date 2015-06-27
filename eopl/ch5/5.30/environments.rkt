@@ -29,6 +29,7 @@
 ;;;;;;;;;;;;;;;; environment constructors and observers ;;;;;;;;;;;;;;;;
 
 ;; Page: 86
+
 (define apply-env
   (lambda (env search-sym)
     (cases environment env
@@ -40,5 +41,5 @@
                            (apply-env saved-env search-sym)))
            (extend-env-rec (p-name b-var p-body saved-env)
                            (if (eqv? search-sym p-name)
-                               (proc-val (procedure b-var p-body env))
+                               (proc-val (procedure b-var p-body))
                                (apply-env saved-env search-sym))))))

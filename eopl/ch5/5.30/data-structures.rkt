@@ -73,6 +73,7 @@
    (saved-cont continuation?))
   (rand-cont
    (val1 expval?)
+   (saved-env environment?)
    (saved-cont continuation?)))
 
 ;;;;;;;;;;;;;;;; procedures ;;;;;;;;;;;;;;;;
@@ -81,7 +82,7 @@
   (procedure
    (bvar symbol?)
    (body expression?)
-   (env environment?)))
+   ))
 
 ;;;;;;;;;;;;;;;; environment structures ;;;;;;;;;;;;;;;;
 

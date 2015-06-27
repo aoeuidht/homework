@@ -3,14 +3,9 @@
 
 (require "data-structures.rkt")  ; for expval constructors
 (require "lang.rkt")             ; for scan&parse
-(require "interp.rkt")           ; for value-of-program
+;; (require "interp.rkt")           ; for value-of-program
 (require (prefix-in reg:         ; for value-of-program
                     "interp-registers.rkt"))
-
-;; run : String -> ExpVal
-(define run
-  (lambda (string)
-    (value-of-program (scan&parse string))))
 
 ;; reg : String -> ExpVal
 (define reg
@@ -34,17 +29,17 @@
 (define-syntax-rule (check-run (name str res) ...)
   (begin
     (cond [(eqv? 'res 'error)
-           (check-exn always? (lambda () (run str)))
+           ;; (check-exn always? (lambda () (run str)))
            (check-exn always? (lambda () (reg str)))]
           [else
-           (check equal-answer? (run str) 'res (symbol->string 'name))
+           ;; (check equal-answer? (run str) 'res (symbol->string 'name))
            (check equal-answer? (reg str) 'res (symbol->string 'name))])
     ...))
 
 
 
 ;;;;;;;;;;;;;;;; tests ;;;;;;;;;;;;;;;;
-
+#|
 (check-run
  ;; simple arithmetic
  (positive-const "11" 11)
@@ -135,3 +130,6 @@ in let times4 = (fix t4m)
    in (odd 13)" 1)
 
  )
+|#
+
+(eopl:printf "~s~%" (reg "((proc (x) proc (y) -(x,y)  5) 6)"))
