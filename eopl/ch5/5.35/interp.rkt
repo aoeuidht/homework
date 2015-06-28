@@ -9,6 +9,8 @@
 
 (define trace-apply-procedure (make-parameter #f))
 
+(define next-handler '())
+
 ;;;;;;;;;;;;;;;; continuations ;;;;;;;;;;;;;;;;
 
 
@@ -104,8 +106,9 @@
                         cont))
 
            (try-exp (exp1 var handler-exp)
-                    (value-of/k exp1 env
-                                (try-cont var handler-exp env cont)))
+                    (let ((next-hand (try-cont var handler-exp env cont)))
+                      (set! next-handler (cons next-hand next-handler))
+                      (value-of/k exp1 env next-hand)))
 
            (raise-exp (exp1)
                       (value-of/k exp1 env
@@ -149,31 +152,17 @@
 ;; apply-handler : ExpVal * Cont -> FinalAnswer
 (define apply-handler
   (lambda (val cont)
-    (cases continuation cont
-           ;; interesting cases
-           (try-cont (var handler-exp saved-env saved-cont)
+    (if (null? next-handler)
+        (eopl:error 'apply-handler "uncaught exception!")
+        (let ((next-hand (car next-handler)))
+          (set! next-handler (cdr next-handler))
+          (cases continuation next-hand
+                 (try-cont (var handler-exp saved-env saved-cont)
                      (value-of/k handler-exp
                                  (extend-env var val saved-env)
                                  saved-cont))
-
-           (end-cont () (eopl:error 'apply-handler "uncaught exception!"))
-
-           ;; otherwise, just look for the handler...
-           (diff1-cont (exp2 saved-env saved-cont)
-                       (apply-handler val saved-cont))
-           (diff2-cont (val1 saved-cont)
-                       (apply-handler val saved-cont))
-           (if-test-cont (exp2 exp3 env saved-cont)
-                         (apply-handler val saved-cont))
-           (unop-arg-cont (unop saved-cont)
-                          (apply-handler val saved-cont))
-           (rator-cont (rand saved-env saved-cont)
-                       (apply-handler val saved-cont))
-           (rand-cont (val1 saved-cont)
-                      (apply-handler val saved-cont))
-           (raise1-cont (cont)
-                        (apply-handler val cont))
-           )))
+                 (else (eopl:printf "shouldn't be here")))
+          ))))
 
 
 ;; apply-procedure : procedure * expval * cont -> final-expval
