@@ -9,42 +9,6 @@
 
 (define trace-apply-procedure (make-parameter #f))
 
-;;;;;;;;;;;;;;;; continuations ;;;;;;;;;;;;;;;;
-
-
-(define-datatype continuation continuation?
-  (end-cont)                          ; []
-  (diff1-cont                       ; cont[(- [] (value-of e2 env))]
-   (exp2 expression?)
-   (env environment?)
-   (cont continuation?))
-  (diff2-cont                         ; cont[(- val1 [])]
-   (val1 expval?)
-   (cont continuation?))
-  (unop-arg-cont
-   (unop unary-op?)
-   (cont continuation?))
-  (if-test-cont
-   (exp2 expression?)
-   (exp3 expression?)
-   (env environment?)
-   (cont continuation?))
-  (rator-cont            ; cont[(apply-proc [] (value-of rand env))]
-   (rand expression?)
-   (env environment?)
-   (cont continuation?))
-  (rand-cont                          ; cont[(apply-proc val1 [])]
-   (val1 expval?)
-   (cont continuation?))
-  (try-cont
-   (var symbol?)
-   (handler-exp expression?)
-   (env environment?)
-   (cont continuation?))
-  (raise1-cont
-   (saved-cont continuation?))
-  )
-
 ;;;;;;;;;;;;;;;; the interpreter ;;;;;;;;;;;;;;;;
 
 ;; value-of-program : Program -> ExpVal
@@ -113,67 +77,95 @@
 
 ;; apply-cont : continuation * expval -> final-expval
 
-(define apply-cont
-  (lambda (cont val)
-    (cases continuation cont
-           (end-cont () val)
-           (diff1-cont (exp2 saved-env saved-cont)
-                       (value-of/k exp2 saved-env (diff2-cont val saved-cont)))
-           (diff2-cont (val1 saved-cont)
-                       (let ((n1 (expval->num val1))
-                             (n2 (expval->num val)))
-                         (apply-cont saved-cont
-                                     (num-val (- n1 n2)))))
-           (unop-arg-cont (unop cont)
-                          (apply-cont cont
-                                      (apply-unop unop val)))
-           (if-test-cont (exp2 exp3 env cont)
-                         (if (expval->bool val)
-                             (value-of/k exp2 env cont)
-                             (value-of/k exp3 env cont)))
-           (rator-cont (rand saved-env saved-cont)
-                       (value-of/k rand saved-env
-                                   (rand-cont val saved-cont)))
-           (rand-cont (val1 saved-cont)
-                      (let ((proc (expval->proc val1)))
-                        (apply-procedure proc val saved-cont)))
-           ;; the body of the try finished normally-- don't evaluate the handler
-           (try-cont (var handler-exp saved-env saved-cont)
-                     (apply-cont saved-cont val))
-           ;; val is the value of the argument to raise
-           (raise1-cont (saved-cont)
-                        ;; we put the short argument first to make the trace more readable.
-                        (apply-handler val saved-cont))
-           )))
+
+
+(define (end-cont)
+  (make-cont
+   (lambda (val) val)
+   (lambda (val) (eopl:error 'apply-handler "uncaught exception!"))
+   ))
+
+(define (diff-cont exp2 saved-env saved-cont)
+  (make-cont
+   (lambda (val)
+     (value-of/k exp2 saved-env (diff2-cont val saved-cont)))
+   (lambda (val) (apply-handler val saved-cont))))
+
+(define (diff2-cont val1 saved-cont)
+  (make-cont
+   (lambda (val)
+     (let ((n1 (expval->num val1))
+           (n2 (expval->num val)))
+       (apply-cont saved-cont
+                   (num-val (- n1 n2)))))
+   (lambda (val)
+     (apply-handler val saved-cont))))
+
+(define (unop-arg-cont unop cont)
+  (make-cont
+   (lambda (val)
+     (apply-cont cont
+                 (apply-unop unop val)))
+   (lambda (val)
+     (apply-handler val cont)))
+  )
+
+(define (if-test-cont exp2 exp3 env cont)
+  (make-cont
+
+   (lambda (val)
+     (if (expval->bool val)
+         (value-of/k exp2 env cont)
+         (value-of/k exp3 env cont)))
+   (lambda (val) (apply-handler val cont))))
+
+(define (rator-cont rand saved-env saved-cont)
+  (make-cont
+   (lambda (val)
+     (value-of/k rand saved-env
+                 (rand-cont val saved-cont)))
+   (lambda (val) (apply-handler val saved-cont))))
+
+(define (rand-cont val1 saved-cont)
+  (make-cont
+   (lambda (val)
+     (let ((proc (expval->proc val1)))
+       (apply-procedure proc val saved-cont)))
+   (lambda (val) (apply-handler val saved-cont))))
+
+(define (try-cont var handler-exp saved-env saved-cont)
+  (make-cont
+   (lambda (val) (apply-cont saved-cont val))
+   (lambda (val)
+     (value-of/k handler-exp
+                 (extend-env var val saved-env)
+                 saved-cont))
+   ))
+
+(define (diff1-cont exp2 saved-env saved-cont)
+  (make-cont
+   (lambda (val)
+     (value-of/k exp2 saved-env (diff2-cont val saved-cont)))
+   (lambda (val) (apply-handler val saved-cont)))
+  )
+
+(define (raise1-cont saved-cont)
+  (make-cont
+   (lambda (val) (apply-handler val saved-cont))
+   (lambda (val) (apply-handler val saved-cont))
+   )
+  )
+
+(define (make-cont apply-hand exception-hand)
+  (lambda (fake  val)
+    ((if fake apply-hand exception-hand) val)))
+
+(define (apply-cont cont val)
+  (cont #t val))
 
 ;; apply-handler : ExpVal * Cont -> FinalAnswer
-(define apply-handler
-  (lambda (val cont)
-    (cases continuation cont
-           ;; interesting cases
-           (try-cont (var handler-exp saved-env saved-cont)
-                     (value-of/k handler-exp
-                                 (extend-env var val saved-env)
-                                 saved-cont))
-
-           (end-cont () (eopl:error 'apply-handler "uncaught exception!"))
-
-           ;; otherwise, just look for the handler...
-           (diff1-cont (exp2 saved-env saved-cont)
-                       (apply-handler val saved-cont))
-           (diff2-cont (val1 saved-cont)
-                       (apply-handler val saved-cont))
-           (if-test-cont (exp2 exp3 env saved-cont)
-                         (apply-handler val saved-cont))
-           (unop-arg-cont (unop saved-cont)
-                          (apply-handler val saved-cont))
-           (rator-cont (rand saved-env saved-cont)
-                       (apply-handler val saved-cont))
-           (rand-cont (val1 saved-cont)
-                      (apply-handler val saved-cont))
-           (raise1-cont (cont)
-                        (apply-handler val cont))
-           )))
+(define (apply-handler val cont)
+  (cont #f val))
 
 
 ;; apply-procedure : procedure * expval * cont -> final-expval
