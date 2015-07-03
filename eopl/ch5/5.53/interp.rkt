@@ -170,7 +170,8 @@
                            (lambda ()
                              (apply-procedure proc1
                                               (num-val 28)
-                                              (end-subthread-cont))))
+                                              (end-subthread-cont)))
+                           #t)
                           (apply-cont saved-cont (num-val 73))))
 
             (wait-cont (saved-cont)
