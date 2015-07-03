@@ -165,14 +165,16 @@
                             (apply-cont cont (num-val 26))))
 
             (spawn-cont (saved-cont)
-                        (let ((proc1 (expval->proc val)))
+                        (let ((proc1 (expval->proc val))
+                              (pcb-next (generate-pcb!)))
                           (place-on-ready-queue!
                            (lambda ()
                              (apply-procedure proc1
                                               (num-val 28)
                                               (end-subthread-cont)))
-                           #t)
-                          (apply-cont saved-cont (num-val 73))))
+                           pcb-next)
+                          (apply-cont saved-cont
+                                      (get-pid-by-pcb pcb-next))))
 
             (wait-cont (saved-cont)
                        (wait-for-mutex

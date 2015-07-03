@@ -20,6 +20,7 @@
  ;; pcb releated
  get-current-pcb
  generate-pcb!
+ get-pid-by-pcb
  )
 
 ;;;;;;;;;;;;;;;; the state ;;;;;;;;;;;;;;;;
@@ -51,7 +52,7 @@
           (enqueue the-ready-queue
                    (cons th (if (null? pcb)
                                 (get-current-pcb)
-                                (generate-pcb!)))))))
+                                (car pcb)))))))
 
 ;; run-next-thread : () -> FinalAnswer
 ;; Page: 184
@@ -116,3 +117,5 @@
 
 (define (generate-pcb!)
   (list (get-next-pid!) (car current-pcb)))
+
+(define (get-pid-by-pcb pcb) (car pcb))
