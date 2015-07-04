@@ -6,6 +6,11 @@
 (provide value-of-program value-of/k)
 
 ;;;;;;;;;;;;;;;; the interpreter ;;;;;;;;;;;;;;;;
+;;; the trampoline
+(define (trampoline bounce)
+  (if (expval? bounce)
+      bounce
+      (trampoline (bounce))))
 
 ;; value-of-program : Program -> ExpVal
 
@@ -13,7 +18,7 @@
   (lambda (pgm)
     (cases cps-out-program pgm
            (cps-a-program (exp1)
-                          (value-of/k exp1 (init-env) (end-cont))))))
+                          (trampoline (value-of/k exp1 (init-env) (end-cont)))))))
 
 (define value-of-simple-exp
   (lambda (exp env)
@@ -84,7 +89,8 @@
                                  (lambda (simple)
                                    (value-of-simple-exp simple env))
                                  rands)))
-                           (apply-procedure/k rator-proc rand-vals cont))))))
+                           (lambda ()
+                             (apply-procedure/k rator-proc rand-vals cont)))))))
 
 ;; apply-cont : Cont * ExpVal -> Final-ExpVal
 ;; there's only one continuation, and it only gets invoked once, at
