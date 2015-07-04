@@ -19,7 +19,8 @@
   (lambda (exp env)
     (cases simple-expression exp
            (cps-const-exp (num) (num-val num))
-           (cps-var-exp (var) (apply-env env var))
+           (cps-var-exp (var)
+                        (apply-env env var))
 
            (cps-diff-exp (exp1 exp2)
                          (let ((val1
