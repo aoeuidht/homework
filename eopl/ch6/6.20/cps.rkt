@@ -249,9 +249,11 @@
 ;; is true.  If pred is false on every element of lst, then returns
 ;; #f.
 (define list-index
+  ;; we find the non-simple-exp right to left
   (lambda (pred lst)
-    (cond
-     ((null? lst) #f)
-     ((pred (car lst)) 0)
-     ((list-index pred (cdr lst)) => (lambda (n) (+ n 1)))
-     (else #f))))
+    (if (null? lst)
+        #f
+        (let ((idx-right (list-index pred (cdr lst))))
+          (cond
+           [(boolean? idx-right) (if (pred (car lst)) 0 #f)]
+           [else (+ 1 idx-right)])))))
