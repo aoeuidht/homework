@@ -216,11 +216,12 @@
 ;; Page: 220
 (define cps-of-call-exp
   (lambda (rator rands k-exp)
-    (cps-of-exps (cons rator rands)
+    (cps-of-exps (append rands (list rator))
                  (lambda (new-rands)
+                 (let ((nrands (reverse new-rands)))
                    (cps-call-exp
-                    (car new-rands)
-                    (append (cdr new-rands) (list k-exp)))))))
+                    (car nrands)
+                    (append (reverse (cdr nrands)) (list k-exp))))))))
 
 ;;;;;;;;;;;;;;;; utilities ;;;;;;;;;;;;;;;;
 
