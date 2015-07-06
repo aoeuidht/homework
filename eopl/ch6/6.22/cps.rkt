@@ -4,7 +4,7 @@
 (require "cps-out-lang.rkt")
 
 (provide cps-of-program)
-
+(require (only-in racket pretty-print))
 ;; cps-of-program : InpExp -> TfExp
 ;; Page: 224
 (define cps-of-program
@@ -21,7 +21,8 @@
 (define cps-of-exp
   (lambda (exp cont)
     (cases expression exp
-           (const-exp (num) (make-send-to-cont cont (cps-const-exp num)))
+           (const-exp (num)
+                      (make-send-to-cont cont (cps-const-exp num)))
            (var-exp (var) (make-send-to-cont cont (cps-var-exp var)))
            (proc-exp (vars body)
                      (make-send-to-cont cont
@@ -141,7 +142,20 @@
 ;; Page: 214
 (define make-send-to-cont
   (lambda (cont bexp)
-    (cps-call-exp cont (list bexp))))
+    (cases simple-expression cont
+           (cps-proc-exp (vars body)
+                         (cps-let-exp
+                          (car vars)
+                          bexp
+                          body)
+                         )
+           (cps-var-exp (var)
+                        (cps-call-exp cont (list bexp)))
+           (else
+            (eopl:error "hahahah~%")))
+
+
+    ))
 
 ;; cps-of-zero?-exp : InpExp * SimpleExp -> TfExp
 ;; Page: 222
