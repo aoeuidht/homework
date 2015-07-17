@@ -195,7 +195,14 @@
                  (lambda (new-rands)
                    (cps-let-exp id
                                 (car new-rands)
-                                (cps-of-exp body k-exp))))))
+                                (cps-of-exp body k-exp))
+                   (cps-call-exp
+                    (cps-proc-exp (list id)
+                                  (cps-of-exp body k-exp))
+                    new-rands
+                    )
+                   )
+                 )))
 
 ;; cps-of-letrec-exp :
 ;; Listof(Listof(Var)) * Listof(InpExp) * InpExp * SimpleExp -> TfExp

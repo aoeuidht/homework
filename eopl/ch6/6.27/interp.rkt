@@ -4,7 +4,7 @@
 (require "data-structures.rkt")       ; this includes environments
 
 (provide value-of-program value-of/k)
-
+(require (only-in racket pretty-print))
 ;;;;;;;;;;;;;;;; the interpreter ;;;;;;;;;;;;;;;;
 
 ;; value-of-program : Program -> ExpVal

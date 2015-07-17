@@ -188,4 +188,4 @@ in let times4 = (fix t4m)
  )
 
 (set! instrument-cps (make-parameter #t))
-(run "+(if zero?(1) then 10 else 1, 2, 4)")
+(run "(proc (y) y 5)")
