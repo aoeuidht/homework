@@ -43,6 +43,7 @@
     ...))
 
 ;;;;;;;;;;;;;;;; tests ;;;;;;;;;;;;;;;;
+#|
 (check-run
  ;; simple arithmetic
  (positive-const "11" 11)
@@ -186,6 +187,6 @@ in let times4 = (fix t4m)
                     21)
 
  )
-
+|#
 (set! instrument-cps (make-parameter #t))
-(run "(proc (y) y 5)")
+(run "(proc (y) 3 5)")

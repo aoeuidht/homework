@@ -100,6 +100,7 @@
   (lambda (proc1 args cont)
     (cases proc proc1
            (procedure (vars body saved-env)
+                      (pretty-print body)
                       (value-of/k body
                                   (extend-env* vars args saved-env)
                                   cont)))))
