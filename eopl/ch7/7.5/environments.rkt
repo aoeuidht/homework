@@ -2,7 +2,7 @@
 
 (require "data-structures.rkt")
 
-(provide init-env empty-env extend-env apply-env)
+(provide init-env empty-env extend-env apply-env batch-extend-env)
 
 ;;;;;;;;;;;;;;;; initial environment ;;;;;;;;;;;;;;;;
 
@@ -37,3 +37,13 @@
                            (if (eqv? search-sym p-name)
                                (proc-val (procedure b-var p-body env))
                                (apply-env saved-env search-sym))))))
+
+(define (batch-extend-env vars vals env)
+  (if (null? vars)
+      env
+      (extend-env (car vars)
+                  (car vals)
+                  (batch-extend-env (cdr vars)
+                                    (cdr vals)
+                                    env)))
+  )

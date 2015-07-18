@@ -46,10 +46,13 @@
                        (value-of exp1 env)
                        (value-of exp2 env)))
 
-           (let-exp (var exp1 body)
-                    (let ((val (value-of exp1 env)))
+           (let-exp (vars exps body)
+                    (let (
+                          (vals (map (lambda (e) (value-of e env))
+                                     exps))
+                          )
                       (value-of body
-                                (extend-env var val env))))
+                                (batch-extend-env vars vals env))))
 
            (proc-exp (bvar ty body)
                      (proc-val

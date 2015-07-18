@@ -302,3 +302,5 @@ in letrec
 
 
  )
+
+(pretty-print (tcheck "let heheheh = 3 in heheheh"))

@@ -66,10 +66,11 @@
                      ty2))
 
            ;; \commentbox{\letrule}
-           (let-exp (var exp1 body)
-                    (let ((exp1-type (type-of exp1 tenv)))
+           (let-exp (vars exps body)
+                    (let ((exp-types (map (lambda (e) (type-of e tenv))
+                                          exps)))
                       (type-of body
-                               (extend-tenv var exp1-type tenv))))
+                               (batch-extend-tenv vars exp-types tenv))))
 
            ;; \commentbox{\procrulechurch}
            (proc-exp (var var-type body)
@@ -133,6 +134,17 @@
                                  (if (eqv? sym sym1)
                                      val1
                                      (apply-tenv old-env sym))))))
+
+;;; add the batch-extend-tenv for exercise 7.5
+(define (batch-extend-tenv b-vars b-types tenv)
+  (if (null? b-vars)
+      tenv
+      (extend-tenv (car b-vars)
+                   (car b-types)
+                   (batch-extend-tenv (cdr b-vars)
+                                      (cdr b-types)
+                                      tenv)))
+  )
 
 (define init-tenv
   (lambda ()
