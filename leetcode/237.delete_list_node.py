@@ -8,17 +8,9 @@ class Solution:
     # @param {ListNode} node
     # @return {void} Do not return anything, modify node in-place instead.
     def deleteNode(self, node):
-        # len is 0 or 1
-        if (not node) or (not node.next):
-            return
-
-        f, piv = node, node.next
-
-        while piv.next:
-            f, piv = f.next, piv.next
-
-        f.val = piv.val
-        f.next = None
+        if node and node.next:
+            node.val = node.next.val
+            node.next = node.next.next
 
 
 if __name__ == '__main__':
