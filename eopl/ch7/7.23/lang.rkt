@@ -81,7 +81,7 @@
      cons-exp)
 
     (type
-     ("[" type "," type "]")
+     ("pair" "(" type "," type ")")
      pair-type)
 
     ))
@@ -158,7 +158,7 @@
       (pair-type (car-type cdr-type)
                  (list
                   (type-to-external-form car-type)
-                  ',
+                  '-->
                   (type-to-external-form cdr-type)))
       (tvar-type (serial-number)
                  (string->symbol

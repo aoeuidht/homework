@@ -361,7 +361,6 @@ in fact"
   "letrec ? f (x : ?) = (f x) in proc (n : ?) (f -(n,1))"
   (int -> tvar01))
 
+ (cons-type-1
+  "cons (1, 2)" (int --> int))
  )
-
-(display  (type-to-external-form
-           (type-of-program (scan&parse "cons (1, 2)"))))
