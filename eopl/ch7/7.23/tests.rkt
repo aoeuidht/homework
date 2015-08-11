@@ -362,3 +362,6 @@ in fact"
   (int -> tvar01))
 
  )
+
+(display  (type-to-external-form
+           (type-of-program (scan&parse "cons (1, 2)"))))
