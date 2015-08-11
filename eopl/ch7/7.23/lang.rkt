@@ -16,64 +16,74 @@
 
 (define the-grammar
   '((program (expression) a-program)
-    
+
     (expression (number) const-exp)
     (expression
      ("-" "(" expression "," expression ")")
      diff-exp)
-    
+
     (expression
      ("zero?" "(" expression ")")
      zero?-exp)
-    
+
     (expression
      ("if" expression "then" expression "else" expression)
      if-exp)
-    
+
     (expression (identifier) var-exp)
-    
+
     (expression
      ("let" identifier "=" expression "in" expression)
-     let-exp)   
-    
+     let-exp)
+
     (expression
      ("proc" "("  identifier ":" optional-type ")" expression)
      proc-exp)
-    
+
     (expression
      ("(" expression expression ")")
      call-exp)
-    
+
     (expression
      ("letrec"
       optional-type identifier "(" identifier ":" optional-type ")"
       "=" expression "in" expression)
      letrec-exp)
-    
+
     (optional-type
      ("?")
      no-type)
-    
+
     (optional-type
      (type)
      a-type)
-    
+
     (type
      ("int")
      int-type)
-    
+
     (type
      ("bool")
      bool-type)
-    
+
     (type
      ("(" type "->" type ")")
      proc-type)
-    
+
     (type
      ("%tvar-type" number)
      tvar-type)
-    
+
+
+    ;; the new cons operation
+    (expression
+     ("cons" "(" expression "," expression ")")
+     cons-exp)
+
+    (type
+     ("[" type "," type "]")
+     pair-type)
+
     ))
 
 ;;;;;;;;;;;;;;;; sllgen boilerplate ;;;;;;;;;;;;;;;;
@@ -105,6 +115,12 @@
     (cases type ty
       (proc-type (t1 t2) #t)
       (else #f))))
+
+(define (pair-type? ty)
+  (cases type ty
+         (pair-type (t1 t2) #t)
+         (else #f))
+  )
 
 (define tvar-type?
   (lambda (ty)
@@ -139,6 +155,11 @@
                   (type-to-external-form arg-type)
                   '->
                   (type-to-external-form result-type)))
+      (pair-type (car-type cdr-type)
+                 (list
+                  (type-to-external-form car-type)
+                  ',
+                  (type-to-external-form cdr-type)))
       (tvar-type (serial-number)
                  (string->symbol
                   (string-append

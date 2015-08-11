@@ -10,7 +10,7 @@
 
 ;; we'll maintain the invariant that no variable bound in the
 ;; substitution occurs in any of the right-hand sides of the
-;; substitution. 
+;; substitution.
 
 
 ;;;;;;;;;;;;;;;; the unifier ;;;;;;;;;;;;;;;;
@@ -22,7 +22,7 @@
     (let ((ty1 (apply-subst-to-type ty1 subst))
           (ty2 (apply-subst-to-type ty2 subst)))
       (cond
-        ((equal? ty1 ty2) subst)            
+        ((equal? ty1 ty2) subst)
         ((tvar-type? ty1)
          (if (no-occurrence? ty1 ty2)
              (extend-subst subst ty1 ty2)
@@ -44,7 +44,7 @@
         (else (report-unification-failure ty1 ty2 exp))))))
 
 (define report-unification-failure
-  (lambda (ty1 ty2 exp) 
+  (lambda (ty1 ty2 exp)
     (eopl:error 'unification-failure
                 "Type mismatch: ~s doesn't match ~s in ~s~%"
                 (type-to-external-form ty1)
@@ -54,7 +54,7 @@
 (define report-no-occurrence-violation
   (lambda (ty1 ty2 exp)
     (eopl:error 'check-no-occurence!
-                "Can't unify: type variable ~s occurs in type ~s in expression ~s~%" 
+                "Can't unify: type variable ~s occurs in type ~s in expression ~s~%"
                 (type-to-external-form ty1)
                 (type-to-external-form ty2)
                 exp)))
@@ -71,4 +71,8 @@
                  (and
                   (no-occurrence? tvar arg-type)
                   (no-occurrence? tvar result-type)))
+      (pair-type (car-type cdr-type)
+                 (and
+                  (no-occurrence? tvar car-type)
+                  (no-occurrence? tvar cdr-type)))
       (tvar-type (serial-number) (not (equal? tvar ty))))))

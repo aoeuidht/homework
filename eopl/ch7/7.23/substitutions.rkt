@@ -22,6 +22,12 @@
                  (proc-type
                   (apply-one-subst arg-type tvar ty1)
                   (apply-one-subst result-type tvar ty1)))
+      ;; add for pair
+      (pair-type (car-type cdr-type)
+                 (pair-type
+                  (apply-one-subst car-type tvar ty1)
+                  (apply-one-subst cdr-type tvar ty1)))
+
       (tvar-type (sn)
                  (if (equal? ty0 tvar) ty1 ty0)))))
 
@@ -35,11 +41,11 @@
     (lambda (val)
       (and (pair? val) (pred1 (car val)) (pred2 (cdr val))))))
 
-(define substitution? 
+(define substitution?
   (list-of (pair-of tvar-type? type?)))
 
 ;; basic observer: apply-subst-to-type
-;; this is sometimes written ty1.subst 
+;; this is sometimes written ty1.subst
 
 ;; apply-subst-to-type : Type * Subst -> Type
 ;; Page: 261
@@ -50,6 +56,10 @@
       (bool-type () (bool-type))
       (proc-type (t1 t2)
                  (proc-type
+                  (apply-subst-to-type t1 subst)
+                  (apply-subst-to-type t2 subst)))
+      (pair-type (t1 t2)
+                 (pair-type
                   (apply-subst-to-type t1 subst)
                   (apply-subst-to-type t2 subst)))
       (tvar-type (sn)
@@ -77,7 +87,7 @@
 ;;   = (apply-one-subst (apply-subst tv0 s) tv t)
 
 ;; so we extend the substitution with a new element, and apply [t/v] to every
-;; element already in the substitution. 
+;; element already in the substitution.
 
 
 ;; empty-subst : () -> Subst
@@ -91,7 +101,7 @@
   (lambda (subst tvar ty)
     (cons
      (cons tvar ty)
-     (map 
+     (map
       (lambda (p)
         (let ((oldlhs (car p))
               (oldrhs (cdr p)))
@@ -99,7 +109,3 @@
            oldlhs
            (apply-one-subst oldrhs tvar ty))))
       subst))))
-
-
-
-

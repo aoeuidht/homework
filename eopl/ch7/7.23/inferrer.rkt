@@ -16,7 +16,7 @@
 ;; type-of: Exp * Tenv * Subst  -> Answer
 
 (define-datatype answer answer?
-  (an-answer                       
+  (an-answer
    (type type?)
    (subst substitution?)))
 
@@ -35,15 +35,15 @@
 (define type-of
   (lambda (exp tenv subst)
     (cases expression exp
-      
+
       (const-exp (num) (an-answer (int-type) subst))
-      
+
       (zero?-exp (exp1)
                  (cases answer (type-of exp1 tenv subst)
                    (an-answer (type1 subst1)
                               (let ((subst2 (unifier type1 (int-type) subst1 exp)))
                                 (an-answer (bool-type) subst2)))))
-      
+
       (diff-exp (exp1 exp2)
                 (cases answer (type-of exp1 tenv subst)
                   (an-answer (type1 subst1)
@@ -53,7 +53,7 @@
                                             (let ((subst2
                                                    (unifier type2 (int-type) subst2 exp2)))
                                               (an-answer (int-type) subst2))))))))
-      
+
       (if-exp (exp1 exp2 exp3)
               (cases answer (type-of exp1 tenv subst)
                 (an-answer (ty1 subst)
@@ -65,16 +65,16 @@
                                             (an-answer (ty3 subst)
                                                        (let ((subst (unifier ty2 ty3 subst exp)))
                                                          (an-answer ty2 subst))))))))))
-      
+
       (var-exp (var) (an-answer (apply-tenv tenv var) subst))
-      
+
       (let-exp (var exp1 body)
                (cases answer (type-of exp1 tenv subst)
                  (an-answer (rhs-type subst)
                             (type-of body
                                      (extend-tenv var rhs-type tenv)
                                      subst))))
-      
+
       (proc-exp (var otype body)
                 (let ((arg-type (otype->type otype)))
                   (cases answer (type-of body
@@ -84,7 +84,7 @@
                                (an-answer
                                 (proc-type arg-type result-type)
                                 subst)))))
-      
+
       (call-exp (rator rand)
                 (let ((result-type (fresh-tvar-type)))
                   (cases answer (type-of rator tenv subst)
@@ -97,17 +97,17 @@
                                                             subst
                                                             exp)))
                                               (an-answer result-type subst))))))))
-      
-      (letrec-exp (proc-result-otype proc-name 
-                                     bvar proc-arg-otype 
+
+      (letrec-exp (proc-result-otype proc-name
+                                     bvar proc-arg-otype
                                      proc-body
                                      letrec-body)
                   (let ((proc-result-type
-                         (otype->type proc-result-otype)) 
+                         (otype->type proc-result-otype))
                         (proc-arg-type
                          (otype->type proc-arg-otype)))
                     (let ((tenv-for-letrec-body
-                           (extend-tenv 
+                           (extend-tenv
                             proc-name
                             (proc-type proc-arg-type proc-result-type)
                             tenv)))
@@ -116,13 +116,23 @@
                                               bvar proc-arg-type tenv-for-letrec-body)
                                              subst)
                         (an-answer (proc-body-type subst)
-                                   (let ((subst 
+                                   (let ((subst
                                           (unifier proc-body-type proc-result-type subst
-                                                   proc-body))) 
+                                                   proc-body)))
                                      (type-of letrec-body
                                               tenv-for-letrec-body
                                               subst)))))))
-      
+
+      ;; the pair exp
+      (cons-exp
+       (car-exp cdr-exp)
+       (cases answer (type-of car-exp tenv subst)
+              (an-answer
+               (ty1 subst)
+               (cases answer
+                      (type-of cdr-exp tenv subst)
+                      (an-answer (ty2 subst)
+                                 (an-answer (pair-type ty1 ty2) subst))))))
       )))
 
 ;;;;;;;;;;;;;;;; type environments ;;;;;;;;;;;;;;;;
@@ -139,25 +149,25 @@
 (define empty-tenv empty-tenv-record)
 (define extend-tenv extended-tenv-record)
 
-(define apply-tenv 
+(define apply-tenv
   (lambda (tenv sym)
     (cases type-environment tenv
       (empty-tenv-record ()
                          (eopl:error 'apply-tenv "Unbound variable ~s" sym))
       (extended-tenv-record (sym1 val1 old-env)
-                            (if (eqv? sym sym1) 
+                            (if (eqv? sym sym1)
                                 val1
                                 (apply-tenv old-env sym))))))
 
 (define init-tenv
   (lambda ()
-    (extend-tenv 'x (int-type) 
+    (extend-tenv 'x (int-type)
                  (extend-tenv 'v (int-type)
                               (extend-tenv 'i (int-type)
                                            (empty-tenv))))))
 
 ;; fresh-tvar-type : () -> Type
-;; Page: 265  
+;; Page: 265
 (define fresh-tvar-type
   (let ((sn 0))
     (lambda ()
