@@ -1,0 +1,36 @@
+digraph {
+    graph [fontname = "Microsoft YaHei",fontsize=16 ranksep=1.0 splines=1 overlap=false size="16, 16" compound=true]
+    edge [fontname = "Microsoft YaHei",fontsize=16]
+    node [fontname = "Microsoft YaHei",fontsize=16 weight=2 rank=same width=1 rankdir=LR]
+
+    p0[label="Start"]
+    p2[label="Initial-Check"]
+    p3[label="After-Dot"]
+    p4[label="Dot-First"]
+    p5[label="After-E"]
+    p6[label="After-E-Mark"]
+    p7[label="Almost-Done"]
+    p8[label="End"]
+    p9[label="Sign-Mark"]
+
+
+    p0 -> p9[label="[+-]"]
+    p0 -> p9[label="blank-string"]
+    p9 -> p3[label="``0.''"]    
+
+    p9 -> p4[label="``.''"]
+    
+    p9 -> p2[label="[1-9]"]
+
+    p2 -> p2[label="[0-9]"]
+    p2 -> p3[label="``.''"]
+    p4 -> p3[label="[0-9]"]
+    p3 -> p3[label="[0-9]"]
+    p3 -> p8[label="$"]
+    p3 -> p5[label="[Ee]"]
+    p5 -> p6[label="[+-]"]    
+    p5 -> p6[label="blank-string"]    
+    p6 -> p7[label="[0-9]"]
+    p7 -> p7[label="[0-9]"]    
+    p7 -> p8[label="$"]    
+}
