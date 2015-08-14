@@ -93,3 +93,5 @@ if __name__ == '__main__':
     t.insert('som')
     print t.startsWith('some')
     print t.startsWith('somenot')
+    print t.startsWith('')
+    print t.search('')
