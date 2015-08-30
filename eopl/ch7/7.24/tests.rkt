@@ -366,4 +366,4 @@ in fact"
  )
 |#
 
-(display (type-to-external-form (type-of-program (scan&parse "proc (n: int m: ?) -(n, m)"))))
+(display (type-to-external-form (type-of-program (scan&parse "(proc (n: int m: ?) -(n, m) 10 20)"))))

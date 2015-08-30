@@ -37,8 +37,8 @@
       (let ((others (reduce-all-rands (cdr rands) tenv subst rand-types)))
         (cases answer (type-of (car rands) tenv (cdr others))
                (an-answer (rand-type subst)
-                          (cons (cons rand-type (car others)
-                                      subst)))))
+                          (cons (cons rand-type (car others))
+                                subst))))
       )
   )
 
