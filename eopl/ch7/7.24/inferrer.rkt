@@ -30,6 +30,19 @@
                    (an-answer (ty subst)
                               (apply-subst-to-type ty subst)))))))
 
+
+(define (reduce-all-rands rands tenv subst rand-types)
+  (if (null? rands)
+      (cons rand-types subst)
+      (let ((others (reduce-all-rands (cdr rands) tenv subst rand-types)))
+        (cases answer (type-of (car rands) tenv (cdr others))
+               (an-answer (rand-type subst)
+                          (cons (cons rand-type (car others)
+                                      subst)))))
+      )
+  )
+
+
 ;; type-of : Exp * Tenv * Subst -> Type
 ;; Page: 267--270
 (define type-of
@@ -75,20 +88,34 @@
                                      (extend-tenv var rhs-type tenv)
                                      subst))))
 
-      (proc-exp (var otype body)
-                (let ((arg-type (otype->type otype)))
+      (proc-exp (vars otypes body)
+                (let ((arg-types (map otype->type otypes)))
                   (cases answer (type-of body
-                                         (extend-tenv var arg-type tenv)
+                                         (batch-extend-tenv vars arg-types tenv)
                                          subst)
                     (an-answer (result-type subst)
                                (an-answer
-                                (proc-type arg-type result-type)
+                                (proc-type arg-types result-type)
                                 subst)))))
 
-      (call-exp (rator rand)
+      (call-exp (rator rands)
                 (let ((result-type (fresh-tvar-type)))
                   (cases answer (type-of rator tenv subst)
-                    (an-answer (rator-type subst)
+                         (an-answer
+                          (rator-type subst)
+                          (let ((rands-rst (reduce-all-rands rands
+                                                             tenv
+                                                             subst
+                                                             '())))
+
+                            (let ((subst
+                                   (unifier rator-type
+                                            (proc-type (car rands-rst)
+                                                       result-type)
+                                            (cdr rands-rst)
+                                            exp)))
+                              (an-answer result-type subst)))
+                          #|
                                (cases answer (type-of rand tenv subst)
                                  (an-answer (rand-type subst)
                                             (let ((subst
@@ -96,24 +123,26 @@
                                                             (proc-type rand-type result-type)
                                                             subst
                                                             exp)))
-                                              (an-answer result-type subst))))))))
+                                              (an-answer result-type subst))))
+                          |#
+                               ))))
 
       (letrec-exp (proc-result-otype proc-name
-                                     bvar proc-arg-otype
+                                     bvars proc-arg-otypes
                                      proc-body
                                      letrec-body)
                   (let ((proc-result-type
                          (otype->type proc-result-otype))
-                        (proc-arg-type
-                         (otype->type proc-arg-otype)))
+                        (proc-arg-types
+                         (map otype->type proc-arg-otypes)))
                     (let ((tenv-for-letrec-body
                            (extend-tenv
                             proc-name
-                            (proc-type proc-arg-type proc-result-type)
+                            (proc-type proc-arg-types proc-result-type)
                             tenv)))
                       (cases answer (type-of proc-body
-                                             (extend-tenv
-                                              bvar proc-arg-type tenv-for-letrec-body)
+                                             (batch-extend-tenv
+                                              bvars proc-arg-types tenv-for-letrec-body)
                                              subst)
                         (an-answer (proc-body-type subst)
                                    (let ((subst
@@ -148,6 +177,13 @@
 
 (define empty-tenv empty-tenv-record)
 (define extend-tenv extended-tenv-record)
+
+(define (batch-extend-tenv vars types old-env)
+  (if (null? vars)
+      old-env
+      (batch-extend-tenv (cdr vars) (cdr types)
+                         (extend-tenv (car vars) (car types)
+                                      old-env))))
 
 (define apply-tenv
   (lambda (tenv sym)

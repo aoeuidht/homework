@@ -37,11 +37,11 @@
      let-exp)
 
     (expression
-     ("proc" "("  identifier ":" optional-type ")" expression)
+     ("proc" "("  (arbno  identifier ":" optional-type) ")" expression)
      proc-exp)
 
     (expression
-     ("(" expression expression ")")
+     ("(" expression (arbno expression) ")")
      call-exp)
 
     (expression
@@ -67,7 +67,7 @@
      bool-type)
 
     (type
-     ("(" type "->" type ")")
+     ("(" (arbno type) "->" type ")")
      proc-type)
 
     (type
@@ -132,14 +132,14 @@
 (define proc-type->arg-type
   (lambda (ty)
     (cases type ty
-      (proc-type (arg-type result-type) arg-type)
+      (proc-type (arg-types result-type) arg-types)
       (else (eopl:error 'proc-type->arg-type
                         "Not a proc type: ~s" ty)))))
 
 (define proc-type->result-type
   (lambda (ty)
     (cases type ty
-      (proc-type (arg-type result-type) result-type)
+      (proc-type (arg-types result-type) result-type)
       (else (eopl:error 'proc-type->result-types
                         "Not a proc type: ~s" ty)))))
 
@@ -150,9 +150,9 @@
     (cases type ty
       (int-type () 'int)
       (bool-type () 'bool)
-      (proc-type (arg-type result-type)
+      (proc-type (arg-types result-type)
                  (list
-                  (type-to-external-form arg-type)
+                  (map type-to-external-form arg-types)
                   '->
                   (type-to-external-form result-type)))
       (pair-type (car-type cdr-type)

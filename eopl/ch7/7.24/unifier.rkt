@@ -32,16 +32,30 @@
              (extend-subst subst ty2 ty1)
              (report-no-occurrence-violation ty2 ty1 exp)))
         ((and (proc-type? ty1) (proc-type? ty2))
-         (let ((subst (unifier
-                       (proc-type->arg-type ty1)
-                       (proc-type->arg-type ty2)
-                       subst exp)))
-           (let ((subst (unifier
-                         (proc-type->result-type ty1)
-                         (proc-type->result-type ty2)
-                         subst exp)))
-             subst)))
+         (let ((ty1-arg-types (proc-type->arg-type ty1))
+               (ty2-arg-types (proc-type->arg-type ty2)))
+           (if (= (length ty1-arg-types) (length ty2-arg-types))
+               (let ((subst (reduce-arg-types ty1-arg-types ty2-arg-types
+                                              subst exp)))
+                 (let ((subst (unifier
+                               (proc-type->result-type ty1)
+                               (proc-type->result-type ty2)
+                               subst exp)))
+                   subst))
+               (report-unification-failure ty1 ty2 exp)
+               )
+           )
+)
         (else (report-unification-failure ty1 ty2 exp))))))
+
+(define (reduce-arg-types ty1-arg-types ty2-arg-types subst exp)
+  (if (null? ty1-arg-types)
+      subst
+      (unifier (car ty1-arg-types) (car ty2-arg-types)
+               (reduce-arg-types (cdr ty1-arg-types)
+                                 (cdr ty2-arg-types)
+                                 subst exp)
+               exp)))
 
 (define report-unification-failure
   (lambda (ty1 ty2 exp)

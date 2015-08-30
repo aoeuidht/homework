@@ -144,7 +144,7 @@ in let times4 = (fix t4m)
 
  )
 
-|#
+
 
 (check-type
  ;; tests from run-tests:
@@ -364,3 +364,6 @@ in fact"
  (cons-type-1
   "cons (1, 2)" (int --> int))
  )
+|#
+
+(display (type-to-external-form (type-of-program (scan&parse "proc (n: int m: ?) -(n, m)"))))

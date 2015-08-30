@@ -18,9 +18,11 @@
     (cases type ty0
       (int-type () (int-type))
       (bool-type () (bool-type))
-      (proc-type (arg-type result-type)
+      (proc-type (arg-types result-type)
                  (proc-type
-                  (apply-one-subst arg-type tvar ty1)
+                  (map (lambda (arg-type)
+                         (apply-one-subst arg-type tvar ty1))
+                       arg-types)
                   (apply-one-subst result-type tvar ty1)))
       ;; add for pair
       (pair-type (car-type cdr-type)
@@ -54,9 +56,10 @@
     (cases type ty
       (int-type () (int-type))
       (bool-type () (bool-type))
-      (proc-type (t1 t2)
+      (proc-type (t1s t2)
                  (proc-type
-                  (apply-subst-to-type t1 subst)
+                  (map (lambda (t1) (apply-subst-to-type t1 subst))
+                       t1s)
                   (apply-subst-to-type t2 subst)))
       (pair-type (t1 t2)
                  (pair-type
