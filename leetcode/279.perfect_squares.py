@@ -7,35 +7,43 @@ from oj_helper import *
 
 
 class Solution(object):
-    def numSquares1(self, n):
-        """
-        :type n: int
-        :rtype: int
-        """
+
+    def n_wrapper(self, n, cache):
+        if cache.has_key(n):
+            return cache[n]
+
+        # find the minium
         p = int(n ** 0.5)
-        if n == (p * p):
+        # is it the square of 1
+        if p * p == n:
             return 1
+        # is it the square of 2
+        for i in range(p, 0, -1):
+            val = i * i
+            n_left = n - val
+            # is n_left square root
+            ns = int(n_left ** 0.5)
+            if ns * ns == n_left:
+                cache[n] = 2
+                return 2
 
-        cache = {0: 0,
-                 1: 1}
-
-        for i in xrange(2, n+1):
-            p = int(i ** 0.5)
-            if i == p * p:
-                cache[i] = 1
-                continue
-            else:
-                cache[i] = i
-
-            for j in xrange(p, 0, -1):
-                lookup = i - j * j
-                tgt = cache[lookup] + 1
-                if cache[i] > tgt:
-                    cache[i] = tgt
-                if cache[i] == 2:
+        # bigger than 2
+        n_left = n
+        rst_min = n
+        for i in range(p, 0, -1):
+            val = i * i
+            cache[val] = 1
+            if val < n:
+                n_left = n - val
+                if cache.has_key(n_left):
+                    _rst = cache[n_left] + 1
+                else:
+                    _rst = 1 + self.n_wrapper(n_left, cache)
+                rst_min = min(_rst, rst_min)
+                if rst_min <= 3:
                     break
-
-        return cache[n]
+        cache[n] = rst_min
+        return rst_min
 
     def numSquares(self, n):
         """
@@ -44,22 +52,12 @@ class Solution(object):
         - `self`:
         - `n`:
         """
-        cache = [n] * (n + 1)
-        cache[0] = 0
-        cache[1] = 1
+        cache = {0: 0,
+                 1: 1}
 
-        p = int(n ** 0.5)
-        if p * p == n:
-            return 1
-
-        for i in range(0, n+1):
-            for j in range(0, p+1):
-                nxt = i + j * j
-                if nxt > n:
-                    break
-                if cache[nxt] > cache[i] + 1:
-                    cache[nxt] = cache[i] + 1
-        return cache[n]
+        rst = self.n_wrapper(n, cache)
+        print n, len(cache), rst
+        return rst
 
 
 
@@ -67,6 +65,8 @@ if __name__ == '__main__':
     s = Solution()
     print s.numSquares(8285)
     print s.numSquares(8829)
+    print s.numSquares(5756)
+    print s.numSquares(12)
     """
     for x in range(1000):
         print x, s.numSquares(x)
