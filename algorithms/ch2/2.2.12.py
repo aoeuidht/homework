@@ -64,14 +64,7 @@ def merge_sort(items, m):
                        lambda k: items[k],
                        lambda i, j: -1 if (i < j) else 1,
                        exchange)
-    # 2. sort the bolcks by the 1st element as key
-    def exchange_batch(i, j):
-        items[i*m:(i+1)*m], items[j*m:(j+1)*m] = items[j*m:(j+1)*m], items[i*m:(i+1)*m]
-    insertion_sort(0, n/m-1,
-                   lambda k: items[k*m],
-                   lambda i, j: -1 if (i < j) else 1,
-                   exchange_batch)
-    # 3. merge all the blocks, should be N/M times
+    # 2. merge all the blocks, should be N/M times
     for i in range(0, n/m):
         for j in range(0, n/m-1):
             merge(items, aux, j*m, (j+1)*m-1, (j+2)*m-1)

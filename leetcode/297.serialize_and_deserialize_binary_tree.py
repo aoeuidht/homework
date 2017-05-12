@@ -15,21 +15,25 @@ class Codec:
         """
         if not root:
             return ''
-        rst = [str(root.val)]
-        for r in self.s_wrapper(root):
-            rst.append('null' if (r is None) else str(r))
-        return ','.join(rst)
+        cands = [root]
+        node_list = []
+        while cands:
+            node = cands.pop(0)
+            node_list.append(node.val if node else '')
+            if node:
+                cands.append(node.left)
+                cands.append(node.right)
+        return ','.join(map(str, node_list))
 
-    def s_wrapper(self, root):
-        if not root:
-            return
-        l, r = root.left, root.right
-        yield l.val if l else None
-        yield r.val if r else None
-        for y in self.s_wrapper(l):
-            yield y
-        for y in self.s_wrapper(r):
-            yield y
+    def de_token(self, rst):
+        """
+
+        Arguments:
+        - `self`:
+        - `rst`:
+        """
+        for item in rst.split(','):
+            yield item
 
     def deserialize(self, data):
         """Decodes your encoded data to tree.
@@ -37,36 +41,27 @@ class Codec:
         :type data: str
         :rtype: TreeNode
         """
-        nvs = data.split(',')
-        if not nvs:
+        if not data:
             return None
-        nq = [TreeNode(nvs[0])]
+        tokens = self.de_token(data)
+        root = TreeNode(tokens.next())
+        nq = [root]
 
-        piv = 0
-        vl = len(nvs)
+        while nq:
+            node = nq.pop(0)
+            try:
+                l = tokens.next()
+                r = tokens.next()
+                if l:
+                    node.left = TreeNode(l)
+                    nq.append(node.left)
+                if r:
+                    node.right = TreeNode(r)
+                    nq.append(node.right)
+            except:
+                break
+        return root
 
-        # 0: skip, 1: left, 2 right
-        pos = 0
-        for v in nvs:
-            if pos == 0:
-                pos = 1
-                continue
-            # left
-            if v == 'null':
-                tn = None
-            else:
-                tn = TreeNode(int(v))
-            if pos == 1:
-                nq[piv].left = tn
-                pos = 2
-            else:
-                nq[piv].right = tn
-                piv += 1
-                pos = 1
-
-            if tn:
-                nq.append(tn)
-        return nq[0]
 
 if __name__ == '__main__':
     r = TreeNode(0)
@@ -79,7 +74,8 @@ if __name__ == '__main__':
     print_bst(r)
     r = TreeNode(0)
     s = c.serialize(r)
+    print s
     root = c.deserialize(s)
     print_bst(root)
 
-    print_bst(c.deserialize(''))
+    print(c.deserialize(''))
