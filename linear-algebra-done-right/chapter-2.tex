@@ -1,0 +1,300 @@
+\section{chapter 2}
+\subsection*{2.A}
+\subsubsection*{2.A.1}
+
+\begin{equation*}
+    \begin{split}
+w_{1} &= v_{1} - v_{2}, w_{2} = v_{2} - v_{3}, w_{3} = v_{3} - v_{4}, w_{4} = v_{4} \\
+&\implies \\
+v_{1} &= w_{1} + w_{2} + w{3} + w{4} \\
+v_{2} &= w_{2} + w{3} + w{4} \\
+v_{3} &= w{3} + w{4} \\
+v_{4} &= w{4} \\
+    \end{split}
+\end{equation*}
+
+\[
+\forall a_{1}, a_{2}, a_{3}, a_{4} \in F \,
+a_{1}v_{1} + a_{2}v_{2} + a_{3}v_{3} + a_{4}v_{4} = 
+a_{1}w_{1} + (a_{1} + a_{2})w_{2}  + (a_{1} + a_{2} +a_{3})w_{3} + (a_{1} + a_{2} +a_{3}+a_{4})w_{4}
+\]
+
+\subsubsection*{2.A.3}
+\[3a+2b = 5, a - 3b = 9 \implies a=3, b=-2 \implies t = 3\cdot 4 + (-2)\cdot 5 = 4 \]
+
+\subsubsection*{2.A.5}
+\begin{enumerate}[label=(\alph*)]
+\item $1+i, 1-i$ point different direction in polar coordinate, and times $a\in R$ does not change the direction, so they are independent over $R$
+\item We can build a counterexample
+
+\[(1-i)(1+i) = (1+i)(1-i) = -(-1-i)(1-i) \implies (1-i)(1+i) + (-1-i)(1-i) = 0\]
+\end{enumerate}
+
+\subsubsection*{2.A.6}
+
+if $v_{1}-v_{2}, v_{2} - v_{3}, v_{3}-v_{4}, v_{4}$ is linearly dependent, then 
+\[\exists\, a_{1}(v_{1}-v_{2})+ a_{2}(v_{2} - v{3})+ a_{3}(v{3}-v{4})+ a_{4}v_{4} = 0 \]
+
+\[\implies a_{1}v_{1} + (a_{2} - a_{1})v_{2} + (a_{3}-a_{2})v_{3} + (a_{4}-a_{3})v_{4} = 0\]
+
+which is a counter example than $v_{1}, v_{2}, v_{3}, v_{4}$ is linearly independent
+
+\subsubsection*{2.A.7}
+
+IF $\exists a_{1}, a_{2}, \cdots,a_{m}$ that makes
+\[a_{1}(5v_{1}-4v_{2}) + a_{2}v_{2}+\cdots + a_{m}v_{m} = 0\]
+Then we have
+\[5a_{1}v_{1} + (a_{2}-4a_{1})v_{2}+\cdots + a_{m}v_{m} = 0\]
+
+which is a counter example.
+
+\subsubsection*{2.A.8}
+
+IF $\lambda v_{1}, \lambda v_{2}, \cdots, \lambda v_{m}$ is linearly dependent, then 
+\[a_{1}\lambda v_{1} + a_{2}\lambda v_{2} + \cdots + a_{m}\lambda v_{m} = 0\]
+\[(a_{1}\lambda v_{1}) + (a_{2}\lambda) v_{2} + \cdots + (a_{m}\lambda v_{m}) = 0\]
+which is a counterexample that $v_{1}, v_{2}, \cdots, v_{m}$ is linearly independent.
+
+\subsubsection*{2.A.9}
+
+Counterexample:
+
+\[w_{1} = -v_{1}, w_{2} = -v_{2},\cdots, w_{m} = -v_{m}\]
+
+\subsubsection*{2.A.10}
+
+\[a_{1}(v_{1}+w) + a_{2}(v_{2} + w)+\cdots + a_{m}(v_{m} + w) = 0\]
+\[a_{1}v_{1} + a_{2}v_{2} + \cdots +a_{m}v_{m} + (a_{1}+a_{2}+\cdots +a_{m})w = 0\]
+\[w=-\frac{a_{1}}{a_{1}+a_{2}+\cdots +a_{m}}v_{1} - \frac{a_{2}}{a_{1}+a_{2}+\cdots +a_{m}}v_{2} - \cdots - \frac{a_{m}}{a_{1}+a_{2}+\cdots +a_{m}}v_{m} \]
+
+so $w\in span(v_{1},\cdots ,v_{m}$
+
+\subsubsection*{2.A.11}
+
+Use the process in 2.A.10 to get counterexample.
+
+\subsubsection*{2.A.12}
+
+$(1, 0, 0, 0, 0), (0, z, 0,0,0), (0,0,z^{2},0,0,),(0,0,0,z^{3},0),(0,0,0,0,z^{4})$ spans $P_{4}(F)$, so the length of spanning list is 5; if six polynomials is linearly independent, it's conflict with 2.23: "Length of linearly independent list $\leq$ length of spanning list"
+
+\subsubsection*{2.A.13}
+
+also we can leverage 2.23. It's easy to see that
+\[(1, 0, 0, 0, 0), (0, z, 0,0,0), (0,0,z^{2},0,0,),(0,0,0,z^{3},0),(0,0,0,0,z^{4})\]
+is linearly independent, and it has length 5; if 4 polynomials spans $P_{4}(F)$, it's conflict with 2.23
+
+\subsubsection*{2.A.14}
+\begin{enumerate}[label=(\alph*)]
+\item IF:
+
+$\forall m$, $\exists $ linearly independent vectors in $V$, so there is no number $m$ than make $m$ bigger than the length of all linearly independent vectors. 
+\item ONLY IF :
+
+For any $m$, we pick m vectors $v_{1}, v_{2}, \cdots, v_{m}$ from $V$, then the $span(v_{1}, v_{2},\cdots,v_{m})\in V$. Then we pickup any $v_{m+1}\in V-span(v_{1}, v_{2},\cdots,v_{m})$, we have vectors $v_{1}, v_{2}, \cdots, v_{m+1}$ are linear independent, based on 2.21.a: if it's linearly dependent, the $v_{m+1}\in span(v_{1}, v_{2},\cdots,v_{m})$.
+\end{enumerate}
+
+\subsubsection*{2.A.17}
+Copy the answer from \href{https://linearalgebras.com/2a.html}{here}.
+
+Let's think $P_{m}(F)$, the length of its span vectors in $m+1$, so $(z, p_{0}(z), p_{1}(z), \cdots, p_{m}(z))$ is linearly dependent because this list has length $m+2$. 
+
+If $(p_{0}(z), p_{1}(z), \cdots, p_{m}(z))$ is linearly independent, then we have $z\in span(p_{0}(z), p_{1}(z), \cdots, p_{m}(z))$(by problem 11), so we have
+
+\[z+a_{0}p_{0}(z) + a_{1}p_{1}(z) +\cdots + a_{m}p_{m}(z) = 0\]
+
+Since $p_{j}(2) = 0$, we got 2 = 0 in the previously equation, which is not possible.
+
+\subsection*{2.B}
+\subsubsection*{2.B.1}
+
+${0}$
+
+\subsubsection*{2.B.3}
+
+\begin{enumerate}[label=(\alph*)]
+\item a basis of $U$ is
+
+\[(1, \frac{1}{3}, 0, 0, 0), (0, 0, 1, \frac{1}{7}, 0), (0, 0, 0, 0, 1)\]
+
+\item extend to 
+
+\[(1, \frac{1}{3}, 0, 0, 0), (0, 0, 1, \frac{1}{7}, 0), (0, 0, 0, 0, 1), (0, 1, 0, 0, 0), (0, 0, 0, 1, 0)\]
+
+\item 
+
+\[W = {(0, x, 0, y, 0) \in R^{5} x, y \in R}\]
+
+\end{enumerate}
+
+\subsubsection*{2.B.4}
+
+\begin{enumerate}[label=(\alph*)]
+\item a basis of $U$ is
+
+\[(1, 6, 0, 0, 0), (0, 0, 1, \frac{1}{2}, 0), (0, 0, 1, 0, \frac{1}{3})\]
+
+\item extend to 
+
+\[(1, 6, 0, 0, 0), (0, 0, 1, \frac{1}{2}, 0), (0, 0, 1, 0, \frac{1}{3}), (0, 1, 0, 0, 0), (0, 0, 1, 0, 0)\]
+
+\item 
+
+\[W = {(0, x, y, 0, 0) \in R^{5} x, y \in R}\]
+
+\end{enumerate}
+
+\subsubsection*{2.B.5}
+
+The basis does not exists because we have the length of independent list is $\leq$ length of spanning list, here we have a spanning list
+
+\[(1, 0, 0, 0), (0, 0, 1, 0), (0,0,0, 1)\] 
+
+so the list with length 4 can't be a independent list.
+
+\subsubsection*{2.B.6}
+
+\[v_{1}+v_{2}, v_{2}+v_{3}, v_{3}+v_{4}, v_{4}\]
+
+Independent, see $2.A.6$
+
+Spanning list
+
+\[ \forall v\in V, v =  a_{1}v_{1} + a_{2}v_{2} + a_{3}v_{3} + a_{4}v_{4}\]
+we also have 
+\[ v = a_{1}(v_{1} + v_{2}) + (a_{2} - a_{1})(v_{2} + v_{3}) + (a_{3} -a_{2}+a_{1})(v_{3}+v_{4}) + (a_{4} - a_{3} + a_{2}-a_{1})v_{4} \]
+
+so the list spans $V$.
+
+\subsubsection*{2.B.7}
+
+counterexample
+
+consider this vector list:
+
+\[(1,0,0,0), (0,1,0,0),(0,0,1,0),(0,0,0,1)\]
+
+apparently, the list spans $F^{4}$. Consider $U=span((1,0,0,0), (0,1,0,0), (0,0,1,1)$, we have
+
+$(0,0,1,1) \in U$ but not in $span(v_{1}, v_{2})$.
+
+
+\subsubsection*{2.B.7}
+
+$u_{1},\cdots, u_{m}, w_{1}, \cdots,w_{n}$ is basis.
+
+\textbf{Independent}
+
+if not independent, then exists
+\[a_{1}u_{1}+\cdots+a_{m}u_{m} + b_{1}w_{1} + \cdots +b_{n}w_{n} = 0\]
+\[a_{1}u_{1}+\cdots+a_{m}u_{m} = -b_{1}w_{1} - \cdots -b_{n}w_{n}\]
+
+which is conflict the define of direct sum.
+
+\textbf{Spanning list}
+
+$\forall v\in U+W$, $v = u+w\, u\in U, w\in W$
+
+so $\exists a_{1},\cdots,a_{m}, b_{1},\cdots, b_{n}$ that makes
+
+\[ v = a_{1}u_{1}+\cdots+a_{m}u_{m} + b_{1}w_{1} + \cdots +b_{n}w_{n}\]
+
+so $u_{1},\cdots, u_{m}, w_{1}, \cdots,w_{n}$ spans $V$.
+
+\subsection*{2.C}
+\subsubsection*{2.C.1}
+
+Let's assume $dim V = n$, so the basis of $U$ is 
+\[u_{1}, u_{2}, \cdots, u_{n}\]
+
+If $U\neq V$, then there must be a vector $v\in V-U$, now consider the list
+
+\[u_{1}, u_{2}, \cdots, u_{n}, v\]
+
+it's easy to know that it is independent, but its length is $n+1$ which is larger than $dim V$, so that breaks the law that length of independent $\leq$ length of spanning list which is $n$.
+
+\subsubsection*{2.C.2}
+
+since $R^{2}$ has basis with length 2, so the dim of subspace of $R^{2}$ can be 0, 1 or 2, which is $\{0\}, R^{2}$ or the lines in $R^{2}$. Since $\{0\}$ must be in any subspaces, so all lines must through origin.
+
+\subsubsection*{2.C.4}
+\begin{enumerate}[label=(\alph*)]
+\item $(x-6), x(x-6), x^{2}(x-6), x^{3}(x-6)$
+
+\item $1, (x-6), x(x-6), x^{2}(x-6), x^{3}(x-6)$
+\item $W = span(1)$, so $W=\{c:c \in F\}$
+\end{enumerate}
+
+\subsubsection*{2.C.5}
+\begin{enumerate}[label=(\alph*)]
+\item $1, x, (x-6)^{3}, (x-6)^{4}$
+\item $1, x, x^{2}, (x-6)^{3}, (x-6)^{4}$
+\item $W = span(x^{2})$, so $W=\{cx^{2}:c \in F\}$
+\end{enumerate}
+
+\subsubsection*{2.C.6}
+\begin{enumerate}[label=(\alph*)]
+\item $1, (x-2)(x-5), x(x-2)(x-5), x^{2}(x-2)(x-5)$
+\item $1, x, (x-2)(x-5), x(x-2)(x-5), x^{2}(x-2)(x-5)$
+\item $W = span(x)$, so $W=\{cx:c \in F\}$
+\end{enumerate}
+
+\subsubsection*{2.C.7}
+\begin{enumerate}[label=(\alph*)]
+\item $1, (x-2)(x-5)(x-6), x(x-2)(x-5)(x-6)$
+\item $1, x, x^{2}, (x-2)(x-5)(x-6), x(x-2)(x-5)(x-6)$
+\item $W = span(x, x^{2})$, so $W=\{cx+dx^{2}:c \in F, d \in F\}$
+\end{enumerate}
+
+\subsubsection*{2.C.8}
+\begin{enumerate}[label=(\alph*)]
+\item if $\int^{1}_{-1}f(x)=0$, means $f(x) = -f(-x)$, so the basis of $U$ is $1, x, x^{3}$
+\item $1, x, x^{2}, x^{3}, x^{4}$
+\item $W = span(x^{4}, x^{2})$, so $W=\{cx^{4}+dx^{2}:c \in F, d \in F\}$
+\end{enumerate}
+
+\subsubsection*{2.C.9}
+
+We only have to find a independent list with length $m-1$ in $span(v_{1}+w, \cdots,v_{m}+w)$. The following list is an example:
+\[v_{m}-v_{1}, v_{m}-v_{2}, \cdots, v_{m}-v_{m-1}\]
+
+It is independent because $v_{1}, \cdots, v_{m}$ is independent.
+
+\subsubsection*{2.C.10}
+
+We need to prove that the list spans $P(F)$ and it's independent. 
+
+For any $p\in P(F)$, we can start from the scalar of the highest degree $z^{m}$, use $p_{m}$ to guarantee we get the correct $a_{m}$; Then we got the correct $a_{m-1}$ using $z_{m-1}$ in $p_{m}$ and $p_{m-1}$; keep doing this until we got $p_{0}$, so we have the list spans $P(F)$.
+
+In this process, if the target vector is $0$, we can get that all the scalars are $0$, so the list is independent.
+
+\subsubsection*{2.C.11}
+
+we have 
+\[dim(U+W) = dim(U) + dim(W) - dim(U\cap W)\]
+so we have $dim(U\cap W)=0$, which means the two subspaces has no common vectors except $0$, then we have $U\oplus W$.
+
+\subsubsection*{2.C.12}
+\[dim(U\cap W) = 5 + 5 - 9 = 1\]
+so $U\cap W \neq \{0\}$
+
+\subsubsection*{2.C.13}
+
+\[dim(U\cap W) = 4 + 4 -6 = 2\]
+so if $v_{1}, v_{2}$ is a basis of $U\cap W$, then they are independent, so neither of $v_{1}, v_{2}$ is a scalar multiple of the other.
+
+\subsubsection*{2.C.14}
+
+Make $U_{1\_m} = U_{1} + \cdots + U_{m}$, then we have 
+\[dim(U_{1\_m}) \leq dim(U_{1\_m-1})+dim(U_{m}) \leq dim(U_{1\_m-2}) + dim(U_{m-1}) + dim(U_{m}) \leq \cdots \leq dim U_{1} + \cdots + dim U_{m}\]
+
+\subsubsection*{2.C.15}
+
+If $v_{1}, \cdots , v_{n}$ is a basis of $V$, then $\forall 1\leq i, j \leq n$, we have $v_{i}, v_{j}$ are independent. So $span(v_{i}) \cap span(v_{j})=\{0\}$ and $v_{i}, v_{j}$ is the basis of the subspace.
+
+If we add $U_{i}=span(v_{i}$ together, we got a $n$ dimension vector space, with $v_{1}, \cdots, v_{n}$ as its basis, which is $V$.
+
+\subsubsection*{2.C.16}
+
+Make $U_{1\_m} = U_{1} \oplus \cdots \oplus U_{m}$, then we have 
+\[dim(U_{1\_m}) = dim(U_{1\_m-1})+ dim(U_{m}) = dim(U_{1\_m-2}) + dim(U_{m-1}) + dim(U_{m}) = \cdots = dim U_{1} + \cdots + dim U_{m}\]
+\newpage

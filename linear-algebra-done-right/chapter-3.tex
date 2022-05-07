@@ -1,0 +1,568 @@
+\section{chapter 3}
+\subsection*{3.A}
+\subsubsection*{3.A.1}
+
+If $T$ is linear, make $u=(x, y, z)$ and $v=2u$, then we should have $Tv = 2Tu$
+\[(4x-8y+6z+b, 12x+c\cdot 8xyz) = 2\cdot (2x-4y+3z+b, 6x+cxyz)\]
+
+then we have $b=c=0$
+
+If $b=c=0$
+
+\begin{equation*}
+    \begin{split}
+T(u+v) &= (2(x_{u}+x_{v}) - 4(y_{u}+y_{v}) + 3(z_{u}+z_{v}), 6(x_{u}+x_{v}) \\
+&= (2x_{u}-4y_{u}+3z_{u}, 6x_{u}) + (2x_{v}-4y_{v}+3z_{v}, 6x_{v}) \\
+&= Tu+Tv \\
+T(\lambda u) &=(2\lambda x - 4\lambda y + 3\lambda z, 6\lambda x) \\
+&= \lambda (2x-4y+3z, 6x) \\
+&= \lambda Tu
+\end{split}
+\end{equation*}
+
+\subsubsection*{3.A.2}
+
+If $T$ is linear, then for $p_{0}, p_{1}$, $T(p_{0}+p_{1}) = Tp_{0} + Tp_{1}$, we must have 
+\[b(p_{0}(1)+p_{1}(1))(p_{0}(2)+p_{1}(2)) = b(p_{0}(1)p_{0}(2)+p_{1}(1)p_{1}(2))\]
+
+Expand the left part, to make the equation work, we have $b=0$
+
+For any $\lambda \in R$,
+\[c\lambda \sin{p(0)} = c \sin{\lambda p{0}}\]
+
+make $\lambda = 2$, to make the equation work, $c=0$.
+
+If $b=c=0$, we can see that the $T$ is the linear combination by linear maps in $3.4$, so $T$ is also linear.
+
+\subsubsection*{3.A.4}
+
+If $v_{1}, \cdots , v_{m}$ is dependent, then $ \exists a_{1}, \cdots, a_{m} $ that 
+\begin{equation*}
+    \begin{split}
+0 &= a_{1}v_{1} + \cdots + a_{m}v_{m} \\
+0 &= T(0) \\
+ &= T(a_{1}v_{1} + \cdots + a_{m}v_{m}) \\
+    & = Ta_{1}v_{1} + \cdots + Ta_{m}v_{m} \\
+    & = a_{1}Tv_{1} + \cdots + a_{m}Tv_{m}
+\end{split}
+\end{equation*}
+
+Which is a counter example of $Tv_{1}, \cdots, Tv_{m}$ is independent.
+
+\subsubsection*{3.A.7}
+
+If $dim(V) = 1$, let's assume $v$ is a basis of $V$, based on the definition of span, then we have 
+\[V=\{av\, a\in F\}\]
+
+IF $T\in L(V,V)$, then we have $Tv\in V$, so $Tv = \lambda v$.
+
+\subsubsection*{3.A.8}
+
+\[\varphi(a_{0}, a_{1}) = \sqrt{a_{0}^{2} + a_{1}^{2}}\]
+
+\subsubsection*{3.A.9}
+\[\varphi(i, j) = (i, 0)\]
+
+\subsubsection*{3.A.10}
+
+$T$ is not linear, because it does not fulfill $T(u+v) = Tu + Tv$:
+
+\[u\in U, v \in (V - U)\] 
+
+based on the defination, we have 
+
+\begin{equation*}
+    \begin{split}
+u+v &\in (V-U) \\
+Tu &\neq 0  \\
+Tv &= 0 \\
+T(u+v) &= 0 \\
+T(u+v) &\neq Tu + tv
+\end{split}
+\end{equation*}
+
+So $T$ is not linear.
+
+\subsubsection*{3.A.11}
+
+$U$ is a subspace of $V$, so we can find a basis of $U$: $u_{1}, \cdots, u_{n}$, and we can expand the basis of $U$ to basis of $W$ to $u_{1}, \cdots, u_{n}, q_{1}, \cdots, q_{m} $.
+
+Make 
+\[Q = span(q_{1}, \cdots, q_{m})\]
+
+and $R\in L(Q, W)$.
+
+Define the $T$ like:
+
+\[Q = span(q_{1}, \cdots, q_{m})\]
+
+ \[
+    Tv=\left\{
+ \begin{array}{ll}
+   Sv    &    v\in U \\
+   Rv    &    v \in Q \\
+   Sv_{0} + Rv_{1}    &    v = v_{0} + v_{1}, v_{0} \in U, v_{1} \in Q
+  \end{array}
+  \right.
+  \]
+
+\subsubsection*{3.A.12}
+
+If $v_{1},\cdots, v_{n}$ is basis of $V$, and $S_{1}, \cdots, S_{m}$ is basis of $L(V, W)$, then we have 
+\[W=span(S_{1}v_{1}, \cdots, S_{1}v_{n}, \cdots, S_{m}v_{1},\cdots, S_{m}v_{n})\]
+which is conflict with that $W$ is infinite dimensional.
+
+\subsubsection*{3.A.13}
+
+$v_{1},\cdots,v_{m}$ is linearly dependent, so $\exists v_{i}$ that satisfy:
+\[v_{i} = a_{1}v_{1} + \cdots + a_{i-1}v_{i-1} + a_{i+1}v_{i+1} + \cdots + a_{m}v_{m}\]
+
+so if we use any $T\in L(v, W)$, the $T^{'}$ to convert $v_{1}, \cdots, v_{m}$ to following vectors does not exists for any  $w\in W,w\neq 0$:
+
+\[Tv_{1}, \cdots, Tv_{i-1}, w + (aTv_{1}  + \cdots + a_{i-1}Tv_{i-1} + a_{i+1}Tv_{i+1} + \cdots + a_{m}Tv_{m}), Tv_{i+1}, \cdots, Tv_{m}\]
+
+
+\subsubsection*{3.A.14}
+ 
+Here is a counter example:
+
+\begin{equation*}
+    \begin{split}
+T(x_{0}, \cdots, x_{n}) &= (x_{0}+x_{1}, x_{1}, \cdots, x_{n}) \\
+S(x_{0}, \cdots, x_{n}) &= (x_{0}, x_{0}+ x_{1}, \cdots, x_{n})
+\end{split}
+\end{equation*}
+
+\subsection*{3.B}
+\subsubsection*{3.B.1}
+
+\[T(x_{1}, x_{2}, x_{3}, x_{4}, x_{5}) = (x_{4}, x_{5})\]
+
+\subsubsection*{3.B.2}
+\[(ST)^{2}(v) = S(T(ST(v)))\]
+Since range $S\subset null T$, so we have $T(ST(v)) = 0$, implies $(ST)^{2} = 0$.
+
+\subsubsection*{3.B.3}
+
+\begin{enumerate}[label=(\alph*)]
+\item $range T = V$
+\item $null T = 0$
+\end{enumerate}
+
+
+\subsubsection*{3.B.4}
+
+We have an count example:
+
+\begin{equation*}
+    \begin{split}
+T_{1}(x_{1}, x_{2}, x_{3}, x_{4}, x_{5}) &= (x_{1}, 0, 0, 0) \\
+T_{2}(x_{1}, x_{2}, x_{3}, x_{4}, x_{5}) &= (0, x_{2}, 0, 0) \\
+T_{3}(x_{1}, x_{2}, x_{3}, x_{4}, x_{5}) &= (0, 0, x_{3}, 0) \\
+T_{4}(x_{1}, x_{2}, x_{3}, x_{4}, x_{5}) &= (0, 0, 0, x_{4}) \\
+T_{1} + T_{2} + T_{3} + T_{4} &= (x_{1}, x_{2}, x_{3}, x_{4})
+\end{split}
+\end{equation*}
+
+The last $null T = (5-5) = 1$, so it's not the subspace.
+
+\subsubsection*{3.B.6}
+
+$dim(T) = range T + null T, range T = null T \implies null T = 2.5$, which make no sense.
+
+\subsubsection*{3.B.9}
+
+If $Tv_{1}, \cdots, Tv_{n}$ is dependent, then we have $a_{1}, \cdots, a_{n}$ that:
+\[a_{1}Tv_{1} + \cdots +a_{n}Tv_{n} = T(a_{1}v_{1}+\cdots+a_{n}v_{n}) = 0\]
+
+Since T is injective, and $T(0) = 0$, implies $a_{1}v_{1}+\cdots+a_{n}v_{n} = 0$, which is a counter example of they are linearly independent.
+
+\subsubsection*{3.B.10}
+
+For $\forall w\in range T$, there exists a $v\in V, Tv=w$. Since $v_{1}, \cdots, v_{n}$ spans $V$, we have 
+\[v = a_{1}v_{1} + \cdots + a_{n}v_{n}\]
+
+So 
+
+\[w = Tv = Ta_{1}v_{1} + \cdots + Ta_{n}v_{n} = a_{1}Tv_{1} + \cdots + a_{n}Tv_{n}\]
+
+indicates that $Tv_{1}, \cdots, Tv_{n}$ spans range $T$.
+
+\subsubsection*{3.B.11}
+
+
+\begin{equation*}
+    \begin{split}
+S_{1}\cdots S_{n}(u) &= S_{1}\cdots S_{n}(v) \implies \\
+S_{2}\cdots S_{n}(u) &= S_{2}\cdots S_{n}(v) \implies \\
+&\cdots \\
+S_{n}(u) &= S_{n}(v) \implies \\
+u &= v
+\end{split}
+\end{equation*}
+
+\subsubsection*{3.B.12}
+
+Make $u_{1}, \cdots, u_{n}$ a basis of $null T$, then we can expand it to $u_{1}, \cdots, u_{n}, w_{1}, \cdots, w_{m}$ to the basis of $V$.
+
+$U=span(w_{1},\cdots, w_{m}$ is the subspace we need.
+
+\subsubsection*{3.B.13}
+
+$dim(null T) = 2$, so $dim(range T) = 4 - 2 = 2$, so T is surjective.
+
+\subsubsection*{3.B.15}
+
+the target space has dimension $2$, and $dim(F^{2}) \leq 2$, so $range(null T) + dim(T) \leq 4$ which is less than 5, so the transaction does exists.
+
+\subsubsection*{3.B.16}
+
+Since $null T, range T$ are finite dimensional, assume $u_{1}, \cdots, u_{n}$ is a basis of $null T$ and $v_{1},\cdots, v_{m}$ is a basis of $range T$, then there is a vector $w_{1},\cdots,w_{m}$ defined by
+\[Tw_{1} = v_{1}, \cdots, Tw_{m} = v_{m}\]
+
+then we have $u_{1}, \cdots, u_{n}, w_{1}, \cdots, w_{m}$ is a basis of $V$. 
+
+If not, there $\exists v_{0}$ that $u_{1}, \cdots, u_{n}, w_{1}, \cdots, w_{m}, v_{0}$ is linear independent, which indicate that
+\[ Tu_{1}, \cdots, Tu_{n}, Tw_{1}, \cdots, Tw_{m}, Tv_{0} = 0, \cdots, 0, v_{1}, \cdots, v_{m}, Tv_{0}\] 
+
+is independent, which is conflict that $v_{1},\cdots, v_{m}$ is a basis of $range T$.
+
+\subsubsection*{3.B.17}
+
+$dim\, V = n, dim\, W = m$, If $n \leq m$, then length of basis $W=w_{1},\cdots,w_{m}$ is longer than basis $V=v_{1},\cdots,v_{n}$, then we can define a injective map as:
+\[Tv_{1} = w_{1}, \cdots, Tv_{n} = w_{n}\]
+
+When there exists an injective map, we have $dim\,V\leq dim\,W$ using $3.23$.
+
+\subsubsection*{3.B.18}
+
+if $dim\,V\geq dim\,W$, then any basis of  $V=v_{1},\cdots,v_{n}$ is longer than the basis of $W=w_{1}, \cdots,w_{m}$ ($n\geq m)$. So here in a surjective map:
+
+\begin{equation*}
+    \begin{split}
+Tv_{1} & = w_{1} \\
+& \cdots  \\
+Tv_{m} &= w_{m} \\
+tv_{m+1} &= 0 \\
+&\cdots \\
+tv_{n} &= 0
+\end{split}
+\end{equation*}
+
+If there is a surjective map, and
+\[dim\,V = dim(null\,T) + dim(T) = dim(null\, T) + dim\,W\]
+which implies $dim\,V\geq dim\,W$.
+
+\subsubsection*{3.B.19}
+
+If $null\,T=U$, we have $dim(range\,T) = dim\,V - dim\,U \leq dim\,W$, the $=$ works only T is surjective.
+since $U$ is a subspace, we can write a basis of $V$ as:
+\[u_{1}, \cdots, u_{n}, v_{1},\cdots, v_{m}\]
+
+If $W$ has lower dimension $x\leq dim\,V-dim\,U$, then we can build a map that make $null\,T=U$
+\begin{equation*}
+    \begin{split}
+    Tu_{1} &= 0 \\
+    & \cdots \\
+    Tu_{n} &= 0 \\
+Tv_{1} & = w_{1} \\
+& \cdots  \\
+Tv_{x} &= w_{x} \\
+tv_{x+1} &= w_{1} \\
+&\cdots \\
+tv_{m} &= w_{1}
+\end{split}
+\end{equation*}
+
+\subsubsection*{3.B.20}
+
+If $T$ is injective, then define $S$ as $S(Tv) = v:v\in V$, so $STv = S(Tv) = v = Iv \implies ST$ is the identity map.
+
+If $T$ is not a one-one map, then $\exists\, Tv_{1} = Tv_{2} = s$, and $Ss$ can't be both $v_{1}$ and $v_{2}$, so no $ST = I$ exists.
+
+\subsubsection*{3.B.21}
+
+IF $ST = I$ and $T$ is not surjective, then $\exists\,w \in W, w\notin range\,T$, so $T(Sw)\notin W$, which is a counter example of $ST = I$.
+
+If T is surjective, then $\forall\,w \in W, \exists\,v\in V, Tv = w$, so let's define $S(Tv) = v: Tv\in W$, and we have $ST = I$.
+
+\subsubsection*{3.B.22}
+
+If dim null (range $T$) = dim null $S$, then 
+\[dim\, null\, ST = dim\, null\, S + dim\,null\,T\]
+
+else 
+
+\[dim\, null\, ST < dim\, null\, S + dim\,null\,T\]
+
+\subsubsection*{3.B.23}
+
+Because $T(U) \subseteq V$, so $range\,ST\subseteq range\,S$, so 
+\[dim\,range\,ST\leq dim\,range\,S\]
+
+$X = range\, T$ is also a vector spaces, and we $S\in L(X, w)$, we have 
+\[dim X = dim\, null\,S + dim\,range S\]
+
+so 
+\[dim\,range S \leq dim\,X\]
+\[dim\,range ST \leq dim\,range T\]
+
+finally, we have
+\[dim\,range\,ST\leq min\{dim\,range\,S,\, dim\,range\,T\}\]
+
+\subsubsection*{3.B.24}
+
+If $T_{2} = ST_{1}$, and $v_{1},\cdots,v_{n}$ is a basis of $null\, T_{1}$, then we have $\forall i \in [1,\cdots,n] T_{2}v_{i}=0$ becauset $T(0) = 0$, so
+    null $T_{1}\subset$ null $ T_{2}$.
+    
+If null $T_{1} \subset$ null $T_{2}$, suppose $u_{1},\cdots,u_{n}$ is a basis of null $T_{1}$,  $w_{1}, \cdots,w_{m}$ is a basis of null $T_{2} (n\leq m)$, extend both basis of null space to the basis of $V$, we have 2 basis:
+\[u_{1},\cdots,u_{n},\cdots, u_{v}\]
+\[w_{1},\cdots,w_{n},\cdots,w_{m}, \cdots, w_{v}\]
+
+It's easy to prove(2.39) that $u_{n+1},\cdots,u_{v}$ is the basis of range $T_{1}$ and $w_{m+1},\cdots,w_{v}$ is the basis of range $T_{2}$, so we build a mapping $S$ that
+
+\begin{equation*}
+    \begin{split}
+    ST_{1}u_{n+1} &= 0 \\
+    &\cdots \\
+    ST_{1}u_{m} &= 0 \\
+    ST_{1}u_{m+1} &= T_{2}w_{m+1} \\
+    &\cdots \\
+    ST_{1}u_{v} &= T_{2}w_{v}
+\end{split}
+\end{equation*}
+
+\subsubsection*{3.B.25}
+
+If $\exists S\in L(V, V)$ and $T_{1} = T_{2}S$, then we have range $S \subset V$, so $T_{2}(S) \subset T_{2}(V)$, aka range $T_{1} \subset$ range $T_{2}$.
+
+If range $T_{1}\subset $range $T_{2} \subset W$, and $w_{1}, \cdots, w_{n}$ is a basis of range $T_{1}$. 
+This basis can be extend to the basis of range $T_{2}$ like $w_{1}, \cdots, w_{n}, \cdots, w_{m}$, and finally to the basis of $W$: $w_{1},\cdots,\w_{m},\cdots, w_{w}$.
+
+For $T_{1}$, we have:
+\begin{equation*}
+    \begin{split}
+T_{1}u_{1} &= w_{1} \\
+&\cdots \\
+T_{1}u_{n} &= w_{n} \\
+T_{1}u_{n+1} &= 0 \\
+&\cdots \\
+T_{1}u_{v} &= 0 
+\end{split}
+\end{equation*}
+
+In the equation, $v$ is the dimension of $V$. and for $T_{2}$:
+\begin{equation*}
+    \begin{split}
+T_{2}v_{1} &= w_{1} \\
+&\cdots \\
+T_{2}v_{m} &= w_{m} \\
+T_{2}v_{m+1} &= 0 \\
+&\cdots \\
+T_{2}v_{v} &= 0 
+\end{split}
+\end{equation*}
+
+so the target map $S$ would be:
+\begin{equation*}
+    \begin{split}
+Su_{1} &= v_{1} \\
+&\cdots \\
+Su_{n} &= v_{n} \\
+Su_{n+1} &= 0 \\
+&\cdots \\
+Su_{v} &= 0 
+\end{split}
+\end{equation*}
+
+because 
+\[T_{2}S(u_{1}) = T_{2}(v_{1}) = w_{1} = T_{1}u_{1} \] for all $u$.
+
+\subsubsection*{3.B.27}
+
+For a polynomial p with deg n, we write its vector as 
+\[a_{1}, \cdots, a_{n}\]
+
+and for polynomial q with deg $n+1$, we write its vector as
+\[b_{1}, \cdots, b_{n+1} \]
+
+then $q^{'}$ has deg n:
+\[b_{2}, 2b_{3}, 3b_{4},\cdots, nb_{n+1}\]
+
+and $q^{''}$ has deg $n-1$:
+
+\[2b_{3}, 6b_{4}, 12b_{5},\cdots, n*(n-1)b_{n+1}\]
+
+so $q$ can be defined as:
+
+\begin{equation*}
+    \begin{split}
+    a_{n} &= 3nb_{n+1} \\
+    a_{n-1} &= 3(n-1)b_{n} + 5n*(n-1)b_{n+1} \\
+    &\cdots \\
+    a_{1} & = 3b_{2} + 52b_{3}
+\end{split}
+\end{equation*}
+
+we can calculate $b_{n+1},\cdots, b_{1}$ top-down.
+
+\subsubsection*{3.B.28}
+
+$w_{1}, \cdots, w_{m}$ is a basis of range $T$, so we have $v_{1},\cdots, v_{m}$ that $\{Tv_{i} = w_{i}, i\in [1, 2,\cdots, m]$. 
+It's easy to prove that $v_{1}, \cdots, v_{m}$ is independent(if not, $w_{1}, \cdots, w_{m}$ will also be dependent). Now expand the vector to a basis of $V: v_{1},\cdots, v_{m},\cdots, v_{n}$.
+
+$\forall v, \exists a_{1},\cdots, a_{m}\in F$ that:
+\[v = a_{1}v_{1} + \cdots + a_{m}v_{m}\]
+
+also $a_{1},\cdots,a_{m}$ is uniq for any $v\in V$.
+
+Now define
+
+\begin{equation*}
+    \begin{split}
+\varphi_{1} &= a_{1} \\
+\varphi_{2} &= a_{2} \\
+&\cdots \\
+\varphi_{m} &= a_{m}
+\end{split}
+\end{equation*}
+
+$a_{1}, \cdots, a_{m}$ is the scala in the equation.
+
+\subsubsection*{3.B.29}
+
+dim $F = 1$, so a basis of $V$ is like
+\[v_{1},\cdots,v_{n}, v_{n+1}\]
+
+and $v_{1},\cdots, v_{n}$ is the basis of $\varphi$. 
+
+Now consider the span of $v_{n+1} = U$, it's easy see $U \cat $ null $\varphi = \{0\}$ and $U + $ null $\varphi = V$. because
+
+\[U = \{av_{n+1}: a\in F\} = \{au: a\in F\]
+so $V = $null $\varphi \oplus \{au:a \in F\}$.
+
+\subsubsection*{3.B.30}
+Use the proof of 3.B.29, if $v_{n+1}\in $basis of $V,\varphi_{1}v_{n+1} = a_{1} \neq 0, \varphi_{2}v_{n+1} = a_{2} \neq 0$,  So 
+\begin{equation*}
+    \begin{split}
+\varphi_{1}v_{n+1} &= a_{1} \\
+\varphi_{2}v_{n+1} &= a_{2} \\
+\frac{\varphi_{1}}{\varphi_{2}} & = \frac{a_{1}}{a_{2}} \\
+\varphi_{1} &= c\varphi_{2}
+\end{split}
+\end{equation*}
+
+\subsubsection*{3.B.31}
+\[T_{1}(a_{1}, \cdots, a_{5}) = (a_{4}, a_{5})\]
+\[T_{2}(a_{1}, \cdots, a_{5}) = (a_{5}, a_{4})\]
+
+\subsection*{3.C}
+\subsubsection*{3.C.1}
+
+If the less than range $T$ nonzero entries, then in the matrix defined in 3.30, at least one column $k$ will be all zero, then in 3.32, the $Tv_{k}$ would be zero, so there would be less than dim range $T$ nonzero vectors in $TV$: they can't span a space with dim range $T$.
+
+\subsubsection*{3.C.2}
+
+basis of $P_{3} = (0, 0, 0, 1), (0, 0, 1, 0), (0, 1, 0, 0), (1, 0, 0,0)$ 
+
+basis of $P_{2} = (3, 0, 0), (0, 2,  0), (0, 0, 1)$
+
+\subsubsection*{3.C.3}
+
+Suppose $u_{1}, \cdots, u_{n}$ is a basis of null $T$, then we can extend the vector to a basis of $V$: $v_{1},\cdots, v_{m}, u_{1}, \cdots, u_{n} $, also we have dim range $T = m$, and $Tv_{1}, \cdots, Tv_{m}$ is a basis of range $T$.
+
+so here is the $m \times (m+n)$ matrix  we need:
+
+\[
+\begin{pmatrix}
+1 & 0 & \cdots & 0 & \cdots & 0\\
+0 & 1 & \cdots & 0 & \cdots & 0\\
+\cdots \\
+\cdots &  & & 1 & \cdots & 0 
+\end{pmatrix}
+\]
+
+\subsubsection*{3.C.4}
+
+If $Tv_{1} = 0$ , then entries of the 1st column are all 0; If no, $w_{1} = Tv_{1}$, and extend $w_{1}$ to a basis of $W$, then the entries of 1st column have a initial 1 followed by 0.
+
+\subsubsection*{3.C.5}
+
+If $w_{1} \notin $ range $T$, then every entity in the 1st row of $M$ has to be 0; 
+
+If $w_{1} \in $ range $T$, then $\exists v_{1} \in V, Tv_{1} = w_{1}$, then any basis with $v_{1}$ as the 1st element make the 1st row has a initial 1 followed by 0.
+
+\subsubsection*{3.C.6}
+
+Suppose $v_{1}, \cdots, v_{n}$ is a basis of $V$ and $w_{1} = Tv_{1} \neq 0$, it's easy to know that $v_{1}, v_{2} + v_{1}, \cdots, v_{n}+v_{1}$ is also a basis. Because dim range $T = 1$, so we have
+
+\begin{equation*}
+    \begin{split}
+    Tv_{1} & = w_{1} \\
+    T(v_{2} + v_{1}) & = a_{2}w_{1} \\
+    & \cdots \\
+    T(v_{n} + v_{1}) & = a_{n}w_{1}
+\end{split}
+\end{equation*}
+
+So the basis of $V$ is $v_{1},  \frac{v_{2} + v_{1}}{a_{2}}, \cdots, \frac{v_{n}+v_{1}}{a_{n}}$ and the basis of $W$ is $w_{1}$.
+
+
+If we have a $M$ with all entries equals to 1, then there is a basis of $V$ and $W$ that $Tv = w, v\in$ basis $V$, then it's easy to know every $v\in V$ is a linear combination of basis $V$, so $Tv$ is linear combination of $w$, so $w$ is a basis of range $T$, which means than dim range $T = 1$.
+
+\subsubsection*{3.C.10}
+
+In $3.47$ we learn that
+\[(AC)_{j,k} = A_{j,.}C_{.,k}\]
+
+so 
+
+\begin{equation*}
+    \begin{split}
+    (AC)_{j,.} &= [(AC)_{j,1}, \cdots, (AC)_{j,k}] \\
+    &= [A_{j,.}C_{.,1}, \cdots, A_{j,.}C_{,.k}] \\
+    &= A_{j,.}[C_{.,1}, \cdots, C_{.,k}] \\
+    &= A_{j,.}C
+\end{split}
+\end{equation*}
+
+\subsubsection*{3.C.11}
+
+\begin{equation*}
+    \begin{split}
+aC &= [\sum_{r=1}^{n}a_{r}C_{r,1}, \sum_{r=1}^{n}a_{r}C_{r,2},\cdots, \sum_{r=1}^{n}a_{r}C_{r,p}] \\
+&= \sum_{r=1}^{n}[a_{r}C_{r,1}, a_{r}C_{r,2}, \cdots, a_{r}C_{r,4}] \\
+&= \sum_{r=1}^{n}a_{r}C_{r,.}
+&= a_{1}C_{1,.} +\cdots + a_{n}C_{n,.}
+\end{split}
+\end{equation*}
+
+\subsubsection*{3.C.14}
+
+In $3.47,3.49, 3.C.10$ we learn that
+
+\begin{equation*}
+    \begin{split}
+(AC)_{j,k} &= A_{j,.}C_{.,k} \\
+
+(AC)_{.,k} &= AC_{.,k} \\
+(AC)_{k,.} &= A_{k,.}C
+\end{split}
+\end{equation*}
+so 
+
+\begin{equation*}
+    \begin{split}
+    A(BC)_{j,k} &= A_{j,.}(BC)_{.,k} \\
+    & = A_{j,.}(BC_{.,k}) \\
+    (AB)C_{j,k} &= (AB)_{j,.}C_{.,k} \\
+     &= (A_{j,.}B)C_{.,k}
+\end{split}
+\end{equation*}
+
+expand both $A(BC)_{j,k}$ and $(AB)C_{j,k}$, they all equals to (if $B$ is $m*n$ matrix):
+\[\sum_{r=1}^{m}\sum_{s=1}^{n}A_{j,m}B_{m,n}C_{n,k}\]
+
+so $A(BC) = (AB)C$
+
+\newpage
