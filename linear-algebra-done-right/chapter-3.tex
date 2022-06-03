@@ -312,7 +312,7 @@ finally, we have
 
 \subsubsection*{3.B.24}
 
-If $T_{2} = ST_{1}$, and $v_{1},\cdots,v_{n}$ is a basis of $null\, T_{1}$, then we have $\forall i \in [1,\cdots,n] T_{2}v_{i}=0$ becauset $T(0) = 0$, so
+If $T_{2} = ST_{1}$, and $v_{1},\cdots,v_{n}$ is a basis of $null\, T_{1}$, then we have $\forall i \in [1,\cdots,n] T_{2}v_{i}=0$ because $T(0) = 0$, so
     null $T_{1}\subset$ null $ T_{2}$.
     
 If null $T_{1} \subset$ null $T_{2}$, suppose $u_{1},\cdots,u_{n}$ is a basis of null $T_{1}$,  $w_{1}, \cdots,w_{m}$ is a basis of null $T_{2} (n\leq m)$, extend both basis of null space to the basis of $V$, we have 2 basis:
@@ -337,7 +337,7 @@ It's easy to prove(2.39) that $u_{n+1},\cdots,u_{v}$ is the basis of range $T_{1
 If $\exists S\in L(V, V)$ and $T_{1} = T_{2}S$, then we have range $S \subset V$, so $T_{2}(S) \subset T_{2}(V)$, aka range $T_{1} \subset$ range $T_{2}$.
 
 If range $T_{1}\subset $range $T_{2} \subset W$, and $w_{1}, \cdots, w_{n}$ is a basis of range $T_{1}$. 
-This basis can be extend to the basis of range $T_{2}$ like $w_{1}, \cdots, w_{n}, \cdots, w_{m}$, and finally to the basis of $W$: $w_{1},\cdots,\w_{m},\cdots, w_{w}$.
+This basis can be extend to the basis of range $T_{2}$ like $w_{1}, \cdots, w_{n}, \cdots, w_{m}$, and finally to the basis of $W$: $w_{1},\cdots,w_{m},\cdots, w_{w}$.
 
 For $T_{1}$, we have:
 \begin{equation*}
@@ -359,7 +359,7 @@ T_{2}v_{1} &= w_{1} \\
 T_{2}v_{m} &= w_{m} \\
 T_{2}v_{m+1} &= 0 \\
 &\cdots \\
-T_{2}v_{v} &= 0 
+T_{2}v_{v} &= 0 \\
 \end{split}
 \end{equation*}
 
@@ -436,7 +436,7 @@ dim $F = 1$, so a basis of $V$ is like
 
 and $v_{1},\cdots, v_{n}$ is the basis of $\varphi$. 
 
-Now consider the span of $v_{n+1} = U$, it's easy see $U \cat $ null $\varphi = \{0\}$ and $U + $ null $\varphi = V$. because
+Now consider the span of $v_{n+1} = U$, it's easy see $U \cap $ null $\varphi = \{0\}$ and $U + $ null $\varphi = V$. because
 
 \[U = \{av_{n+1}: a\in F\} = \{au: a\in F\]
 so $V = $null $\varphi \oplus \{au:a \in F\}$.
@@ -532,7 +532,7 @@ so
     \begin{split}
 aC &= [\sum_{r=1}^{n}a_{r}C_{r,1}, \sum_{r=1}^{n}a_{r}C_{r,2},\cdots, \sum_{r=1}^{n}a_{r}C_{r,p}] \\
 &= \sum_{r=1}^{n}[a_{r}C_{r,1}, a_{r}C_{r,2}, \cdots, a_{r}C_{r,4}] \\
-&= \sum_{r=1}^{n}a_{r}C_{r,.}
+&= \sum_{r=1}^{n}a_{r}C_{r,.} \\
 &= a_{1}C_{1,.} +\cdots + a_{n}C_{n,.}
 \end{split}
 \end{equation*}
@@ -544,7 +544,6 @@ In $3.47,3.49, 3.C.10$ we learn that
 \begin{equation*}
     \begin{split}
 (AC)_{j,k} &= A_{j,.}C_{.,k} \\
-
 (AC)_{.,k} &= AC_{.,k} \\
 (AC)_{k,.} &= A_{k,.}C
 \end{split}
@@ -565,4 +564,365 @@ expand both $A(BC)_{j,k}$ and $(AB)C_{j,k}$, they all equals to (if $B$ is $m*n$
 
 so $A(BC) = (AB)C$
 
+\subsection*{3.D}
+\subsubsection*{3.D.1}
+
+Because $S$ and $T$ are both invertible, then we have
+\[ST\times T^{-1}S^{-1} = S(TT^{-1})S^{-1} = SIS^{-1} = I\]
+
+and 
+\[T^{-1}S^{-1} \times ST = T^{-1}(S^{-1}S)T = T^{-1}IT = I\]
+
+so $ST$ is invertible and $(ST)^{-1} = T^{-1}S^{-1}$
+
+\subsubsection*{3.D.2}
+
+Suppose $v_{1}, \cdots, v_{n}$ is a basis of $V$, consider operators:
+\[T_{1}v_{1} = 0, T_{1}v_{i} = v_{i} if i > 1\]
+
+and 
+\[T_{2}v_{1} = v_{1}, T_{1}v_{i} = 0 if i > 1\]
+
+They are neither injective, so they are not invertible, and we have 
+\[T_{1} + T_{2} = I\]
+which is invertible, so the noninvertible operators is not a subspace.
+
+\subsubsection*{3.D.3}
+$U$ is a subspace of $V$, so for a basis of $U: v_{1}, \cdots, v_{u}$, we can extend it to a basis of $V: v_{1},\cdots, v_{u}, \cdots, v_{n}$.
+
+If $T$ is invertible and $Tu = Su$, then null $T = {0}$, so $S$ is injective.
+
+If $S$ is injective, then $\forall u \in U, Su \neq {0}$, so $Sv_{1}, \cdots, SV_{u}$ is linear independent. 
+Expand the vector to a basis of $V: Sv_{1}, \cdots, Sv_{u}, \cdots, v^{'}_{n}$, and make
+\[Tv_{u+1} = v^{'}_{n+1}, \cdots, Tv_{n} = v^{'}_{n}\]
+
+then it's easy to know that T is both injective and surjective, so it's invertible.
+
+\subsubsection*{3.D.4}
+
+If $\exists S, T_{1} = ST_{2}$, then $\forall v\in V, T_{1}v = 0 $ we have
+\[T_{1}v = ST_{2}v = 0\]
+
+Since null $T = {0}$, then we have $T_{2}v = 0$ so null $T_{1} = $ null $T_{2}$.
+
+If null $T_{1} = $ null $T_{2}$, then we have $(v_{1},\cdots, v_{n})\, T_{1}v_{i} \neq 0, T_{2}v_{i} \neq 0$.
+So we can define $S$ as 
+\[S(T_{2}v) = T_{1}v\, v\in (v_{1}, \cdots, v_{n})\]
+
+because $S$ is both injective and surjective.
+
+\subsubsection*{3.D.5}
+
+If $\exists S$, $T_{1}v = (T_{2}S)v = T_{2}(Sv) = $ range $T_{2} v\in V$, so range $T_{1} = $ range $T_{2}$.
+
+If range $T_{1} = $ range $T_{2}$, then dim null $T_{1} = $ dim null $T_{2}$, so we have 2 basis that
+\[(v^{'}_{1}, \cdots, v^{'}_{m}, w^{'}_{1}, \cdots, w^{'}_{n})\, T_{1}v = 0, T_{1}w \neq 0\]
+and
+\[(v^{''}_{1}, \cdots, v^{''}_{m}, w^{''}_{1}, \cdots, w^{''}_{n})\, T_{2}v = 0, T_{2}w \neq 0\]
+
+So we can get an invertible $S$ that
+\[Sv^{''} = v^{'}, Sw^{''} = w^{'}\]
+
+\subsubsection*{3.D.6}
+
+If $\exists R, \exists S, T_{1} = ST_{2}R$, then $\forall v\in V\, T_{1}v = (ST_{2}R)v $, so null $T_{1} = $ null $ST_{2}R$.
+Because $S,R$ are injective, so dim null $ST_{2}R$ = dim null $T_{2}R = $ dim null $T_{2}$.
+
+If dim null $T_{1} = $ dim null $T_{2}$, then we have 2 basis
+\[(v^{'}_{1}, \cdots, v^{'}_{m}, w^{'}_{1}, \cdots, w^{'}_{n})\, T_{1}v = 0, T_{1}w \neq 0\]
+and
+\[(v^{''}_{1}, \cdots, v^{''}_{m}, w^{''}_{1}, \cdots, w^{''}_{n})\, T_{2}v = 0, T_{2}w \neq 0\]
+
+we make $R$ as $Rv^{'} = Rv^{''}, Rw^{'} = Rv^{''}$ as $S$ as $S(T_{2}v) = T_{1}v$, then we have $T_{1} = ST_{2}R$
+
+
+\subsubsection*{3.D.7}
+\begin{enumerate}[label=(\alph*)]
+\item $E$ is subspace
+If $T_{1} \in E, T_{2} \in E$, then $(T_{1} + T_{2}v = T_{1}v + T_{2}v = 0 + 0 = 0$. $(\lambda T)v = \lambda (Tv) = \lambda \times 0 = 0$, so $E$ is a subspace.
+\item dim $E$
+If $v\neq 0$, then we can expand it to a basis of $V: v, v_{2},\cdots, v_{n}$, so $E$ is actually $L($span$(v_{2}, \cdots, v_{n}), W)$, so 
+dim $E = ($ dim $V) - 1) \times $ dim $W$.
+\end{enumerate}
+
+\subsubsection*{3.D.8}
+
+$V \to W$ is surjective, so suppose null $T = (v_{1}, \cdots, v_{n})$, then we can extend null $T$ to a basis of $V: (v_{1}, \cdots, v_{n}, w_{1},\cdots, w_{m}$.
+It's easy to know that $T_{w} \neq 0$, and it's a basis of W.
+
+No define $U = $ span $(w_{1}, \cdots, w_{m}$, and $T|_{U}$ is both injective and surjective, so $T|_{U}$ is isomorphism of $U$ onto $W$.
+
+\subsubsection*{3.D.9}
+
+If $S,T$ are invertible, so 
+
+\[ST\times T^{-1}S^{-1} = S(TT^{-1})S^{-1} = SS^{-1} = I \]
+
+and
+
+\[T^{-1}S^{-1}\times ST = T^{-1}(S^{-1}S)T = T^{-1}T = I \]
+
+so $ST$ is surjective.
+
+IF $ST$ is invertible, then $\forall v, \exists R$ that $R(STv) = I$. If $S$ or $T$ is not inevtible, then $\exists v $ that $STv = 0$, then $Rv = 0$ which is a counter case 
+of $R(STv) = I$, so both $S$ and $T$ are invertible.
+
+\subsubsection*{3.D.10}
+
+If $ST = I$, so dim $S = $ dim $V$, so $S$ is surjective: if not so, there would be some $v$ not in range $S$, so $STv \neq v$. $V$ is fixed dimensional, so $S$ is invertible because $3.69$.
+
+\[S^{-1}ST = S^{-1}I = S^{-1} = T\]
+
+so $TS = I$.
+
+\subsubsection*{3.D.11}
+
+Because $3.D.10$, we have $S^{-1} = TU$ and $U^{-1} = ST$.
+
+\begin{equation*}
+    \begin{split}
+    STU &= I \\
+    S^{-1}STU &= S^{-1} \\
+    TU &= S^{-1} \\
+    TUS &= I
+\end{split}
+\end{equation*}
+and 
+
+\begin{equation*}
+    \begin{split}
+    STU &= I \\
+    USTU &= U \\
+    USTUU^{-1} &= UU^{-1} \\
+    UST &= I
+\end{split}
+\end{equation*}
+so we have $T^{-1} = US$
+
+\subsubsection*{3.D.13}
+
+Since $V$ is finite dimensional, and $RST$ is surjective, then $RST$ is invertible (3.69); In $3.D.9$, we know that $ST$ is invertable, then $S$ is invertible, so $S$ is injective.
+
+\subsubsection*{3.D.14}
+
+Injective: $\forall v \in V, v \neq 0, \exists a_{1}, \cdots, a_{n}$ that $Tv = [a_{1}, \cdots, a_{n}] \neq {0}$, so $T$ is injective, so $T$ is invertible because $3.69$.
+
+\subsubsection*{3.D.15}
+
+In $3.64$, we have $M(T)_{.,k} = M(v_{k})$, Consider a basis of $V: (v_{1} = [1, 0, \cdots, 0], \cdots, v_{n} = [0, \cdots, 1])$ and a matrix $M$:
+\[
+\begin{pmatrix}
+Tv_{1}, \cdots, Tv_{n}
+\end{pmatrix}
+\]
+
+for any $T$, It's easy to see that $Mv = Tv$.
+
+\subsubsection*{3.D.20}
+
+The first one equals that
+
+\begin{equation}
+    \begin{vmatrix}
+    M
+    \end{vmatrix} . 
+    \begin{bmatrix}
+    x_{1} \\ \cdots \\ x_{n}
+    \end{bmatrix}  = 0
+\end{equation}
+
+If $x_{1} = \cdots = x_{n} = 0$, means $M$ is injective.
+
+The 2nd one equals that
+
+\begin{equation}
+    \begin{vmatrix}
+    M
+    \end{vmatrix} . 
+    \begin{bmatrix}
+    x_{1} \\ \cdots \\ x_{n}
+    \end{bmatrix} = 
+    \begin{bmatrix}
+    c_{1} \\ \cdots \\ c_{n}
+    \end{bmatrix}
+\end{equation}
+
+exists a solution, which means that $M$ is invertible, 
+they are equivalent because $3.69$.
+
+\subsection*{3.E}
+\subsubsection*{3.E.1}
+
+If $T$ is linear, $\forall v_{1}, v_{2} \in T$, we have $T(v_{1} + v_{2}) = T(v_{1}+v_{2})$, which implies 
+\[(v_{1}, Tv_{1}) + (v_{2}, Tv_{2}) = (v_{1}+v_{2}, Tv_{1} + Tv_{2}) = (v_{1} + v_{2}, T(v_{1} + v_{2}))\]
+
+using $3.71$. So graph of $T$ is close under addition.
+
+This process also works under scalar multiplication:
+
+\[\lambda Tv = T(\lambda v)\]
+
+so 
+
+\[\lambda (v, Tv) = (\lambda v, \lambda Tv) = (\lambda v, T(\lambda v))\]
+
+so graph of $T$ is linear.
+
+If graph of $T$ is linear, just reverse the process above, we will see that T is linear.
+
+\subsubsection*{3.E.2}
+
+In $3.76$, we have 
+\[dim(V_{1} \times \cdots \times V_{m} = dim V_{1} + \cdots + dim V_{m}\] 
+
+so if $V_{1} \times \cdots \times V_{m}$ is finite-dimensional, then each vector space should be finite-dimensional.
+
+\subsubsection*{3.E.3}
+
+Make $U_{1} = P(R), $ and $U_{2} = P(R)$, then 
+\[U_{1} \times U_{2} = a, a^{'}, bx, b^{'}x + \cdots \]
+and 
+\[U_{1} + U_{2} = P(R) = P(R)\]
+
+they are isomorphic because $T$ is invertible if we define $T$ as:
+\[T(U_{1} \times U_{2}） = T(a, a^{'}, bx, b^{'}x + \cdots) = a + a^{'}x + bx^{2} + x^{'}x^{3} + \cdots\]
+
+and apparently $U_{1}+U_{2}$ are not direct sum.
+
+\subsubsection*{3.E.4}
+
+$L(V_{1}\times \cdots \times V_{m}, W)$ are maps from $(v_{1}, \cdots, v_{m}) \implies w, w\in W$. Now make $v_{1}, \cdots, v_{m}$ are the only non-zero item in the vector, then the map $S_{0}, \cdots, S_{m}$ would be the same as $T = L(V_{i}, W)$, which means than $\forall T\in L(V, w)$, there is a map equals to it.
+
+For all $S \in L(V_{1}\times \cdots \times V_{m}, W)$, we can split use the previously step, so define
+\[R(S) = R(S_{0} + \cdots + S_{m}) = (T_{0} , \cdots , T_{m}) \]
+
+so 
+
+\[S\implies T\] is injective.
+
+Now consider the other direction, 
+\[R(T_{0} , \cdots , T_{m}) = S_{0} + \cdots + S_{m} = S\]
+
+$R$ is also injective. Singe the map are injective both direction, so it's a invertible.
+
+\subsubsection*{3.E.5}
+
+This exercise works like $3.E.4$, make $w_{1}, \cdots, w_{m}$ to a vector with only 1 non-zero tiem, then the map equals to $L(V, W_{i})$. so we can find 2 injective mapping with reverse direction.
+
+\subsubsection*{3.E.7}
+
+If $u = 0$, which also belongs to $U$, so $\exists w_{1}$ that 
+\[v + 0 = x + w_{1}\]
+
+and for any non-zero $u \in U, \exists w_{2} \in W$ that
+\[v + u = x + w_{2}\] 
+
+now use the 2nd equation minus the 1st equation, we got:
+\[u = w_{2} - w_{1}\]
+
+Since $W$ is subspace, so $\forall u \in W$, so $U = W$.
+
+\subsubsection*{3.E.8}
+
+If $A$ is a affine subset, then $\exists u, U: u\in V, A = u + U$. $\forall v, w \in A, \lambda \in F, \exists v^{'}, w^{'} \in U$, that
+
+\begin{equation*}
+    \begin{split}
+    v &= u + v^{'} : v^{'} \in U \\
+    w &= u + w^{'} : w^{'} \in U \\
+    \lambda v + (1-\lambda)w &= \lambda(u + v^{1}) + (1-\lambda)(u+w^{'}) \\
+    &= \lambda u + \lambda v^{'} + (1-\lambda)u + (1-\lambda)w^{'} \\
+    &= u + \lambda v^{'} + (1-\lambda)w^{'}
+\end{split}
+\end{equation*}
+
+Since $U$ is subspace,so $(\lambda v^{'} + (1-\lambda)w^{'}) \in U$, then $(u+\lambda v^{'} + (1-\lambda)w^{'}) \in A$.
+
+To prove that $A$ is affine subset, define $U = {A - v: v\in A, v\neq 0}$, we need to prove that $U$ is a vector space.
+
+$\forall a\in A, (a-v)\in U$, so $\forall \lambda \in F$,
+
+\begin{equation*}
+    \begin{split}
+    \lambda (a-v) &= \lambda a - \lambda v \\
+    &= \lambda a + v - \lambda v -v \\
+    & = \lambda a + (1-\lambda)v -v \\
+    &= (\lambda a + (1-\lambda)v) - v \in {A-v} = U
+\end{split}
+\end{equation*}
+so $U$ is close under scalar multiplication.
+
+$\forall a, b \in A$, $a-v \in U, b-v\in U$, so $(a-v)/2 \in U, (b-v)/2 \in U$ (by the previously steps).
+\begin{equation*}
+    \begin{split}
+    \frac{a-v}{2} + \frac{b-v}{2} &= \frac{a}{2} + \frac{b}{2} - v \\
+    &= \frac{1}{2}a + (1-\frac{1}{2})b -v \\
+    &= (\lambda a + (1-\lambda)b) -v \in {A-v} = U
+    \end{split}
+\end{equation*}
+
+so $U$ is close under addition.
+
+\subsubsection*{3.E.9}
+
+If $A_{1} \cap A_{2} $ is not empty, then there would be at least 1 vector $v$ in both affine subsets, then we have
+\[A_{1} = v + U_{1}, A_{2} = v + U_{2}\] 
+because $3.85$. Now let's talk about $U_{1}, U_{2}$: 
+
+If $U_{1} \cap U_{2} = {0}$, then $v + {0}$ is a affine subset.
+
+If $U_{1} \cap U_{2} = U_{3} \neq {0}$, then it's easy to know that $U_{3}$ is also a subspace, then
+
+\begin{equation*}
+    \begin{split}
+    A_{1} \cap A_{2} &= {v + U_{1}} \cap {v + U_{2}} \\
+    &= {v + U_{1}\cap U_{2}} \\
+    &= {v + U_{3}}
+        \end{split}
+\end{equation*}
+
+so $A_{1} \cap A_{2} $ is a affine subset or empty.
+
+\subsubsection*{3.E.10}
+
+Use the solution of $3.E.9$, merge 2 affine subsets into a new affine subsets, or a blank set. 
+
+\subsubsection*{3.E.11}
+
+\begin{enumerate}[label=(\alph*)]
+\item $A$ is affine subset
+
+like $3.E.8$, we prove that $A-v: v\in A$ is a subspace. It's easy to know that $v_{1} \in A$ because $\lambda_{1} = 1$ will prove that.
+
+\begin{equation*}
+    \begin{split}
+    k (A-v_{1}) &= k(\lambda_{1} - 1)v_{1} + k\lambda_{2}v_{2} + \cdots + k\lambda_{m}v_{m} \\
+    &= k(\lambda_{1} - 1)v_{1} + k\lambda_{2}v_{2} + \cdots + k\lambda_{m}v_{m} + v_{1} - v_{1} \\
+    &= (k\lambda_{1} - k + 1)v_{1} + k\lambda_{2}v_{2} + \cdots + k\lambda_{m}v_{m}  - v_{1}
+    \end{split}
+\end{equation*}
+
+$(k\lambda_{1} - k + 1) + k\lambda_{2} + \cdots + k\lambda_{m} = k\sigma_{1}^{m}\lambda - k + 1 = 1$, 
+so $\forall v \in (A-v_{1}), kv \in (A-v_{1})$, which means $A-v_{1}$ is close under multiplication.
+
+The same trick works on addition
+
+\begin{equation*}
+    \begin{split}
+    (\lambda_{11} - 1)v_{1} + \lambda_{21}v_{2} + \cdots + \lambda_{m1}v_{m} &+ \\
+    (\lambda_{12} - 1)v_{1} + \lambda_{22}v_{2} + \cdots + \lambda_{m2}v_{m} &= (\lambda_{11} - 1)v_{1} + \lambda_{21}v_{2} + \cdots + \lambda_{m1}v_{m} +\\
+    & (\lambda_{12} - 1)v_{1} + \lambda_{22}v_{2} + \cdots + \lambda_{m2}v_{m} + v_{1} - v_{1} \\
+    &= (\lambda_{11} + \lambda_{21} - 1)v_{1} + (\lambda_{21}+\lambda_{22})v_{2} + \cdots + (\lambda_{m1}+\lambda_{m2})v_{m} - v_{1} \\
+    \sigma_{1}^{m}\lambda_{1} + \sigma_{1}^{m}\lambda_{2} - 1 &= 1 + 1 - 1 \\
+    &= 1
+    \end{split}
+\end{equation*}
+
+so $A-v_{1}$ is close under addition, Which means $A$ is affine subset.
+
+
+\item dim $E$
+If $v\neq 0$, then we can expand it to a basis of $V: v, v_{2},\cdots, v_{n}$, so $E$ is actually $L($span$(v_{2}, \cdots, v_{n}), W)$, so 
+dim $E = ($ dim $V) - 1) \times $ dim $W$.
+\end{enumerate}
 \newpage
