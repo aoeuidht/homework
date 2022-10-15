@@ -1,0 +1,257 @@
+\section{chapter 4}
+\section{chapter 5}
+\subsection*{5.A}
+\subsubsection*{5.A.1}
+
+\begin{enumerate}[label=(\alph*)]
+\item Since $U$ is a subspace of $V$, then $0\in U$. $U\subset $ null $T$, so $\forall u\in U, T(u) = 0 \in U $, so $U$ is invariant.
+\item $\forall u\in U, T(u)\in $ range $T \subset U$, so $T(u) \in U$, so $U$ is invariant.
+\end{enumerate}
+
+\subsubsection*{5.A.2}
+
+$\forall s \in $ null $S, T(s) \in $ null $S$. Prove:
+
+\[S(T(s)) = T(S(s)) = T(0) = 0 \implies T(s) \in null S \].
+
+\subsubsection*{5.A.3}
+
+$\forall s \in $ range $S, \exists s^{'} \in V, S(s^{'}) = s. T(s) = T(S(s^{'})) = S(T(s^{'})) \in $ range $S$, so range $S$ is invariant under $T$.
+
+\subsubsection*{5.A.4}
+
+\[\forall u \in U_{1} + \cdots + U_{m}, u = u_{1} + \cdots + u_{m} \]
+\[T(u) = T(u_{1}) + \cdots + T(u_{m}) \in U_{1} + \cdots + U_{m} \]
+so $U_{1} + \cdots + U_{m}$ is invariant under $T$.
+
+\subsubsection*{5.A.5}
+If not, $\exists v \in $ intersections of $\VEC{V}{n}, T(v) \notin $ intersections of $\VEC{V}{n}$. 
+So $\exists V_{i}, T(v) \notin V_{i}$, which is counter case of $V_{i}$ is invariant.
+
+\subsubsection*{5.A.6}
+The hypothesis is correct. If $U$ is a subspace of $V$ and $U \neq V, U\neq 0$, then there must a basis of $U \VEC{v}{m}$, and we can extend it to a basis of $V \VEC{v}{n}$. Then $U$ is not invariant under T:
+
+\[
+T(u_{i}) =
+\begin{cases}
+u_{i+1}, & 0<i<n \\
+u_{1}, & i= n\\
+\end{cases}
+\]
+
+because $T(u_{m}) = u_{m+1} \notin U$.
+
+\subsubsection*{5.A.7}
+
+\begin{equation*}
+    \begin{split}
+    T(x, y) &= \lambda (x, y) \\
+    \lambda(x, y) &= (-3y, x) \\
+    \lambda x &= -3y \\
+    \lambda y &= x \\
+    \lambda\lambda y & = -3y \\
+    \lambda^{2} &= -3
+    \lambda &= \sqrt{3}i and \lambda = -\sqrt{3}i
+\end{split}
+\end{equation*}
+
+Since $T\in$ L$(R^{2})$, so there is no eigenvalues of $T$.
+
+\subsubsection*{5.A.8}
+
+\begin{equation*}
+    \begin{split}
+    T(w, z) &= \lambda (w, z) \\
+    \lambda(w, z) &= (z, w) \\
+    \lambda w &= z \\
+    \lambda z &= w \\
+    \lambda\lambda w & = w \\
+    \lambda^{2} &= 1
+    \lambda &= 1 and \lambda = -1
+\end{split}
+\end{equation*}
+
+The eigenvalues are 1 and -1, the eigenvectors are $(w, w) and (w, -w)$.
+
+\subsubsection*{5.A.9}
+\begin{equation*}
+    \begin{split}
+    T(z_{1}, z_{2}, z_{3}) &= \lambda (z_{1}, z_{2}, z_{3}) \\
+    \lambda(z_{1}, z_{2}, z_{3}) &= (2z_{2}, 0, 5z_{3}) \\
+    \lambda z_{1} &= 2z_{2} \\
+    \lambda z_{2} &= 0 \\
+    \lambda z_{3} &= 5z_{3}
+\end{split}
+\end{equation*}
+
+so $\lambda = 5$ and the eigenvector is $(0, 0, w)$.
+
+\subsubsection*{5.A.10}
+
+\begin{enumerate}[label=(\alph*)]
+\item the eigenvalues are $1, 2, \cdots, n$, the eigenvectors are $(w, 0, \cdots, 0), (0, w, 0, \cdots, 0), \cdots, (0, \cdots, 0, w)$.
+\item the invariant spaces are $span((\VEC{w}{n})) \exists w_{i} \neq 0$ or ${0}$.
+\end{enumerate}
+
+\subsubsection*{5.A.11}
+Since the degree of $p^{'}$ is degree $p - 1$, so the eigenvalue is 0, and the eigenvector is $0$.
+
+\subsubsection*{5.A.12}
+
+For $p\in P_{4}, p = a_{4}x^{4} + a_{3}x^{3} + a_{2}x^{2} + a_{1}x + a_{0}$, so 
+\begin{equation*}
+    \begin{split}
+    xp^{'}(x) &= x(4a_{4}x^{3} + 3a_{3}x^{2} + 2a_{2}x + a_{1}) \\
+    &= 4a_{4}x^{4} + 3a_{3}x^{3} + 2a_{2}x^{2} + a_{1}x \\
+    & = \lambda (a_{4}x^{4} + a_{3}x^{3} + a_{2}x^{2} + a_{1}x + a_{0})
+\end{split}
+\end{equation*}
+
+so the eigenvalues are $4, 3, 2, 1, 0$ and eigenvectors are $wx^{4}, wx^{3}, wx^{2}, wx, w$
+
+\subsubsection*{5.A.14}
+
+\[P(u+w) = \lambda (u+w) = \lambda u + \lambda w = u\]
+
+the equation works only if $\lambda = 1, w=0$ or $\lambda = 0, u = 0$.
+so when $\lambda = 1$, the eigenvectors are $ u\in U, u\neq 0$; when $\lambda = 0$, the eigenvectors are $w \in W, w\neq 0$.
+
+\subsubsection*{5.A.15}
+\begin{enumerate}[label=(\alph*)]
+\item have the same eigenvalues
+\begin{equation*}
+    \begin{split}
+    T(v) &= \lambda v \\
+    T(S(u)) &= \lambda S(u) ; v = S(u) because S is invertible \\
+    S^{-1}T(S(u)) &= S^{-1}(\lambda S(u)) \\
+    S^{-1}TS(u) &= \lambda S^{-1}S(u) \\
+    S^{-1}TS(u) &= \lambda u
+\end{split}
+\end{equation*}
+
+\item eigenvectors of $T$  are the vectors after transaction (by $S$) of eigenvectors of $S^{-1}TS$.
+\end{enumerate}
+
+\subsubsection*{5.A.17}
+
+Consider $T$ as:
+
+\[
+\begin{pmatrix}
+0 & 0 & 0 & 1 \\
+2 & 0 & 0 & 0 \\
+0 & 3 & 0 & 0 \\
+0 & 0 & 4 & 0
+\end{pmatrix}
+\]
+
+\subsubsection*{5.A.18}
+
+If $\lambda$ is a eigenvalue of $T$, then we have
+
+\begin{equation*}
+    \begin{split}
+    T(z_{1}, z_{2}, \cdots) &= \lambda (z_{1}, z_{2}, \cdots) \\
+    (0, z_{1}, z_{2}, \cdots) &= \lambda (z_{1}, z_{2}, \cdots) \\
+    0 &= \lambda z_{1}, z_{1} = \lambda z_{2}, z_{2} = \lambda z_{3}, \cdots \\
+    0 &= z_{1} = z_{2} = \cdots
+\end{split}
+\end{equation*}
+Which is conflict with the define of eigenvalue because in $5.5$, there is a rule  $v\neq 0$.
+
+\subsubsection*{5.A.19}
+
+The eigenvalues are $(0, n)$.
+If eigenvalue is n, then eigenvectors are $v = (a, a, \cdots), a \neq 0$; If eigenvalue is 0, then $v = (\VEC{x}{n}), \sum_{i=1}^{n}x_{n} = 0$.
+
+\subsubsection*{5.A.20}
+
+The eigenvalues are $F$.
+If eigenvalue is 0, then eigenvectors are $(z, 0, 0, \cdots), z\in F, z \neq 0$; if eigenvalue $\lambda$ is not 0, then eigenvectors are $(z, \lambda z,\lambda^{2}z,\cdots), z\neq 0$.
+
+\subsubsection*{5.A.21}
+\begin{enumerate}[label=(\alph*)]
+\item \\
+suppose $u$ is one eigenvector of $T$, then we have
+\begin{equation*}
+    \begin{split}
+    T(u) &= \lambda u \\
+    T^{-1}T(u) &= T^{-1}(\lambda u) \\
+    T^{-1}(\lambda u) &= u \\
+    T^{-1}(\lambda u) &= \frac{1}{\lambda}\lambda u \\
+\end{split}
+\end{equation*}
+
+\item 
+If $T(u) = \lambda u$, then
+\begin{equation*}
+    \begin{split}
+    u &= T^{-1}T(u) \\
+    &= T^{-1}(\lambda u) \\
+    \frac{1}{\lambda} &= T^{-1}(\frac{1}{\lambda}\lambda u) \\
+    T^{-1}u &= \frac{1}{\lambda}u
+\end{split}
+\end{equation*}
+\end{enumerate}
+
+\subsubsection*{5.A.22}
+
+\begin{equation*}
+    \begin{split}
+    T(v) &= 3w, T(w) = 3v \\
+    T(v + w) &= 3(w+v), T(v - w) = 3(w-v) = -3(v-w)
+\end{split}
+\end{equation*}
+
+\subsubsection*{5.A.23}
+
+suppose $\lambda$ is an eigenvalue of $ST$, and $v$ is an eigenvector:
+\begin{equation*}
+    \begin{split}
+    T(ST)v &= T(\lambda v) \\
+    & = \lambda T(v) \\
+    TS(Tv) &= \lambda T(v)
+\end{split}
+\end{equation*}
+
+so $\lambda$ is also the eigenvalue of $TS$.
+
+\subsubsection*{5.A.24}
+
+\begin{enumerate}[label=(\alph*)]
+\item If $v = (i,\cdots, i)^{t}$, then 1 is the eigenvalue of $T$
+\item 
+\end{enumerate}
+
+\subsubsection*{5.A.25}
+
+If $u, v$ are corresponding to eigenvalues $\lambda_{1}, \lambda_{2}$, suppose $T(u+v) = \lambda_{3}(u+v)$, then we have
+
+\begin{equation*}
+    \begin{split}
+    T(0) &= 0 \\
+    T(u+v - u - v) & = 0\\
+    &= T(u+v) - T(u) - T(v) \\
+    &= \lambda_{3}(u+v) - \lambda_{1}u - \lambda_{2} v \\
+    0 &= (\lambda_{3} - \lambda_{1})u + (\lambda_{3} - \lambda_{2}) v \\
+    \lambda_{1} &= \lambda_{2} = \lambda_{3}
+\end{split}
+\end{equation*}
+
+\subsubsection*{5.A.26}
+
+With the help of $5.A.25$, we know that all vectors have the same eigenvalue, so it's a scalar multiple of the identity operator.
+
+\subsubsection*{5.A.27}
+
+From $5.A.26$, if T is not a scalar multiple of the identify operator, then $\exists u\in V$ and $u$ is not an eigenvector. so $(u, Tu)$ is not linearly independent. Extend it to a basis of $V: (u, Tu, v_{1}, \cdots, v_{n-2})$. Remove $Tu$ from the basis, we can get $U = $ span$(u, v_{1}, \cdots, v_{n-2}$, which is a subspace of $V$ whose dimension is $n-1$. 
+
+Now we have $u\in U$ and $Tu \notin U$, which is a conflict with any subspace with dimension $n-1$ is invariant under $T$.
+
+\subsubsection*{5.A.28}
+
+From $5.A.26$, if T is not scalar multiple of the identify operator, then $\exists u\in V$ and $u_{1}$ is not an eigenvector. Append two linear independent vectors, we got $(u_{1}, u_{2}, u_{3})$.
+
+Since $u_{1}$ is not eigenvector, consider $U$ = span$(u_{1}, u_{2})$, if $Tu_{1} \notin U$, then $U$ is not invariant under $T$; If $Tu_{1} \in U$, then $U_{2}=$span$(u_{1}, u_{3})$ is not invariant under $T$, so $T$ must be a scalar multiple of the identify operator.
+
+\newpage

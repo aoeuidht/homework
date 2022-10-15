@@ -773,6 +773,7 @@ If graph of $T$ is linear, just reverse the process above, we will see that T is
 \subsubsection*{3.E.2}
 
 In $3.76$, we have 
+
 \[dim(V_{1} \times \cdots \times V_{m} = dim V_{1} + \cdots + dim V_{m}\] 
 
 so if $V_{1} \times \cdots \times V_{m}$ is finite-dimensional, then each vector space should be finite-dimensional.
@@ -780,12 +781,15 @@ so if $V_{1} \times \cdots \times V_{m}$ is finite-dimensional, then each vector
 \subsubsection*{3.E.3}
 
 Make $U_{1} = P(R), $ and $U_{2} = P(R)$, then 
+
 \[U_{1} \times U_{2} = a, a^{'}, bx, b^{'}x + \cdots \]
+
 and 
+
 \[U_{1} + U_{2} = P(R) = P(R)\]
 
 they are isomorphic because $T$ is invertible if we define $T$ as:
-\[T(U_{1} \times U_{2}） = T(a, a^{'}, bx, b^{'}x + \cdots) = a + a^{'}x + bx^{2} + x^{'}x^{3} + \cdots\]
+\[T(U_{1} \times U_{2}) = T(a, a^{'}, bx, b^{'}x + \cdots) = a + a^{'}x + bx^{2} + x^{'}x^{3} + \cdots\]
 
 and apparently $U_{1}+U_{2}$ are not direct sum.
 
@@ -920,9 +924,372 @@ The same trick works on addition
 
 so $A-v_{1}$ is close under addition, Which means $A$ is affine subset.
 
+\item $W\supset A$
 
-\item dim $E$
-If $v\neq 0$, then we can expand it to a basis of $V: v, v_{2},\cdots, v_{n}$, so $E$ is actually $L($span$(v_{2}, \cdots, v_{n}), W)$, so 
-dim $E = ($ dim $V) - 1) \times $ dim $W$.
+Since $v_{1}\in B$ (B is a affine subset of $V$ than $v_{1},\cdots,v_{m} \in B$, then we have $B = v_{1} + W$, $W$ is a subspace of $V$(because 3.85). also we have $v_{2}-v_{1}, \cdots, v_{m}-v_{1} \in W$.
+
+So it's easy to know that $\forall \lambda_{2},\cdots, \lambda_{m} \in F$
+
+\begin{equation*}
+    \begin{split}
+\lambda_{2}(v_{2}-v_{1}) + \cdots + \lambda_{m}(v_{m}-v_{1}) &\in W \\
+v_{1} + \lambda_{2}(v_{2}-v_{1}) + \cdots + \lambda_{m}(v_{m}-v_{1}) &\in B \\
+v_{1} + \lambda_{2}(v_{2}-v_{1}) + \cdots + \lambda_{m}(v_{m}-v_{1}) &= (1-\lambda_{2} - \cdots - \lambda_{m})v_{1} + \lambda_{2}v_{2} + \cdots + \lambda_{m}v_{m} \\
+(1-\lambda_{2} - \cdots - \lambda_{m}) &= \lambda_{1} \\
+\lambda_{1} + \cdots + \lambda_{m} &= 1 \\
+v_{1} + \lambda_{2}(v_{2}-v_{1}) + \cdots + \lambda_{m}(v_{m}-v_{1}) &\in A
+    \end{split}
+\end{equation*}
+
+\item dim $U\leq m-1$
+Consider the vector $(v_{1} - v_{1}, v_{2} - v_{1}, \cdots, v_{m} - v_{1})$, there is a $0$ and less than or equal to $m-1$ non-zero items. Based on 3.85, span$(v_{2}-v_{1}, \cdots, v_{m}-v_{1}) + v = A$. Based on $2.31$, dimension of span$(v_{2}-v_{1}, \cdots, v_{m}-v_{1}) \leq m-1$.
 \end{enumerate}
+
+\subsubsection*{3.E.12}
+
+Because $U$ is a subspace of $V$, so there exists a subspace $W$ of $V$ that $V = U \oplus W$. $\forall v\in V, v = w + u: w\in W, u\in U$. It's easy to know that $W$ is isomorphic to $V/U$ because $v+U = w + U$.
+
+now we add $U$ into the equation, $U\times W$ is isomorphic to $U \times V/U$, which equals to that $V$ is isomorphic to $U\times V/U$.
+
+\subsubsection*{3.E.13}
+
+Firstly, $v_{1},\cdots,v_{m}, u_{1},\cdots,u_{n}$ is linear independent, because if it's not, then we will get a counter example that $v_{1}+U,\cdots, v_{m}+U$ is a basis of $V/U$.
+
+If $v_{1},\cdots,v_{m}, u_{1},\cdots,u_{n}$ cant span $V$, then there exists a $w\in V$ that $v_{1},\cdots,v_{m}, u_{1},\cdots,u_{n}, w$ is linear independent, then $v_{1}+U,\cdots, v_{m}+U, w+U$ is linear independent, which is also a counter example of $v_{1}+U,\cdots, v_{m}+U$ is a basis of $V/U$.
+
+\subsubsection*{3.E.14}
+
+\begin{enumerate}
+    \item subspace
+    
+    If $u\in U$, then $\lambda u = {(\lambda x_{1}, \lambda x_{2},\cdots )}$, it's easy to see that there are finitely non zero elements, because $\lambda 0 = 0$. for $u_{1}\in U, u_{2} \in U$, $u_{1} + u_{2}$ is also has finitely non zero elements because the max number of non zero elements is the sum of count of non zero elements in the 2 vectors.
+
+    \item infinite-dimensional
+    
+    Make 
+    \[v_{j} = (x_{1},x_{2},\cdots) \in F^{\infty}, x_{i} = 0\, if\, i < j, x_{i} = 1\, if\, i \geq j\]
+    
+    and
+    
+    \[W = {v_{i} i\in F}\]
+    
+    $W$ is a subspace of $F^{\infty}$ and it's infinite dimensional, also $W\cap U = {0}$, so $W/U$ is infinite dimensional, so $F^{\infty}/U$ is infinite-dimensional.
+\end{enumerate}
+
+\subsubsection*{3.E.15}
+
+$\phi \in L(V, F)$, so dim null($\phi$) = dim $V$ - dim $F$ = dim $V$ - 1, so dim $V/(null \phi)$ = dim $V$ - (dim $V$ - 1) = 1.
+
+\subsubsection*{3.E.16}
+
+dim $V/U = 1$, so dim $U = $ dim $V - 1$ (3.89), so for a basis of $U: (u_{1}, \cdots, u_{n})$, we can expand it to a basis of $V: (u_{1}, \cdots, u_{n}, v)$. 
+
+$\forall v = a_{1}u_{1}+\cdots a_{n}u_{n} + bv$, define 
+\[\phi(v) = b\]
+
+$\phi \in L(V, F)$ and it's easy to check  null $\phi = U$.
+
+\subsubsection*{3.E.16}
+
+Use the proof of $3.E.13$, the basis of $W$ is $v_{1}, \cdots, v_{n}$.
+
+\subsection*{3.F}
+\subsubsection*{3.F.1}
+
+If $\varphi$ is a linear function, and $\varphi(V) = {0} $, then it's a zero map. If not, then dim(range($\varphi$)) = 1, and it's surjective because dim(F) = 1.
+
+\subsubsection*{3.F.3}
+
+$\exists \varphi^{'} \in V^{'}$ that $\varphi^{'}(v) \neq 0$. then make $\varphi = (\varphi^{'}(v))^{-1}$.
+
+\subsubsection*{3.F.4}
+
+Suppose $u_{1}, \cdots, u_{m}$ is a basis of $U$ and $u_{1}, \cdots, u_{m}, v_{1},\cdots, v_{n}$ is a basis of $V$ because $V\neq U$. then use $3.96$, $\varphi_{m+1},\cdots,\varphi_{m+n}$ are the target linear functions we're looking for.
+
+\subsubsection*{3.F.5}
+
+They're isomorphic because they have the same dimension.
+
+based on $3.95, 3.76$, dim $(V_{1}\times \cdots \times V_{m})^{'} = $ dim $(V_{1}\times \cdots \times V_{m})$ = dim $V_{1} + \cdots + $dim $V_{m}$
+
+and dim $V_{1}^{'}\times \cdots \times V_{m}^{'}$ = dim $V_{1}^{1}+\cdots +$ dim $V_{m}^{'}$ = dim $V_{1} + \cdots + $dim $V_{m}$.
+
+\subsubsection*{3.F.6}
+
+(a)
+
+If $v_{1},\cdots,v_{m}$ can't span $V$, then $\exists v\in V, \notin$ span $(v_{1}, \cdots, v_{m})$. Now we can find a function $\varphi$ using $3.96$, then $\varphi \in $ null $\Gamma \neq {0}$, Which in a counter case.
+
+
+When $\Gamma$ is injective, then null $\Gamma = {0}$. If $v_{1},\cdots,v_{m}$ can't spans $V$, then we can find a function $\varphi \in V^{'}$  and $G(\varphi) = 0$ using the same step, which is a counter case of null $\Gamma = 0$.
+
+(b) 
+
+If $v_{1},\cdots,v_{m}$ is linearly independent, make $W = $span($v_{1},\cdots,v_{m}$), then dim $W$ = m. According to $3.106$, dim $V$ = dim $W$ + dim $W^{0}$.
+
+Now consider $\Gamma$ as a transaction, dim $V^{'} = $ dim null $\Gamma$ + dim range $\Gamma$. 
+
+$\forall w^{0} \in W^{0}, \Gamma(w^{0}) = 0$, so dim null $\Gamma = $ dim $W^{0}$. so range $\Gamma = $ range $W = m$. Then it's surjective because dim $\Gamma = m = $ dim $(F^{m})$.
+
+The calculation works on counter direction, so dim $W = m$, then $v_{1}, \cdots, v_{m}$ are linearly independent.
+
+\subsubsection*{3.F.7}
+
+for $p_{m} = x^{m}$, it's easy to know that
+\[
+\varphi_{j}(p_{m}) =
+\begin{cases}
+p^{m-j}(0) = 0,&j<m \\
+1,&j=m \\
+0,&j>m \\
+\end{cases}
+\]
+
+which matches the define of $3.96$.
+
+\subsubsection*{3.F.8}
+(a)
+
+The degrees of each element are $(0,1,2,\cdots, m)$, so they are linearly independent.
+
+(b)
+
+Let's refer $3.F.7$, it's dual basis is
+\[
+\varphi(j)(p) = \frac{p^{j}(5)}{j!}
+\]
+
+
+\subsubsection*{3.F.9}
+
+Since $\varphi_{1},\cdots,\varphi{n}$ is the dual basis, then we have
+\[
+\psi = a_{1}\varphi_{1} + \cdots + a_{n}\varphi_{n} 
+\]
+
+Based on $3.96$, $\psi(v_{i}) = 0 + \cdots + a_{i}\times 1+\cdots+0$, so $a_{i} = \psi(v_{i})$
+
+Then we have
+\[
+\psi = \psi(v_{1})\varphi_{1} + \cdots + \psi(v_{n})\varphi_{n}
+\]
+
+\subsubsection*{3.F.11}
+
+If $\exists (\VEC{c}{m}), (\VEC{d}{n})$ and $A_{i,k} = c_{j}d_{k}$, then we can write $A$ as:
+
+\[
+A = 
+\begin{bmatrix}
+\VEC{c_{1}d}{n} \\
+\VEC{c_{2}d}{n} \\
+\cdots \\
+\VEC{c_{m}d}{n} 
+\end{bmatrix}
+\]
+
+Then we have $A_{1,.} = \frac{A_{i,.} \times c_{1}}{c_{i}} i = 1,\cdots,n$. so the rank of $A$ is 1.
+
+If rank of $A$ is 1, then make $c_{1} = 1, d_{1} = A_{1, 1}$. then $\VEC{d}{n} = A_{1,.}$ 
+and $\VEC{c}{m} = \frac{A_{.,1}}{A_{1,1}}$.
+
+\subsubsection*{3.F.12}
+By $3.99$, we have 
+\[
+\varphi(v) = (T^{'}(\varphi))(T(v)) , v\in V, \varphi \in V^{'}
+\]
+
+Since $T(v) = Iv = v$, then we have $\varphi(v) = (T^{'}(\varphi))(v)), v\in V$, which means 
+$\varphi = T^{'}(\varphi) \implies T^{'}(\varphi) = I\varphi$.
+
+\subsubsection*{3.F.13}
+
+\begin{enumerate}[label=(\alph*)]
+\item 
+\[
+T^{'}(\varphi_{1}) = 4x + 5y + 6z \\
+T^{'}(\varphi_{2}) = 7x + 8y + 9z
+\]
+
+\[ \varphi_{1}(T(v)) = T^{'}(\varphi_{1})(v), v\in R^{3} \]
+\item
+
+\begin{equation*}
+M(T) = 
+\begin{bmatrix}
+4 & 5 & 6 \\
+7 & 8 & 9
+\end{bmatrix}
+\end{equation*}
+\begin{equation*}
+M(T^{'}) = (M(T))^{t} = 
+\begin{bmatrix}
+4 & 7 \\
+5 & 8 \\
+6 & 9
+\end{bmatrix}
+\end{equation*}
+\[
+T^{'}(\varphi_{1}) = 4\psi_{1} + 5\psi_{2} + 6\psi_{3}
+\]
+\[
+T^{'}(\varphi_{2}) = 7\psi_{1} + 8\psi_{2} + 9\psi_{3}
+\]
+
+\end{enumerate}
+
+\subsubsection*{3.F.14}
+\begin{enumerate}[label=(\alph*)]
+\item 
+\begin{equation*}
+    \begin{split}
+T^{'}(\varphi)(x) &= (x^{2}p(x) + p^{''}(x))^{'}(4) \\
+&= 8p(4) + 16p^{'}(4) + p^{'''}(4)
+\end{split}
+\end{equation*}
+
+\item
+\begin{equation*}
+    \begin{split}
+(T^{'}(\varphi))(x^{3}) &= (\varphi \circ T)(x^{3}) \\
+& = \varphi (T(x^{3})) \\
+& = \varphi(x^{5} + 6x) \\
+& = 3 + \frac{1}{6}
+\end{split}
+\end{equation*}
+\end{enumerate}
+
+\subsubsection*{3.F.15}
+Because $3.107.b$, dim null $T^{'} = $ dim null $T +$ dim $W$ - dim $V$. Suppose dim $W = w$, dim $V = v$, then we have
+dim null $T^{'} = $ dim null $T + w - v$.
+
+If dim null $T^{'} = w$, then we have dim null $T =v$, which indicates $T = 0$; and if $T = 0$, we have dim null $T^{'} = w$ which means $T^{1} = 0$.
+
+\subsubsection*{3.F.16}
+Because $3.114.a, M(T^{'}) = (M(T))^{t}$, then for $\forall T\in L(V, W)$, there would be a uniq $T^{'}$ whose matrix is the transpose of the matrix of $T$. It also works the opposite way, so it's a invertible map.
+
+\subsubsection*{3.F.17}
+
+If $U\subset null \varphi$, then $\forall u\in U, u\in null \varphi$, then $\varphi u = 0$, which is exactly the saying in $3.102$.
+\subsubsection*{3.F.18}
+By $3.95 $, dim $V^{'} = $ dim $V$ and $3.106 $, dim $U +$ dim $U^{0} = $ dim $V$, we have
+
+dim $U +$ dim $U^{0} = $ dim $V^{'}$. 
+
+IF $U = 0$, then dim $U^{0} =$ dim $V^{'}$, which means $U^{0} = V'{'}$, and If $U^{0} = V'{'}$ then $U = 0$.
+
+\subsubsection*{3.F.19}
+Leverage the same equation we use in $3.F.18$.
+
+\subsubsection*{3.F.20}
+
+If $W^{0}\not\subset U^{0}$, then $\exists \varphi_{j} \in W^{0}, \notin U^{0}$, $\varphi_{j}$ is the jth element of basis defined in $3.96$. Now consider the jth item of basis in $3.96 v_{j}, \varphi_{j}v_{j} = 1$, so $v_{j} \in U, \notin W$, which is conflict to $U\subset W$
+
+\subsubsection*{3.F.21}
+
+Suppose $\VEC{v}{n}$ is a basis of $V$, and $U\not\subset W$, then there must be a $v_{j} \in U, \notin W$. Now consider 
+$\varphi_{j}$ defined in $3.96$, apparently $\varphi_{j} \in W^{0}, \notin U^{0}$, which is a counter case of $W^{0} \subset U^{0}$.
+
+\subsubsection*{3.F.22}
+Continue using $\varphi_{j}, v_{j}$ defined in $3.96$, the basis of $(U+W)^{0}$ is ${\varphi_{j}, v_{j} \notin U, \notin W}$.
+
+The basis of $U^{0} \cap W^{0}$ is basis of $U^{0} \cap $ basis of $ W^{0}$, 
+which is ${\varphi_{j}, v_{j} \notin U} \cat {\varphi_{j}, v_{j} \notin W}$, 
+it's equal to ${\varphi_{j}, v_{j} \notin U, \notin W}$.
+
+\subsubsection*{3.F.23}
+
+$\varphi_{j}, v_{j}$ are items defined in $3.96$, then
+\begin{equation*}
+    \begin{split}
+(U \cap W)^{0} &= span({\varphi_{i}, v_{i} \notin (U \cap W)}) \\
+U^{0} &= span({\varphi_{i}, v_{i} \notin U}) \\
+W^{0} &= span({\varphi_{i}, v_{i} \notin W}) \\
+U^{0} + W^{0} &= span({\varphi_{i}, v_{i} \notin U}) \cup span({\varphi_{i}, v_{i} \notin W}) \\
+&= span({\varphi_{i}, v_{i} \notin U} \cup {\varphi_{i}, v_{i} \notin W}) \\
+&= span({\varphi_{i}, v_{i} \notin U \cup  v_{i} \notin W}) \\
+&= span({\varphi_{i}, v_{i} \notin (U \cap W)}) \\
+&= (U \cap W)^{0}
+\end{split}
+\end{equation*}
+
+\subsubsection*{3.F.25}
+
+$\forall u \in U, \varphi(u) = 0$ because that's the definition of annihilator.
+
+If $v\in V, \notin U, \varphi(v) =0 \varphi \in U^{0}$, then $v = a_{1}v_{1} + \cdots + a_{n}v_{n}, \VEC{v}{n} $ is a basis of $V$, then by the definition of subspace, $\exists i , a_{i} \neq 0, v_{i} \notin U$. Also, because $\varphi(v) = 0$, so $\varphi_{i} \notin U^{0}$ ($\varphi_{i}$ is the dual basis defined in $3.96$. That is a conflict because $\forall u\in U, \varphi_{i}(u) = 0$ because $v_{i} \notin U$, so $v \in U$ if $\varphi(v) = 0 \forall \varphi \in U^{0}$.
+
+\subsubsection*{3.F.26}
+
+If $\Gamma$ is a subspace of $V^{'}$, then we have its basis $\VEC{\varphi}{n}$. Use $3.96$, define a subspace $U$ of $V$, whose basis is $v_{n+1},\cdots,v_{m}$, use $3.F.25$, it's easy to know that $U^{0} = \Gamma$.
+
+\subsubsection*{3.F.27}
+
+Because $3.107 (a)$: null $T^{'} = ($ range $T)^{0}$. and null $T^{'} = $ span $(\varphi), \varphi(p) = p(8)$, so $\forall p \in $ range $T, \varphi(p) = 0$, which equals to range $T = {p\in P_{i}(R): p(8) = 0}$.
+
+\subsubsection*{3.F.28 & 3.F.29}
+
+Use the method in $3.104$.
+
+\subsubsection*{3.F.30}
+Extend 
+$\VEC{\varphi}{m}$ to $\VEC{\varphi}{n}$, 
+a basis of $V^{'}$, and $\varphi_{i} = a_{i}\varphi^{'}_{1} + \cdots + n_{i}\varphi^{'}_{n}$, 
+$\varphi^{'}$ is the dual basis in $3.96$. 
+So it's easy to know $v_{i} = a_{i}v^{'}_{1} + \cdots + n_{i}v^{'}_{n}$ is a basis of $V$.
+
+if $\forall v\in V, v = a_{1}v_{1} + \cdots + a_{n}v_{n}$, and make $T_{i} = a_{1}v_{1} + \cdots + 0v_{i} + \cdots + a_{n}v_{n}, i \in [1, m]$, then from $3.F.28$, null $\varphi_{i} = $ range $T_{i}, i\in [1, m]$, then
+
+\begin{equation*}
+    \begin{split}
+    null \varphi_{1} \cap \cdots \cap null \varphi_{m} &= range T_{1} \cap \cdots \cap range T_{m} \\
+    & = span(v_{1},\cdots, v_{n}) \cap \cdots \cap span(v_{1}, \cdots, v_{m-1}, v{m+1},\cdots, v_{n}) \\
+    &= span(v_{m+1}, \cdots, v_{n})
+\end{split}
+\end{equation*}
+
+so its dimension is dim $V - m$
+
+\subsubsection*{3.F.31}
+
+Since $\VEC{\varphi}{n}$ is a basis of $V^{'}$,  then their must be a mapping 
+$T(\varphi_{i}) = e_{i}$, so  $M(T)\varphi_{i} = \varphi_{i}(e_{i})$, which we have $M_{i.,}\varphi_{j} = 1$ if and only if $i = j$, or it will be 0.
+
+So the $M^{t}$ is the matrix we need, to convert $e$ to the basis we need.
+
+
+\subsubsection*{3.F.33}
+If $A, B\in F^{m,n}$, then $(A+B)^{t}_{j,k} = (A+B)_{k, j} = A_{k,j} + B_{k,j} = A^{t}_{j, k} +B^{t}_{j, k}$, so it's closure under sum.
+
+$(kA)^{t}_{j, k} = (kA)_{k, j} = kA_{k,j} = kA^{t}_{j,}$, so it's closure under times.
+
+Now let's prove it's invertible, and because $\forall A\in F^{m,n}$, there is an uniq $A^{t} \in F^{n,m}$, and vice versa.
+
+\subsubsection*{3.F.34}
+\begin{enumerate}[label=(\alph*)]
+\item 
+$(\Lambda v)(\varphi) = \varphi(v) \in F$, so $\Lambda v \in V^{''}$, then $\Lambda \in (V \implies V^{''}$.
+
+\item
+\begin{equation*}
+    \begin{split}
+    (T^{''}\omicron \lambda (v))(\varphi) &= (T^{''}(\lambda v))(p) \\
+    &= (\lambda v \omicron T^{'})(\varphi) \\
+    &= (\lambda v)(T^{'}(\varphi)) \\
+    &= (T^{'}(\varphi))(v) \\
+    &= (\varphi \omicron T)(v) \\
+    &= \varphi(Tv) \\
+    &= (\lambda \omicron T(v))(\varphi) \\
+    &= ((\lambda \omicron T)(v))(\varphi)
+
+\end{split}
+\end{equation*}
+
+\item
+dim $V$ = dim $V^{'}$ = dim $V^{''}$, so $\Lambda$ is invertible mapping.
+\end{enumerate}
+
+\subsubsection*{3.F.35}
+
+$T = {p(n), n\in R, p\in P(R)}$, so this is a 1-1 mapping.
 \newpage
